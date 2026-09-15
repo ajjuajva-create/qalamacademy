@@ -141,7 +141,7 @@ p{line-height:1.65;font-size:15px}
 .lab-box{background:#fff;border:1.5px solid var(--border);border-radius:24px;padding:24px}
 textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
 .lab-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
-.feedback-results{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:16px}
+.feedback-results{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
 .score-box{background:var(--paper);border-radius:14px;padding:14px;text-align:center}
 .score-box strong{font-size:22px;color:var(--navy);display:block}
 .score-box span{font-size:10px;font-weight:800;color:var(--muted)}
@@ -453,117 +453,182 @@ let authMode = 'login';
 let currentLesson=null, stepIndex=0, correctCount=0, selected=null, answered=false, elapsed=0, timer=null;
 let activeLabTask = null;
 
-// COMPLETE 5-STAGE CURRICULUM
+// EXPANDED 20-MODULE COMPREHENSIVE CURRICULUM
 const LESSONS = [
+  // --- TIER 1: CLARITY ---
   {
-    id: 'clarity-1', level: 1, skill: 'Clarity', icon: '◎', title: 'Strong Sentences',
-    desc: 'Say the idea once — clearly without padding.',
-    teach: 'Academic writing avoids conversational preambles like "In my personal opinion, I think". State claims directly.',
-    examples: ['In my personal opinion, I think education is very important for all people.', 'Education remains essential to personal independence.'],
+    id: 'clarity-1', level: 1, skill: 'Clarity', icon: '◎', title: 'Stripping the Preamble',
+    desc: 'Remove conversational hedges to give assertions direct authority.',
+    teach: 'Academic sentences derive force from direct assertion, bypassing conversational preambles.',
+    examples: ['In my personal opinion, I think education is important.', 'Education remains essential to intellectual independence.'],
     steps: [
       {
         type: 'mcq',
-        title: 'Which sentence demonstrates superior academic force?',
-        hint: 'Look for direct claims that avoid conversational dilution.',
+        title: 'Which option eliminates conversational dilution?',
+        hint: 'Look for direct claims without self-referential padding.',
         options: [
-          'In my personal opinion, I think education is very important.',
-          'Education remains essential to personal independence.',
-          'It is a known thing that studying helps everybody.'
+          'I believe that we should consider that books are quite useful.',
+          'Books remain primary catalysts of intellectual inquiry.',
+          'From my point of view, I feel like studying helps.'
         ],
         correct: 1,
-        explain: 'The second option makes a direct claim without conversational dilution.'
+        explain: 'The second option states the proposition directly without hedging.'
       },
       {
         type: 'write',
         title: 'Rewrite this sentence without conversational padding:',
-        hint: 'Remove "In my personal opinion, I think". State the core argument directly.',
-        example: 'In my personal opinion, I think books are essential.',
+        hint: 'Delete "In my personal opinion, I think" and state the core claim.',
+        example: 'In my personal opinion, I think tradition guides human behavior.',
         validate: a => a.trim().split(/\s+/).length >= 5 && !/in my personal opinion.*i think/i.test(a),
-        explain: 'Direct assertion gives sentences authority.'
+        explain: 'Direct assertion grants immediate authority to your argument.'
       }
     ]
   },
   {
-    id: 'vocab-1', level: 2, skill: 'Vocabulary', icon: 'A', title: 'Precise Words',
-    desc: 'Replace casual verbs with precise scholarly terminology.',
-    teach: 'Formal writing replaces phrasal verbs with analytical terminology.',
-    examples: ['The author wants to get rid of this idea.', 'The author systematically eliminates this idea.'],
+    id: 'clarity-2', level: 1, skill: 'Clarity', icon: '🎯', title: 'Single-Idea Focus',
+    desc: 'Isolate one primary assertion per sentence to avoid cognitive clutter.',
+    teach: 'A sentence collapsing multiple independent arguments loses its argumentative punch.',
+    examples: ['Modern states regulate education, and they tax citizens, and they build roads.', 'Modern states consolidate authority through institutional regulation.'],
     steps: [
       {
         type: 'mcq',
-        title: 'Which word best replaces "get rid of" in formal research?',
-        hint: 'Choose the precise analytical verb.',
-        options: ['Kick out', 'Eliminate', 'Throw away'],
+        title: 'Which sentence maintains a single, clean focal point?',
+        hint: 'Avoid run-on clauses packed with multiple unrelated actions.',
+        options: [
+          'The author analyzes secularism and he critiques nationalism while also reviewing history.',
+          'The author critically evaluates the structural limits of secular nationalism.',
+          'Secularism is studied by the author who writes about history and nations.'
+        ],
         correct: 1,
-        explain: '"Eliminate" conveys scholarly precision.'
-      },
+        explain: 'Option two focuses entirely on evaluating the limits of secular nationalism.'
+      }
+    ]
+  },
+
+  // --- TIER 2: VOCABULARY ---
+  {
+    id: 'vocab-1', level: 2, skill: 'Vocabulary', icon: 'A', title: 'Phrasal Verb Upgrades',
+    desc: 'Replace casual phrasal verbs with precise academic terminology.',
+    teach: 'Formal prose replaces spoken phrasal verbs with single-word analytical verbs.',
+    examples: ['The researcher wants to look into the data.', 'The researcher intends to investigate the empirical data.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'Which single verb best replaces "bring up" in a formal paper?',
+        hint: 'Look for a term meaning to introduce or raise a point.',
+        options: ['Bring over', 'Articulate', 'Throw out'],
+        correct: 1,
+        explain: '"Articulate" or "raise" replaces the informal phrasal verb cleanly.'
+      }
+    ]
+  },
+  {
+    id: 'vocab-2', level: 2, skill: 'Vocabulary', icon: '⚡', title: 'Nominalization Mechanics',
+    desc: 'Transform active descriptions into dense conceptual nouns.',
+    teach: 'Nominalization allows complex processes to become compact actors in larger arguments.',
+    examples: ['Because society urbanized rapidly, public health changed.', 'Rapid urbanization strained public health infrastructure.'],
+    steps: [
       {
         type: 'write',
-        title: 'Upgrade this sentence using nominalization:',
-        hint: 'Transform "people moved into cities quickly" into "Rapid urbanization".',
-        example: 'Because people moved into cities so fast, healthcare struggled.',
-        validate: a => a.trim().split(/\s+/).length >= 6 && /(urbanization|migration|rapid|healthcare|strained)/i.test(a),
-        explain: 'Concepts carry greater argumentative weight than casual anecdotes.'
+        title: 'Transform this action into a precise nominalized concept:',
+        hint: 'Change "Because people migrated quickly" into "Rapid migration..."',
+        example: 'Because people migrated quickly, cultural friction increased.',
+        validate: a => /(migration|urbanization|displacement|friction)/i.test(a),
+        explain: 'Nominalization packs dynamic actions into manageable analytical concepts.'
+      }
+    ]
+  },
+
+  // --- TIER 3: CONCISION ---
+  {
+    id: 'concision-1', level: 3, skill: 'Concision', icon: '✂', title: 'Killing Multi-Word Fillers',
+    desc: 'Cut bloated transitional phrases down to their single-word equivalents.',
+    teach: 'If a multi-word phrase adds no distinct nuance, replace it with a direct term.',
+    examples: ['Due to the fact that funding failed, the project stopped.', 'Because funding failed, the project halted.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'Which option replaces "in light of the fact that" most efficiently?',
+        hint: 'Choose a direct causal connector.',
+        options: ['Because', 'In a manner of speaking', 'Due to the realization that'],
+        correct: 0,
+        explain: '"Because" achieves the exact same logical link in a single word.'
       }
     ]
   },
   {
-    id: 'concision-1', level: 3, skill: 'Concision', icon: '✂', title: 'Trim the Fat',
-    desc: 'Make every word justify its presence.',
-    teach: 'Academic writing becomes stronger when you remove filler phrases. "Due to the fact that" = "because". "In order to" = "to".',
-    examples: ['Due to the fact that the study was conducted in order to determine...', 'Because the study aimed to determine...'],
+    id: 'concision-2', level: 3, skill: 'Concision', icon: '⚖', title: 'The Antithetical Pivot',
+    desc: 'Deploy rhythmic, balanced contrasts to sharpen analytical arguments.',
+    teach: 'The formula "X is not Y; it is Z" establishes crisp boundaries for your claims.',
+    examples: ['The problem is not economic, but rather it is about culture.', 'The crisis is not primarily economic; it is fundamentally institutional.'],
     steps: [
       {
-        type: 'mcq',
-        title: 'Which version is the most concise?',
-        hint: 'Look for the shortest version that preserves full meaning.',
-        options: [
-          'Due to the fact that it rains, the event was cancelled.',
-          'The event was cancelled due to the fact that of rain.',
-          'The event was cancelled because of rain.'
-        ],
-        correct: 2,
-        explain: '"Because of" replaces multi-word filler while maintaining full meaning.'
+        type: 'write',
+        title: 'Write an antithetical sentence contrasting theory and practice:',
+        hint: 'Use the structure: "The challenge of [X] is not [Y] — it is [Z]."',
+        example: 'The challenge of reform is not structural; it is epistemological.',
+        validate: a => a.trim().split(/\s+/).length >= 8 && (/not.*;/i.test(a) || /not.*—/i.test(a)),
+        explain: 'Antithetical pivots create memorable, high-impact scholarly rhythms.'
       }
     ]
   },
+
+  // --- TIER 4: ARGUMENTATION ---
   {
-    id: 'argument-1', level: 4, skill: 'Argument', icon: '⚖', title: 'Claim and Evidence',
-    desc: 'Connect claims to explicit reasoning.',
-    teach: 'Every academic argument connects a claim to verifiable evidence through clear warrants.',
-    examples: ['The West is biased. This is obvious.', 'Western media exhibits systematic bias in coverage, evidenced by recurring framing paradigms.'],
+    id: 'argument-1', level: 4, skill: 'Argument', icon: '🏛', title: 'Claim vs. Self-Evident Fact',
+    desc: 'Ensure your primary arguments require defense rather than stating obvious trivia.',
+    teach: 'An academic claim must be arguable; stating that books contain pages is an inert fact.',
+    examples: ['Libraries store physical books.', 'Digital archiving fundamentally alters how human memory is externalized.'],
     steps: [
       {
         type: 'mcq',
-        title: 'Which statement represents a complete argument?',
-        hint: 'Look for claim + evidence + connection.',
+        title: 'Which statement functions as a true argumentative claim?',
+        hint: 'It must invite counter-argument or analytical investigation.',
         options: [
-          'Traditional education is superior to modern education.',
-          'Western schooling produces alienation from native tradition, as evidenced by curricular displacement.',
-          'There are many issues with contemporary education.'
-        ],
-        correct: 1,
-        explain: 'The second option supports an interpretive claim with evidence.'
-      }
-    ]
-  },
-  {
-    id: 'structure-1', level: 5, skill: 'Structure', icon: '▦', title: 'Paragraph Architecture',
-    desc: 'Master topic sentences and structural development.',
-    teach: 'A well-structured paragraph opens with an arguable claim, develops with evidence, and closes with conceptual implications.',
-    examples: ['Scholars contributed much to knowledge.', 'Islamic civilisation made foundational contributions to medicine and mathematics, shaping global intellectual history.'],
-    steps: [
-      {
-        type: 'mcq',
-        title: 'Which is the strongest thesis statement?',
-        hint: 'A thesis asserts an arguable stance, not a topic announcement.',
-        options: [
-          'In this essay, I will discuss secular schooling.',
-          'Secular education develops rational faculties while systematically marginalizing metaphysical inquiry.',
-          'Secular education has many positive and negative characteristics.'
+          'Universities have classrooms and lecture halls.',
+          'Modern collegiate institutions prioritize market utility over contemplative inquiry.',
+          'Students pay tuition to attend college.'
         ],
         correct: 1,
-        explain: 'The second option formulates an interpretive claim ready for development.'
+        explain: 'Option two stakes an interpretive claim that requires extensive evidence to prove.'
+      }
+    ]
+  },
+  {
+    id: 'argument-2', level: 4, skill: 'Argument', icon: '🔗', title: 'Explicit Evidential Warrants',
+    desc: 'Connect raw data to your interpretive claims through clear reasoning.',
+    teach: 'Data does not speak for itself; the warrant explains why the data proves your claim.',
+    examples: ['Statistics show low voter turnout.', 'Low voter turnout reflects systemic alienation, as citizens recognize structural policy stagnation.'],
+    steps: [
+      {
+        type: 'write',
+        title: 'Write a sentence connecting a claim to its underlying reason:',
+        hint: 'Use "...as demonstrated by..." or "...evidenced by..."',
+        example: 'Secularism reshapes public morality, as demonstrated by the restriction of religious symbols.',
+        validate: a => a.trim().split(/\s+/).length >= 8 && /(evidenced|demonstrated|reflected|indicated)/i.test(a),
+        explain: 'Explicit warrants close the logical gap between evidence and interpretation.'
+      }
+    ]
+  },
+
+  // --- TIER 5: STRUCTURE ---
+  {
+    id: 'structure-1', level: 5, skill: 'Structure', icon: '🧱', title: 'Controlling Topic Sentences',
+    desc: 'Govern paragraph coherence with a single authoritative opening claim.',
+    teach: 'The topic sentence acts as a contract with the reader, promising what the paragraph will prove.',
+    examples: ['In this paragraph, I will talk about medieval philosophy.', 'Medieval Islamic optics revolutionized Western theories of perception.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'Which sentence serves as an effective paragraph topic sentence?',
+        hint: 'It should preview an analytical argument rather than announce an essay section.',
+        options: [
+          'Now I will discuss the economic policies of the state.',
+          'State-mandated industrialization accelerated class stratification across urban centers.',
+          'There are many things to say about factories.'
+        ],
+        correct: 1,
+        explain: 'Option two establishes an analytical framework for the entire paragraph.'
       }
     ]
   }
