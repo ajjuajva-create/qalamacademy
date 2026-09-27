@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#172b4d">
+<title>Qalam Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f8f7f3;--paper2:#f1efe8;--white:#fff;
+  --ink:#17202a;--navy:#172b4d;--navy2:#243b5a;
+  --green:#3f6b5b;--green2:#315647;--greenbg:#e7f0eb;
+  --gold:#c8903a;--goldbg:#f7eddc;
+  --blue:#3d7190;--bluebg:#e7f0f5;
+  --purple:#765a8c;--purplebg:#eee8f2;
+  --red:#a94b4b;--redbg:#f7e7e7;
+  --muted:#64748b;--border:#ddd9cf;
+  --shadow:0 18px 50px rgba(23,43,77,.10);
+  --radius:22px;--font:'Plus Jakarta Sans',sans-serif;
+  --serif:'DM Serif Display',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%;font-family:var(--font);color:var(--ink);background:#ecefe6;font-size:16px}
+body{display:flex;justify-content:center;align-items:flex-start}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+
+.app{
+  width:100%;min-height:100vh;background:var(--paper);
+  position:relative;overflow:hidden;display:flex;flex-direction:column;
+}
+@media(min-width:900px){
+  body{padding:24px 0}
+  .app{
+    max-width:1200px;min-height:92vh;border-radius:28px;
+    border:1px solid rgba(255,255,255,.8);box-shadow:0 30px 80px rgba(15,23,42,.15);
+  }
+}
+.screen{min-height:100%;overflow-y:auto;scroll-behavior:smooth}
+.container{width:min(100%,1040px);margin:auto;padding:0 28px 120px}
+.serif{font-family:var(--serif)}
+h1{font-size:clamp(30px,4.5vw,48px);line-height:1.15;color:var(--navy)}
+h2{font-size:24px;color:var(--navy);line-height:1.25}
+h3{font-size:18px;color:var(--navy);line-height:1.3}
+p{line-height:1.65;font-size:15px}
+.muted{color:var(--muted)}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:800}
+
+.btn{
+  border:0;border-radius:14px;padding:14px 22px;font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  transition:.15s;font-size:14px;cursor:pointer
+}
+.btn:active{transform:translateY(2px)}
+.btn-primary{background:var(--navy);color:#fff;box-shadow:0 4px 0 #0e1d34}
+.btn-green{background:var(--green);color:#fff;box-shadow:0 4px 0 var(--green2)}
+.btn-outline{background:#fff;color:var(--navy);border:1.5px solid var(--border)}
+.btn-soft{background:var(--paper2);color:var(--navy)}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;transform:none}
+
+.topbar{
+  height:74px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;padding:0 28px;
+  position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)
+}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--navy);text-decoration:none}
+.brand-mark{width:42px;height:42px;border-radius:12px;background:var(--navy);display:grid;place-items:center}
+.brand-mark svg{width:24px;height:24px}
+.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:800}
+.nav-links{display:flex;gap:8px}
+.nav-btn{border:0;background:transparent;color:var(--muted);padding:10px 15px;border-radius:12px;font-size:14px;font-weight:800;transition:.15s}
+.nav-btn:hover,.nav-btn.active{background:var(--paper2);color:var(--navy)}
+
+.auth{
+  min-height:100%;display:grid;place-items:center;padding:32px 20px;
+  background:radial-gradient(circle at 15% 15%,rgba(200,144,58,.13),transparent 30%),
+             radial-gradient(circle at 90% 80%,rgba(63,107,91,.13),transparent 30%),var(--paper);
+}
+.auth-card{width:min(100%,480px);background:#fff;border:1px solid var(--border);border-radius:30px;padding:38px 34px;box-shadow:var(--shadow)}
+.auth-head{text-align:center;margin-bottom:28px}
+.auth-emblem{width:68px;height:68px;border-radius:20px;background:var(--navy);display:grid;place-items:center;margin:0 auto 14px}
+.auth-emblem svg{width:38px;height:38px}
+.auth-head h1{font-size:28px;color:var(--navy)}
+.auth-head p{font-size:14px;color:var(--muted);margin-top:8px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--paper2);padding:4px;border-radius:14px;margin-bottom:20px}
+.tab{border:0;background:transparent;padding:12px;border-radius:10px;font-size:13px;font-weight:800;color:var(--muted);transition:.15s}
+.tab.active{background:#fff;color:var(--navy);box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.field input,.field textarea,.field select{width:100%;border:1.5px solid var(--border);background:#fff;border-radius:14px;padding:14px;outline:none;color:var(--ink);font-size:15px;transition:.2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(23,43,77,.08)}
+
+.habit{
+  background:var(--navy);color:#fff;border-radius:24px;padding:22px 26px;
+  display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;
+  box-shadow:var(--shadow);margin:24px 0
+}
+.streak{min-width:88px;padding:12px 14px;border:1px solid rgba(255,255,255,.18);border-radius:16px;text-align:center;background:rgba(255,255,255,.07)}
+.streak strong{font-size:32px;color:#e9c477;display:block}
+.streak span{font-size:10px;letter-spacing:.12em;font-weight:800;opacity:.75}
+.tier{font-size:11px;font-weight:800;padding:6px 12px;border-radius:10px;background:rgba(255,255,255,.12);display:inline-block;margin-bottom:6px}
+.habit-title{font-size:18px;font-weight:800}
+.habit-text{font-size:13px;opacity:.78;margin-top:4px}
+.xp{text-align:right}.xp strong{display:block;font-size:22px}.xp span{font-size:10px;opacity:.65}
+
+.today{background:#fff;border:1.5px solid var(--border);border-radius:24px;padding:24px;display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;box-shadow:0 8px 24px rgba(23,43,77,.05)}
+.skill-icon{width:64px;height:64px;border-radius:18px;background:var(--greenbg);display:grid;place-items:center;color:var(--green);font-size:26px;flex:none}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.meta span{font-size:11px;font-weight:800;padding:6px 10px;border-radius:8px;background:var(--paper2);color:var(--muted)}
+
+.lesson-list{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.lesson-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:20px;display:flex;gap:16px;align-items:flex-start;min-height:140px;cursor:pointer;transition:.2s;position:relative}
+.lesson-card.locked{opacity:.55;cursor:not-allowed}
+.lesson-card.done{border-color:#bfd3c8;background:var(--greenbg)}
+.done-badge{position:absolute;top:14px;right:14px;width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800}
+.lesson-icon{width:48px;height:48px;border-radius:14px;background:var(--bluebg);display:grid;place-items:center;font-size:22px;flex:none}
+
+.winding-path{padding:16px 20px 36px;display:flex;flex-direction:column;align-items:center;position:relative}
+.winding-path::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:4px;background:repeating-linear-gradient(to bottom,var(--border) 0px,var(--border) 8px,transparent 8px,transparent 16px);transform:translateX(-50%);z-index:0}
+.path-node-wrap{position:relative;z-index:1;margin-bottom:34px;display:flex;flex-direction:column;align-items:center}
+.path-node-wrap:nth-child(odd){align-self:flex-start;margin-left:14%}
+.path-node-wrap:nth-child(even){align-self:flex-end;margin-right:14%}
+.path-node-wrap:nth-child(3n){align-self:center;margin-left:0;margin-right:0}
+.path-node{width:86px;height:86px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;transition:transform .15s;border:4px solid #fff}
+.path-node.node-active{background:var(--green);box-shadow:0 8px 0 var(--green2)}
+.path-node.node-done{background:var(--gold);box-shadow:0 8px 0 #8c6020}
+.path-node.node-locked{background:#e8e5df;box-shadow:0 8px 0 #ccc;cursor:not-allowed;color:#aaa}
+.path-node-label{margin-top:10px;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:6px 14px;font-size:12px;font-weight:800;text-align:center}
+
+.lab-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--paper2);padding:4px;border-radius:14px;margin-bottom:20px;gap:6px}
+.lab-tab{border:0;background:transparent;padding:12px 10px;border-radius:10px;font-size:13px;font-weight:800;color:var(--muted);transition:.15s}
+.lab-tab.active{background:#fff;color:var(--navy);box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.lab-box{background:#fff;border:1.5px solid var(--border);border-radius:24px;padding:24px}
+textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
+.lab-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.feedback-results{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.score-box{background:var(--paper);border-radius:14px;padding:14px;text-align:center}
+.score-box strong{font-size:22px;color:var(--navy);display:block}
+.score-box span{font-size:10px;font-weight:800;color:var(--muted)}
+.feedback-points{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.feedback-points div{font-size:13px;background:var(--greenbg);color:var(--green2);padding:12px 14px;border-radius:12px;line-height:1.5}
+
+.lab-task-list{display:flex;flex-direction:column;gap:14px}
+.lab-task{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:20px;cursor:pointer;transition:.2s}
+.lab-task:hover{border-color:var(--green);box-shadow:0 6px 16px rgba(63,107,91,.1)}
+.lab-task.done{border-color:#bfd3c8;background:var(--greenbg)}
+.lab-task.active-task{border-color:var(--navy);box-shadow:0 0 0 3px rgba(23,43,77,.08)}
+.lab-task-header{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.lab-task-num{width:36px;height:36px;border-radius:10px;background:var(--paper2);display:grid;place-items:center;font-size:14px;font-weight:800;color:var(--navy);flex:none}
+.lab-task.done .lab-task-num{background:var(--green);color:#fff}
+.lab-task-title{font-size:16px;font-weight:800;color:var(--navy)}
+.lab-task-meta{font-size:12px;color:var(--muted);margin-top:2px}
+.lab-task-body{display:none;margin-top:16px}
+.lab-task.active-task .lab-task-body{display:block}
+.lab-task-prompt{background:var(--goldbg);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 16px;font-size:14px;color:#725629;margin-bottom:14px;line-height:1.65}
+.lab-task textarea{width:100%;min-height:130px;padding:14px;border:1.5px solid var(--border);border-radius:14px;font-size:15px;line-height:1.7;resize:none;outline:none;background:var(--paper)}
+.lab-task textarea:focus{border-color:var(--navy);background:#fff}
+
+.report-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.metric{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:18px}
+.metric strong{display:block;font-size:28px;color:var(--navy)}
+.metric span{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.08em}
+.week-card{background:#fff;border:1.5px solid var(--border);border-radius:24px;padding:22px;margin-top:16px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:16px}
+.day{text-align:center}
+.day span{display:block;font-size:11px;color:var(--muted);font-weight:800;margin-bottom:8px}
+.day i{display:block;height:48px;border-radius:14px;background:var(--paper2);border:1px solid var(--border)}
+.day.done i{background:var(--greenbg);border-color:#bfd3c8}
+.day.today i{outline:2px solid var(--gold)}
+
+.lesson-screen{background:var(--paper);min-height:100vh}
+.lessonbar{height:70px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 24px;position:sticky;top:0;z-index:20}
+.lessonbar .bar{flex:1;height:10px;background:var(--paper2);border-radius:99px;overflow:hidden}
+.lessonbar .bar i{display:block;height:100%;background:var(--green);transition:.4s}
+.lesson-main{width:min(100%,820px);margin:auto;padding:32px 24px 140px}
+.teach{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:20px;margin:18px 0}
+.teach .weak-ex{background:var(--redbg);padding:13px 15px;border-radius:12px;font-size:14px;margin:10px 0}
+.teach .strong-ex{background:var(--greenbg);padding:13px 15px;border-radius:12px;font-size:14px}
+.option{width:100%;text-align:left;border:1.5px solid var(--border);background:#fff;border-radius:16px;padding:16px 18px;margin-bottom:12px;font-size:15px;cursor:pointer}
+.option.selected{border-color:var(--navy);background:var(--bluebg)}
+.option.correct{border-color:var(--green);background:var(--greenbg)}
+.option.wrong{border-color:var(--red);background:var(--redbg)}
+
+.lesson-footer{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(255,255,255,.98);border-top:1.5px solid var(--border);
+  padding:16px 24px calc(16px + env(safe-area-inset-bottom));
+  z-index:90;box-shadow:0 -10px 30px rgba(0,0,0,0.06);
+}
+.lesson-footer-inner{width:min(100%,820px);margin:auto;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.lesson-feedback{flex:1;font-size:14px;font-weight:700}
+
+.result-wrap{min-height:100vh;display:grid;place-items:center;padding:28px}
+.result-card{width:min(100%,540px);text-align:center;background:#fff;border:1.5px solid var(--border);border-radius:30px;padding:36px;box-shadow:var(--shadow)}
+
+.mobile-nav{display:none}
+@media(max-width:768px){
+  .topbar{height:66px;padding:0 18px}
+  .nav-links{display:none}
+  .mobile-nav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.98);
+    border-top:1px solid var(--border);z-index:40;
+    padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+    justify-content:space-around;
+  }
+  body.in-lesson .mobile-nav{display:none!important}
+  .mobile-nav button{border:0;background:transparent;color:var(--muted);font-size:11px;font-weight:800;display:flex;flex-direction:column;align-items:center}
+  .mobile-nav button.active{color:var(--navy)}
+  .container{padding:0 18px 120px}
+  .lesson-list,.skills,.report-grid,.feedback-results{grid-template-columns:1fr}
+  .lesson-footer-inner{flex-direction:column;gap:10px}
+  .lesson-footer .btn{width:100%}
+}
+.toast{position:fixed;right:18px;bottom:84px;background:var(--navy);color:#fff;padding:14px 18px;border-radius:14px;font-size:13px;font-weight:700;z-index:200}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- AUTH -->
+<div id="authScreen" class="screen hidden">
+  <div class="auth">
+    <div class="auth-card">
+      <div class="auth-head">
+        <div class="auth-emblem">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path d="M18 4L30 14L18 32L6 14Z" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.4)"/>
+            <path d="M12 16L18 10L24 16L18 28Z" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.5)"/>
+            <path d="M18 10L18 28" stroke="#e9c477" stroke-width="1.5"/>
+            <circle cx="18" cy="28" r="2" fill="#e9c477"/>
+          </svg>
+        </div>
+        <h1 class="serif">Qalam Academy</h1>
+        <p>Simple, human-friendly writing training.</p>
+      </div>
+      <div class="tabs">
+        <button class="tab active" id="tabLogin" onclick="setAuthMode('login')">Sign in</button>
+        <button class="tab" id="tabSignup" onclick="setAuthMode('signup')">Create account</button>
+      </div>
+      <div class="field"><label>Username</label><input type="text" id="authEmail" placeholder="e.g. ajvad"></div>
+      <div class="field"><label>Passphrase</label><input type="password" id="authPassword" placeholder="••••••••"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:6px" id="authButton" onclick="handleAuth()">SIGN IN →</button>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<section id="appScreen" class="screen hidden">
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 36 36" fill="none">
+          <path d="M18 4L30 14L18 32L6 14Z" fill="rgba(255,255,255,0.1)"/>
+          <path d="M18 11L18 27" stroke="#e9c477" stroke-width="1.5"/>
+          <circle cx="18" cy="27" r="2" fill="#e9c477"/>
+        </svg>
+      </div>
+      <div><span style="font-size:17px;font-weight:800">Qalam</span><small>Academy</small></div>
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" id="navHome" onclick="navigate('home')">Home</button>
+      <button class="nav-btn" id="navLearn" onclick="navigate('learn')">Learn</button>
+      <button class="nav-btn" id="navLab" onclick="navigate('lab')">Writing Lab</button>
+      <button class="nav-btn" id="navProgress" onclick="navigate('progress')">Progress</button>
+    </div>
+    <button class="btn btn-outline" style="padding:6px 12px;font-size:12px" onclick="logout()">Exit</button>
+  </div>
+
+  <!-- HOME -->
+  <div id="homePage" class="page">
+    <div class="container">
+      <div class="habit">
+        <div class="streak"><strong id="streakNum">1</strong><span>STREAK</span></div>
+        <div>
+          <div class="tier" id="tierPill">Beginner</div>
+          <div class="habit-title" id="greeting">Welcome back.</div>
+          <div class="habit-text">Pick up your training below.</div>
+        </div>
+        <div class="xp"><strong id="xpNum">0 XP</strong><span>TOTAL</span></div>
+      </div>
+
+      <div style="margin-bottom:20px">
+        <button class="btn btn-green" style="width:100%;padding:16px;font-size:16px" onclick="startEndlessPractice()">⚡ Unlimited Practice Drill (+15 XP)</button>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><div><div class="eyebrow">Today</div><h2>Focal Practice</h2></div></div>
+        <div id="todayCard" class="today"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><div><div class="eyebrow">Curriculum</div><h2>Step-by-Step Training</h2></div></div>
+        <div id="lessonList" class="lesson-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEARN -->
+  <div id="learnPage" class="page hidden">
+    <div class="container">
+      <div style="padding:32px 0 20px">
+        <div class="eyebrow">Training Roadmap</div>
+        <h1 class="serif">The Path to Clear Writing.</h1>
+      </div>
+      <div class="winding-path" id="windingPath"></div>
+    </div>
+  </div>
+
+  <!-- WRITING LAB -->
+  <div id="labPage" class="page hidden">
+    <div class="container">
+      <div style="padding:32px 0 16px">
+        <div class="eyebrow">Studio</div>
+        <h1 class="serif">Writing Lab & Arena.</h1>
+      </div>
+      <div class="lab-tabs">
+        <button class="lab-tab active" id="labTabTasks" onclick="switchLabTab('tasks')">📝 Guided Tasks</button>
+        <button class="lab-tab" id="labTabAnalyse" onclick="switchLabTab('analyse')">✦ Paragraph Analyser</button>
+      </div>
+
+      <div id="labTasks">
+        <div class="lab-task-list" id="labTaskList"></div>
+      </div>
+
+      <div id="labAnalyse" class="hidden">
+        <div class="lab-box">
+          <div class="field">
+            <label>Writing Style</label>
+            <select id="labType">
+              <option>General Paragraph</option>
+              <option>Essay Introduction</option>
+              <option>Personal Reflection</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Your Draft</label>
+            <textarea id="labText" class="large" placeholder="Paste or type your draft here to check sentence length, filler words, and readability..."></textarea>
+          </div>
+          <div class="lab-actions">
+            <span class="muted" style="font-size:12px">Instant readability check.</span>
+            <button class="btn btn-green" onclick="evaluateWriting()">Analyze Writing →</button>
+          </div>
+          <div id="labResults" class="hidden">
+            <div class="feedback-results" id="scoreGrid"></div>
+            <div class="feedback-points" id="feedbackPoints"></div>
+            <div style="margin-top:16px;display:flex;gap:10px">
+              <button class="btn btn-soft" onclick="clearLab()">Reset Draft</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div id="progressPage" class="page hidden">
+    <div class="container">
+      <div style="padding:32px 0 20px">
+        <div class="eyebrow">Ledger</div>
+        <h1 class="serif">Your Record.</h1>
+      </div>
+      <div class="report-grid">
+        <div class="metric"><strong id="repXP">0</strong><span>TOTAL XP</span></div>
+        <div class="metric"><strong id="repSessions">0</strong><span>LESSONS DONE</span></div>
+        <div class="metric"><strong id="repTasks">0</strong><span>TASKS DONE</span></div>
+        <div class="metric"><strong id="repStreak">0</strong><span>DAY STREAK</span></div>
+      </div>
+      <div class="week-card">
+        <div class="eyebrow">Rhythm</div>
+        <h3 style="margin-top:4px">7-Day Consistency</h3>
+        <div id="daysGrid" class="days"></div>
+      </div>
+      <div style="margin-top:20px;background:#fff;padding:24px;border-radius:20px;border:1.5px solid var(--border)">
+        <div style="font-size:18px;font-weight:800;color:var(--navy)">Cloud Synchronization Status</div>
+        <p class="muted" style="margin-top:6px" id="userAccountDetails"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LESSON -->
+<section id="lessonScreen" class="screen hidden lesson-screen">
+  <div class="lessonbar">
+    <button class="icon-btn" onclick="leaveLesson()">✕</button>
+    <div class="bar"><i id="lessonBar" style="width:0%"></i></div>
+    <span id="lessonTimer" style="font-size:13px;font-weight:800;color:var(--muted)">00:00</span>
+  </div>
+  <main class="lesson-main">
+    <span id="lessonLabel" class="lesson-label">LESSON</span>
+    <h1 id="lessonTitle" class="serif" style="font-size:34px;margin-top:10px">Lesson</h1>
+    <div id="teachBox" class="teach"></div>
+    <div class="question">
+      <h2 id="questionTitle">Question</h2>
+      <div id="questionHint" class="muted" style="font-size:13px;margin:8px 0"></div>
+      <div id="questionArea" style="margin-top:16px"></div>
+    </div>
+  </main>
+  <div class="lesson-footer">
+    <div class="lesson-footer-inner">
+      <div id="lessonFeedback" class="lesson-feedback">Select an answer or type your answer to proceed.</div>
+      <button id="lessonAction" class="btn btn-primary" disabled onclick="evaluateStep()">CHECK</button>
+    </div>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section id="resultScreen" class="screen hidden">
+  <div class="result-wrap">
+    <div class="result-card">
+      <h1 class="serif" style="font-size:36px;color:var(--green)">Great Job!</h1>
+      <p id="resultMessage" style="margin:14px 0">You completed this training session and earned XP.</p>
+      <div style="font-size:24px;font-weight:800;color:var(--navy);margin-bottom:20px" id="resultXP">+20 XP</div>
+      <button class="btn btn-green" style="width:100%" onclick="backFromResult()">Continue Training →</button>
+    </div>
+  </div>
+</section>
+
+<div class="mobile-nav" id="mobileNav">
+  <button id="mHome" class="active" onclick="navigate('home')"><b>⌂</b>Home</button>
+  <button id="mLearn" onclick="navigate('learn')"><b>◈</b>Learn</button>
+  <button id="mLab" onclick="navigate('lab')"><b>✎</b>Lab</button>
+  <button id="mProgress" onclick="navigate('progress')"><b>◌</b>Progress</button>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script>
+// SUPABASE REST CONFIGURATION
+const SUPA_URL = 'https://kqqhtmjidxaruunahrpq.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtxcWh0bWppZHhhcnV1bmFocnBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMzUyNzQsImV4cCI6MjEwNDcxMTI3NH0.nu1GV9pbkjYmhFPnnat_KPk5WnSTmZ_ddCA6E1p_iqg';
+
+const HEADERS = {
+  'Content-Type': 'application/json',
+  'apikey': SUPA_KEY,
+  'Authorization': 'Bearer ' + SUPA_KEY,
+  'Prefer': 'return=representation'
+};
+
+const DEFAULT_STATE = {
+  username: '', password: '', xp: 0, streak: 1, total_seconds: 0, unlocked_level: 1, completed_lessons: [], lab_tasks_done: [], practice_dates: []
+};
+let state = DEFAULT_STATE;
+let authMode = 'login';
+let currentLesson=null, stepIndex=0, correctCount=0, selected=null, answered=false, elapsed=0, timer=null;
+let activeLabTask = null;
+
+// FRIENDLY DYNAMIC AUDIO SYNTHESIZER
+let audioCtx = null;
+function getAudioContext(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if(audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+function playTone(freq, duration, type='sine', volume=0.12, delay=0){
+  try {
+    const ac = getAudioContext();
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.connect(gain);
+    gain.connect(ac.destination);
+    osc.frequency.value = freq;
+    osc.type = type;
+    const t = ac.currentTime + delay;
+    gain.gain.setValueAtTime(volume, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
+    osc.start(t);
+    osc.stop(t + duration);
+  } catch(e) {}
+}
+function soundClick(){ playTone(600, 0.05, 'sine', 0.08); }
+function soundCorrect(){ playTone(440, 0.08, 'sine', 0.12); playTone(554.37, 0.08, 'sine', 0.12, 0.08); playTone(659.25, 0.18, 'sine', 0.15, 0.16); }
+function soundWrong(){ playTone(180, 0.15, 'triangle', 0.12); playTone(140, 0.2, 'triangle', 0.1, 0.12); }
+function soundComplete(){ [440, 554, 659, 880].forEach((f, i) => playTone(f, 0.12, 'sine', 0.15, i * 0.08)); }
+
+// HUMAN-FRIENDLY, STEP-BY-STEP CURRICULUM (Thorough training with multiple clear questions per module)
+const LESSONS = [
+  {
+    id: 'step-1', level: 1, skill: 'Basics', icon: '🌱', title: 'Level 1: Writing Complete Thoughts',
+    desc: 'Learn the simple secret to what makes a complete sentence.',
+    teach: 'A complete sentence is like a bicycle: it needs two main wheels to roll forward. Wheel 1 is **WHO** is doing something. Wheel 2 is **WHAT** they are doing. If you miss either one, the thought falls flat.',
+    examples: ['Went to the store yesterday.', 'Sarah went to the store yesterday.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'Which of these is a complete thought with both a "Who" and a "What"?',
+        hint: 'Look for someone doing an action.',
+        options: [
+          'Running down the dusty street very fast.',
+          'The brown horse galloped across the open field.',
+          'Underneath the warm summer sun.'
+        ],
+        correct: 1,
+        explain: 'Option 2 clearly tells us who (the horse) and what it did (galloped).'
+      },
+      {
+        type: 'mcq',
+        title: 'Why is "Running down the street" an incomplete thought?',
+        hint: 'Ask yourself: who is actually running?',
+        options: [
+          'It forgets to tell us WHO is doing the running.',
+          'It is too short.',
+          'It has too many periods.'
+        ],
+        correct: 0,
+        explain: 'Without naming who is running, the reader is left guessing.'
+      },
+      {
+        type: 'mcq',
+        title: 'Which option adds a clear "Who" to fix "Loudly barked at the mailman"?',
+        hint: 'We need an animal doing the barking.',
+        options: [
+          'Because the weather was nice.',
+          'Our neighbor\'s golden retriever loudly barked at the mailman.',
+          'Quickly and quietly.'
+        ],
+        correct: 1,
+        explain: 'Adding "Our neighbor\'s golden retriever" gives the sentence its missing subject.'
+      },
+      {
+        type: 'write',
+        title: 'Write a simple, complete sentence telling what you ate today:',
+        hint: 'Example: "I ate an apple for breakfast."',
+        example: 'I ate a bowl of rice.',
+        validate: a => a.trim().split(/\s+/).length >= 3,
+        explain: 'Wonderful! You just wrote a complete sentence with a clear subject and action.'
+      }
+    ]
+  },
+  {
+    id: 'step-2', level: 2, skill: 'Clarity', icon: '✂️', title: 'Level 2: Stopping Filler Words',
+    desc: 'Remove hesitation and write with natural confidence.',
+    teach: 'When we speak casually, we say things like "I think that maybe..." or "In my opinion, I believe". In writing, these are filler words. They make you sound unsure of yourself. To sound confident, just delete the filler and state your point!',
+    examples: ['I think that maybe reading books is good.', 'Reading books helps you learn faster.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'Which sentence sounds confident and direct?',
+        hint: 'Choose the one without hesitant padding.',
+        options: [
+          'I feel like maybe exercise is healthy.',
+          'Exercise keeps your body strong and active.',
+          'From my point of view, I believe exercise helps.'
+        ],
+        correct: 1,
+        explain: 'Option 2 states the fact directly without hiding behind "I feel like".'
+      },
+      {
+        type: 'mcq',
+        title: 'Which phrase is unnecessary padding that you can safely delete?',
+        hint: 'Words that add zero meaning to your sentence.',
+        options: [
+          'As a matter of fact,',
+          'Quickly',
+          'Carefully'
+        ],
+        correct: 0,
+        explain: '"As a matter of fact" is empty padding. Deleting it makes your sentence punchy.'
+      },
+      {
+        type: 'mcq',
+        title: 'How does deleting filler words improve your writing?',
+        hint: 'Think about how quickly your reader understands your point.',
+        options: [
+          'It lets your main idea shine through without distractions.',
+          'It makes your sentences longer and harder to read.',
+          'It changes the topic completely.'
+        ],
+        correct: 0,
+        explain: 'Removing clutter lets your reader grasp your meaning instantly.'
+      },
+      {
+        type: 'write',
+        title: 'Rewrite this sentence without using "I think that":',
+        hint: 'Start directly with the main subject.',
+        example: 'I think that practice makes you better.',
+        validate: a => a.trim().split(/\s+/).length >= 3 && !/i think/i.test(a),
+        explain: 'Great! Dropping "I think" gives your writing instant authority.'
+      }
+    ]
+  },
+  {
+    id: 'step-3', level: 3, skill: 'Flow', icon: '🌊', title: 'Level 3: Breaking Run-On Sentences',
+    desc: 'Learn how to manage long sentences so your reader doesn\'t run out of breath.',
+    teach: 'A **clause** is a mini-sentence containing a subject (who) and an action (what). A **run-on sentence** happens when you glue two complete thoughts together using only the word "and" over and over. You fix this easily by placing a period (.) or breaking thoughts apart with a comma.',
+    examples: ['It started to rain and we forgot our umbrellas and we got soaked.', 'It started to rain. Because we forgot our umbrellas, we got soaked.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'In simple terms, what is a clause?',
+        hint: 'Think of the basic building block of a thought.',
+        options: [
+          'A mini-sentence containing someone doing something.',
+          'A difficult vocabulary word.',
+          'A punctuation mark like a question mark.'
+        ],
+        correct: 0,
+        explain: 'A clause is a clear thought block with a subject and an action.'
+      },
+      {
+        type: 'mcq',
+        title: 'Which sentence fixes the endless "and" run-on problem?',
+        hint: 'Look for smooth grouping of actions.',
+        options: [
+          'I went to the store and I bought fruit and then I walked home and ate.',
+          'I went to the store, bought some fruit, and walked home.',
+          'And I went and bought fruit and walked.'
+        ],
+        correct: 1,
+        explain: 'Option 2 groups the actions cleanly without repeating "and" endlessly.'
+      },
+      {
+        type: 'mcq',
+        title: 'When should you use a period in your writing?',
+        hint: 'Think about finishing one complete thought before starting another.',
+        options: [
+          'Whenever you finish a complete thought and want to give the reader a pause.',
+          'In the middle of every single sentence.',
+          'Only at the very end of an entire page.'
+        ],
+        correct: 0,
+        explain: 'Periods signal that a complete thought is finished.'
+      },
+      {
+        type: 'write',
+        title: 'Break this run-on sentence into two separate sentences using a period:',
+        hint: 'Place a period where the first natural thought ends.',
+        example: 'The sun was shining brightly and the birds were singing in the trees.',
+        validate: a => a.trim().split(/[.!?]/).length >= 2,
+        explain: 'Splitting long thoughts gives your reader room to breathe and understand.'
+      }
+    ]
+  },
+  {
+    id: 'step-4', level: 4, skill: 'Vocabulary', icon: '💡', title: 'Level 4: Using Strong Verbs',
+    desc: 'Replace lazy phrases with exact, vivid action words.',
+    teach: 'A verb is an action word. Instead of saying "got rid of", use "eliminate". Instead of "look into", use "investigate". Strong verbs paint a crystal-clear picture in your reader\'s mind.',
+    examples: ['We need to look into this problem.', 'We need to investigate this problem.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'Which verb is stronger and more precise than "make better"?',
+        hint: 'Choose the single professional word.',
+        options: ['Improve', 'Fix up', 'Make good'],
+        correct: 0,
+        explain: '"Improve" is a sharp, exact verb that replaces clumsy phrasing.'
+      },
+      {
+        type: 'mcq',
+        title: 'Which option replaces "give assistance" with a single strong verb?',
+        hint: 'Think of what people say when they help someone.',
+        options: ['Help', 'Provide hand', 'Make aid'],
+        correct: 0,
+        explain: '"Help" is clean, direct, and avoids wordy noun phrasing.'
+      },
+      {
+        type: 'write',
+        title: 'Replace "figure out" with a stronger single word:',
+        hint: 'Try words like "solve", "discover", or "determine".',
+        example: 'We must figure out the answer.',
+        validate: a => /(solve|discover|determine|find|calculate)/i.test(a),
+        explain: 'Strong verbs remove clutter and make sentences instantly punchy.'
+      }
+    ]
+  },
+  {
+    id: 'step-5', level: 5, skill: 'Structure', icon: '🧱', title: 'Level 5: Building Paragraphs',
+    desc: 'Connect sentences smoothly into a well-organized paragraph.',
+    teach: 'A great paragraph works like a friendly conversation: sentence 1 introduces the main point, sentences 2 and 3 give clear examples, and the final sentence wraps it up nicely.',
+    examples: ['Random facts thrown together.', 'Main idea + supporting example + concluding thought.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'What should the very first sentence of a paragraph do?',
+        hint: 'Think about introducing the main topic to the reader.',
+        options: [
+          'State the main idea or point of the paragraph.',
+          'List random unrelated details.',
+          'End the story abruptly.'
+        ],
+        correct: 0,
+        explain: 'The first sentence acts as a welcoming roadmap for everything that follows.'
+      },
+      {
+        type: 'mcq',
+        title: 'What is the purpose of the middle sentences in a paragraph?',
+        hint: 'Think about proof or explanation.',
+        options: [
+          'To provide examples and details that support your main idea.',
+          'To talk about something completely different.',
+          'To repeat the exact same sentence four times.'
+        ],
+        correct: 0,
+        explain: 'Middle sentences back up your opening claim with clear details.'
+      }
+    ]
+  }
+];
+
+// GUIDED WRITING TASKS
+const LAB_TASKS = [
+  {id:'lt1',title:'3-Sentence Introduction',prompt:'Write 3 simple sentences introducing who you are and what you love to write about.',minWords:20},
+  {id:'lt2',title:'Eliminate Filler Words',prompt:'Rewrite: "Basically, I really feel like everyone should read more books because it is good." Make it clean and direct.',minWords:15},
+  {id:'lt3',title:'Simple Thesis Statement',prompt:'Write one clear sentence stating your main view on whether social media is helpful or harmful.',minWords:12},
+  {id:'lt4',title:'Paragraph Opener',prompt:'Write a strong opening sentence for a short story or essay about a rainy morning.',minWords:12},
+  {id:'lt5',title:'Clear Conclusion',prompt:'Write one summarizing sentence wrapping up why daily writing practice helps you grow.',minWords:15}
+];
+
+function setAuthMode(m) {
+  authMode = m;
+  document.getElementById('tabLogin').classList.toggle('active', m==='login');
+  document.getElementById('tabSignup').classList.toggle('active', m==='signup');
+  document.getElementById('authButton').textContent = m==='login' ? 'SIGN IN →' : 'CREATE ACCOUNT →';
+}
+
+async function handleAuth() {
+  const u = document.getElementById('authEmail').value.trim().toLowerCase();
+  const p = document.getElementById('authPassword').value.trim();
+  const btn = document.getElementById('authButton');
+  if(!u || !p){ toast('Enter username and password'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'CONNECTING TO SUPABASE…';
+
+  try {
+    if (authMode === 'signup') {
+      const checkRes = await fetch(`${SUPA_URL}/rest/v1/accounts?username=eq.${encodeURIComponent(u)}&select=username`, { headers: HEADERS });
+      const existing = await checkRes.json();
+      if(Array.isArray(existing) && existing.length > 0){
+        toast('Username already exists. Please Sign In.');
+        btn.disabled = false;
+        btn.textContent = 'CREATE ACCOUNT →';
+        return;
+      }
+
+      const newRecord = {
+        username: u, password: p, xp: 0, streak: 1, total_seconds: 0, unlocked_level: 1, completed_lessons: [], lab_tasks_done: [], practice_dates: [new Date().toISOString().slice(0,10)]
+      };
+
+      const insertRes = await fetch(`${SUPA_URL}/rest/v1/accounts`, {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify(newRecord)
+      });
+
+      if(!insertRes.ok){
+        const err = await insertRes.text();
+        throw new Error(err);
+      }
+
+      state = newRecord;
+    } else {
+      const fetchRes = await fetch(`${SUPA_URL}/rest/v1/accounts?username=eq.${encodeURIComponent(u)}&select=*`, { headers: HEADERS });
+      const rows = await fetchRes.json();
+      
+      if(!Array.isArray(rows) || rows.length === 0){
+        toast('Account not found. Choose Create Account first.');
+        btn.disabled = false;
+        btn.textContent = 'SIGN IN →';
+        return;
+      }
+
+      if(rows[0].password !== p){
+        toast('Incorrect passphrase.');
+        btn.disabled = false;
+        btn.textContent = 'SIGN IN →';
+        return;
+      }
+
+      state = { ...DEFAULT_STATE, ...rows[0] };
+    }
+
+    localStorage.setItem('qalam_user_cache', JSON.stringify(state));
+    enterApp();
+    soundClick();
+    toast(`Connected as ${state.username}!`);
+  } catch (err) {
+    alert(`Supabase Connection Error:\n${err.message}`);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = authMode === 'login' ? 'SIGN IN →' : 'CREATE ACCOUNT →';
+  }
+}
+
+async function syncProgressToCloud() {
+  if(!state.username) return;
+  try {
+    await fetch(`${SUPA_URL}/rest/v1/accounts?username=eq.${encodeURIComponent(state.username)}`, {
+      method: 'PATCH',
+      headers: HEADERS,
+      body: JSON.stringify({
+        xp: state.xp,
+        streak: state.streak,
+        total_seconds: state.total_seconds,
+        unlocked_level: state.unlocked_level,
+        completed_lessons: state.completed_lessons,
+        lab_tasks_done: state.lab_tasks_done,
+        practice_dates: state.practice_dates
+      })
+    });
+  } catch(e) {
+    console.warn("Cloud sync network error:", e);
+  }
+}
+
+function enterApp() {
+  document.getElementById('authScreen').classList.add('hidden');
+  document.getElementById('appScreen').classList.remove('hidden');
+  navigate('home');
+  renderHome();
+}
+
+function logout() {
+  localStorage.removeItem('qalam_user_cache');
+  state = DEFAULT_STATE;
+  document.getElementById('appScreen').classList.add('hidden');
+  document.getElementById('authScreen').classList.remove('hidden');
+}
+
+function navigate(page) {
+  ['home','learn','lab','progress'].forEach(p => document.getElementById(p+'Page').classList.toggle('hidden', p!==page));
+  ['navHome','navLearn','navLab','navProgress'].forEach(id => document.getElementById(id).classList.remove('active'));
+  ['mHome','mLearn','mLab','mProgress'].forEach(id => document.getElementById(id).classList.remove('active'));
+  
+  const m = {home:'navHome', learn:'navLearn', lab:'navLab', progress:'navProgress'}[page];
+  const mm = {home:'mHome', learn:'mLearn', lab:'mLab', progress:'mProgress'}[page];
+  if(m) document.getElementById(m).classList.add('active');
+  if(mm) document.getElementById(mm).classList.add('active');
+  
+  if(page==='home') renderHome();
+  if(page==='learn') renderLearn();
+  if(page==='lab') renderLab();
+  if(page==='progress') renderProgress();
+  soundClick();
+}
+
+function renderHome() {
+  document.getElementById('greeting').textContent = `Welcome back, ${state.username}.`;
+  document.getElementById('streakNum').textContent = state.streak || 1;
+  document.getElementById('xpNum').textContent = `${state.xp || 0} XP`;
+
+  const comp = state.completed_lessons || [];
+  const next = LESSONS.find(l => l.level <= (state.unlocked_level||1) && !comp.includes(l.id)) || LESSONS[0];
+
+  document.getElementById('todayCard').innerHTML = `
+    <div class="skill-icon">${next.icon}</div>
+    <div>
+      <h3>${next.title}</h3>
+      <p class="muted" style="margin-top:3px">${next.desc}</p>
+      <div class="meta"><span>LEVEL ${next.level}</span><span>${next.skill.toUpperCase()}</span><span>+20 XP</span></div>
+    </div>
+    <button class="btn btn-green" onclick="startLessonById('${next.id}')">START →</button>
+  `;
+
+  document.getElementById('lessonList').innerHTML = LESSONS.map(l => {
+    const done = comp.includes(l.id);
+    const locked = l.level > (state.unlocked_level||1);
+    const statusTxt = done ? '✓ COMPLETED (Click to Practice Again)' : locked ? '🔒 LOCKED' : '▶ READY TO TRAIN';
+    return `
+      <div class="lesson-card ${done?'done':locked?'locked':''}" onclick="startLessonById('${l.id}')">
+        ${done?'<div class="done-badge">✓</div>':''}
+        <div class="lesson-icon">${locked?'🔒':l.icon}</div>
+        <div>
+          <h3 style="margin-bottom:4px">${l.title}</h3>
+          <p class="muted" style="font-size:12px">${l.desc}</p>
+          <div style="font-size:11px;font-weight:800;margin-top:8px;color:${done?'var(--green)':locked?'var(--muted)':'var(--blue)'}">${statusTxt}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderLearn() {
+  const comp = state.completed_lessons || [];
+  const container = document.getElementById('windingPath');
+  container.innerHTML = '';
+
+  LESSONS.forEach(l => {
+    const done = comp.includes(l.id);
+    const locked = l.level > (state.unlocked_level||1);
+    const wrap = document.createElement('div');
+    wrap.className = 'path-node-wrap';
+    wrap.innerHTML = `
+      <div class="path-node ${done?'node-done':!locked?'node-active':'node-locked'}" onclick="startLessonById('${l.id}')">
+        ${done?'✓':locked?'🔒':l.icon}
+      </div>
+      <div class="path-node-label">${l.title}</div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);margin-top:4px">${done?'Completed (Replay)':locked?'Locked':'Next Up'}</div>
+    `;
+    container.appendChild(wrap);
+  });
+}
+
+// ENDLESS PRACTICE MODE
+function startEndlessPractice() {
+  const randomLesson = LESSONS[Math.floor(Math.random() * LESSONS.length)];
+  startLessonById(randomLesson.id);
+  soundClick();
+  toast('Unlimited Practice Drill Started!');
+}
+
+// WRITING LAB
+function switchLabTab(tab) {
+  document.getElementById('labTabTasks').classList.toggle('active', tab==='tasks');
+  document.getElementById('labTabAnalyse').classList.toggle('active', tab==='analyse');
+  document.getElementById('labTasks').classList.toggle('hidden', tab!=='tasks');
+  document.getElementById('labAnalyse').classList.toggle('hidden', tab!=='analyse');
+  soundClick();
+}
+
+function renderLab() {
+  const done = state.lab_tasks_done || [];
+  document.getElementById('labTaskList').innerHTML = LAB_TASKS.map((t, i) => {
+    const isDone = done.includes(t.id);
+    const isActive = activeLabTask === t.id;
+    return `
+      <div class="lab-task ${isDone?'done':''} ${isActive?'active-task':''}" onclick="toggleLabTask('${t.id}')">
+        <div class="lab-task-header">
+          <div class="lab-task-num">${isDone?'✓':i+1}</div>
+          <div style="flex:1">
+            <div class="lab-task-title">${t.title}</div>
+            <div class="lab-task-meta">Task ${i+1} · Target: ${t.minWords}+ words</div>
+          </div>
+        </div>
+        ${isActive?`
+        <div class="lab-task-body" onclick="event.stopPropagation()">
+          <div class="lab-task-prompt">${t.prompt}</div>
+          <textarea id="lt_txt_${t.id}" placeholder="Compose your response here..."></textarea>
+          <div style="margin-top:10px;text-align:right">
+            <button class="btn btn-green" onclick="submitLabTask('${t.id}')">Submit & Re-train →</button>
+          </div>
+        </div>`:''}
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleLabTask(id) {
+  activeLabTask = activeLabTask === id ? null : id;
+  soundClick();
+  renderLab();
+}
+
+async function submitLabTask(id) {
+  const el = document.getElementById('lt_txt_'+id);
+  const task = LAB_TASKS.find(t => t.id === id);
+  if(!el || el.value.trim().split(/\s+/).filter(Boolean).length < task.minWords){
+    soundWrong();
+    toast(`Please write at least ${task.minWords} words first.`);
+    return;
+  }
+
+  if(!state.lab_tasks_done) state.lab_tasks_done = [];
+  if(!state.lab_tasks_done.includes(id)){
+    state.lab_tasks_done.push(id);
+  }
+  state.xp += 15;
+  localStorage.setItem('qalam_user_cache', JSON.stringify(state));
+  await syncProgressToCloud();
+
+  activeLabTask = null;
+  soundCorrect();
+  toast('Task logged & synced! +15 XP');
+  renderLab();
+}
+
+function evaluateWriting() {
+  const text = document.getElementById('labText').value.trim();
+  if(!text){ soundWrong(); toast('Write or paste draft text first.'); return; }
+  const words = text.split(/\s+/).filter(Boolean);
+  const sentences = text.split(/[.!?]+/).filter(x => x.trim()).length || 1;
+  const avg = words.length / sentences;
+  const filler = (text.match(/\b(very|really|basically|in order to|due to the fact that|in my opinion|I think)\b/gi)||[]).length;
+  const clarity = Math.max(50, Math.min(98, 90 - filler*6));
+  const concision = Math.max(45, Math.min(98, 88 - (avg > 26 ? 12 : 0)));
+  const vocab = Math.max(50, Math.min(96, 80 + (words.length > 50 ? 8 : 0)));
+  const style = Math.round((clarity + concision + vocab) / 3);
+
+  document.getElementById('scoreGrid').innerHTML = `
+    <div class="score-box"><strong>${clarity}</strong><span>CLARITY</span></div>
+    <div class="score-box"><strong>${concision}</strong><span>CONCISION</span></div>
+    <div class="score-box"><strong>${vocab}</strong><span>VOCAB</span></div>
+    <div class="score-box"><strong>${style}</strong><span>STYLE</span></div>
+  `;
+
+  document.getElementById('feedbackPoints').innerHTML = `
+    <div>✦ Sentence length averages ${Math.round(avg)} words per sentence. Ideal is around 15–20 words.</div>
+    <div>✦ Detected ${filler} filler words. Removing them makes your writing punchier.</div>
+  `;
+  document.getElementById('labResults').classList.remove('hidden');
+  soundCorrect();
+}
+
+function clearLab() {
+  document.getElementById('labText').value = '';
+  document.getElementById('labResults').classList.add('hidden');
+  soundClick();
+}
+
+function renderProgress() {
+  document.getElementById('repXP').textContent = state.xp || 0;
+  document.getElementById('repSessions').textContent = (state.completed_lessons || []).length;
+  document.getElementById('repTasks').textContent = (state.lab_tasks_done || []).length;
+  document.getElementById('repStreak').textContent = state.streak || 1;
+
+  const now = new Date(), days = [];
+  for(let i=6; i>=0; i--){
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    days.push(d);
+  }
+  const dates = new Set(state.practice_dates || []);
+  document.getElementById('daysGrid').innerHTML = days.map((d, i) => {
+    const key = d.toISOString().slice(0,10);
+    return `<div class="day ${dates.has(key)?'done':''} ${i===6?'today':''}"><span>${d.toLocaleDateString(undefined,{weekday:'short'})}</span><i></i></div>`;
+  }).join('');
+
+  document.getElementById('userAccountDetails').textContent = 
+    `Connected Account: ${state.username} | Cloud XP: ${state.xp} | Level: ${state.unlocked_level}`;
+}
+
+// LESSON ENGINE
+function startLessonById(id) {
+  const l = LESSONS.find(x => x.id === id);
+  if(!l) return;
+  currentLesson = l; stepIndex = 0; correctCount = 0; selected = null; answered = false; elapsed = 0;
+  
+  document.body.classList.add('in-lesson');
+  document.getElementById('appScreen').classList.add('hidden');
+  document.getElementById('lessonScreen').classList.remove('hidden');
+
+  clearInterval(timer);
+  timer = setInterval(() => {
+    elapsed++;
+    const m = String(Math.floor(elapsed/60)).padStart(2,'0');
+    const s = String(elapsed%60).padStart(2,'0');
+    document.getElementById('lessonTimer').textContent = `${m}:${s}`;
+  }, 1000);
+
+  soundClick();
+  renderStep();
+}
+
+function renderStep() {
+  answered = false; selected = null;
+  const l = currentLesson, q = l.steps[stepIndex];
+  document.getElementById('lessonTitle').textContent = l.title;
+  document.getElementById('lessonBar').style.width = `${(stepIndex/l.steps.length)*100}%`;
+  document.getElementById('teachBox').innerHTML = `
+    <div class="eyebrow">Lesson Rule</div>
+    <p style="font-size:15px;margin-top:6px;line-height:1.6">${l.teach}</p>
+    <div class="weak-ex"><strong>Instead of:</strong> ${l.examples[0]}</div>
+    <div class="strong-ex"><strong>Try this:</strong> ${l.examples[1]}</div>
+  `;
+  document.getElementById('questionTitle').textContent = q.title;
+  document.getElementById('questionHint').textContent = q.hint || '';
+  
+  const area = document.getElementById('questionArea');
+  if(q.type === 'mcq'){
+    area.innerHTML = q.options.map((opt, i) => `
+      <button class="option" onclick="selectOpt(${i})">${opt}</button>
+    `).join('');
+  } else {
+    area.innerHTML = `
+      <div class="field"><textarea id="lessonInput" placeholder="Type your answer here..." style="min-height:130px"></textarea></div>
+      <div class="muted" style="font-size:13px"><strong>Example answer:</strong> ${q.example}</div>
+    `;
+    document.getElementById('lessonInput').addEventListener('input', () => {
+      document.getElementById('lessonAction').disabled = document.getElementById('lessonInput').value.trim().split(/\s+/).filter(Boolean).length < 2;
+    });
+  }
+
+  document.getElementById('lessonFeedback').textContent = "Select an answer or type your response to proceed.";
+  const btn = document.getElementById('lessonAction');
+  btn.textContent = "CHECK";
+  btn.disabled = q.type === 'mcq';
+}
+
+function selectOpt(i) {
+  if(answered) return;
+  selected = i;
+  soundClick();
+  document.querySelectorAll('.option').forEach((b, idx) => b.classList.toggle('selected', idx === i));
+  document.getElementById('lessonAction').disabled = false;
+}
+
+function evaluateStep() {
+  if(answered) {
+    stepIndex++;
+    if(stepIndex >= currentLesson.steps.length) finishLesson();
+    else renderStep();
+    return;
+  }
+  const q = currentLesson.steps[stepIndex];
+  let pass = false;
+  if(q.type === 'mcq'){
+    pass = selected === q.correct;
+    document.querySelectorAll('.option').forEach((el, i) => {
+      if(i === q.correct) el.classList.add('correct');
+      if(i === selected && !pass) el.classList.add('wrong');
+    });
+  } else {
+    pass = q.validate(document.getElementById('lessonInput').value);
+  }
+
+  if(pass) {
+    correctCount++;
+    soundCorrect();
+  } else {
+    soundWrong();
+  }
+  answered = true;
+
+  const btn = document.getElementById('lessonAction');
+  btn.textContent = stepIndex === currentLesson.steps.length-1 ? "FINISH LESSON →" : "CONTINUE →";
+  document.getElementById('lessonFeedback').innerHTML = pass ? 
+    `<span style="color:var(--green)">✓ Correct:</span> ${q.explain}` : 
+    `<span style="color:var(--red)">Not quite right:</span> ${q.explain}`;
+}
+
+async function finishLesson() {
+  clearInterval(timer);
+  document.body.classList.remove('in-lesson');
+  
+  state.xp = (state.xp || 0) + 20;
+  state.total_seconds = (state.total_seconds || 0) + elapsed;
+  if(!state.completed_lessons) state.completed_lessons = [];
+  if(!state.completed_lessons.includes(currentLesson.id)){
+    state.completed_lessons.push(currentLesson.id);
+  }
+  if(state.unlocked_level <= currentLesson.level && currentLesson.level < LESSONS.length){
+    state.unlocked_level = currentLesson.level + 1;
+  }
+
+  const today = new Date().toISOString().slice(0,10);
+  if(!state.practice_dates) state.practice_dates = [];
+  if(!state.practice_dates.includes(today)){
+    state.practice_dates.push(today);
+  }
+
+  localStorage.setItem('qalam_user_cache', JSON.stringify(state));
+  await syncProgressToCloud();
+
+  soundComplete();
+  document.getElementById('resultXP').textContent = "+20 XP";
+  document.getElementById('lessonScreen').classList.add('hidden');
+  document.getElementById('resultScreen').classList.remove('hidden');
+}
+
+function leaveLesson() {
+  clearInterval(timer);
+  document.body.classList.remove('in-lesson');
+  document.getElementById('lessonScreen').classList.add('hidden');
+  document.getElementById('appScreen').classList.remove('hidden');
+  navigate('home');
+  soundClick();
+}
+
+function backFromResult() {
+  document.getElementById('resultScreen').classList.add('hidden');
+  document.getElementById('appScreen').classList.remove('hidden');
+  navigate('home');
+  soundClick();
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.remove('hidden');
+  setTimeout(() => t.classList.add('hidden'), 2800);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const cached = localStorage.getItem('qalam_user_cache');
+  if(cached){
+    try {
+      state = JSON.parse(cached);
+      enterApp();
+    } catch(e) {
+      document.getElementById('authScreen').classList.remove('hidden');
+    }
+  } else {
+    document.getElementById('authScreen').classList.remove('hidden');
+  }
+});
+</script>
+</body>
+</html>
