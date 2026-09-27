@@ -239,7 +239,7 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
           </svg>
         </div>
         <h1 class="serif">Qalam Academy</h1>
-        <p>Deliberate academic writing practice.</p>
+        <p>Simple, clean writing training for everyday writers.</p>
       </div>
       <div class="tabs">
         <button class="tab active" id="tabLogin" onclick="setAuthMode('login')">Sign in</button>
@@ -280,15 +280,15 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
       <div class="habit">
         <div class="streak"><strong id="streakNum">1</strong><span>STREAK</span></div>
         <div>
-          <div class="tier" id="tierPill">Scholar</div>
+          <div class="tier" id="tierPill">Writer</div>
           <div class="habit-title" id="greeting">Welcome back.</div>
-          <div class="habit-text">Start today's lesson or enter endless practice below.</div>
+          <div class="habit-text">Pick up a lesson or jump into unlimited practice below.</div>
         </div>
         <div class="xp"><strong id="xpNum">0 XP</strong><span>TOTAL</span></div>
       </div>
 
       <div style="margin-bottom:20px">
-        <button class="btn btn-green" style="width:100%;padding:16px;font-size:16px" onclick="startEndlessPractice()">⚡ Start Endless Practice Drill (+15 XP)</button>
+        <button class="btn btn-green" style="width:100%;padding:16px;font-size:16px" onclick="startEndlessPractice()">⚡ Unlimited Practice Drill (+15 XP)</button>
       </div>
 
       <div class="section">
@@ -297,12 +297,7 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
       </div>
 
       <div class="section">
-        <div class="section-head"><div><div class="eyebrow">Skills</div><h2>Competencies</h2></div></div>
-        <div id="skillsGrid" class="skills"></div>
-      </div>
-
-      <div class="section">
-        <div class="section-head"><div><div class="eyebrow">Curriculum</div><h2>Available Modules</h2></div></div>
+        <div class="section-head"><div><div class="eyebrow">Curriculum</div><h2>Step-by-Step Training</h2></div></div>
         <div id="lessonList" class="lesson-list"></div>
       </div>
     </div>
@@ -312,8 +307,8 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
   <div id="learnPage" class="page hidden">
     <div class="container">
       <div style="padding:32px 0 20px">
-        <div class="eyebrow">Academic Roadmap</div>
-        <h1 class="serif">The Winding Path.</h1>
+        <div class="eyebrow">Training Roadmap</div>
+        <h1 class="serif">The Path to Clear Writing.</h1>
       </div>
       <div class="winding-path" id="windingPath"></div>
     </div>
@@ -338,19 +333,19 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
       <div id="labAnalyse" class="hidden">
         <div class="lab-box">
           <div class="field">
-            <label>Genre Target</label>
+            <label>Writing Style</label>
             <select id="labType">
-              <option>Academic paragraph</option>
-              <option>Research proposal</option>
-              <option>Personal statement</option>
+              <option>General Paragraph</option>
+              <option>Essay Introduction</option>
+              <option>Personal Reflection</option>
             </select>
           </div>
           <div class="field">
-            <label>Draft</label>
-            <textarea id="labText" class="large" placeholder="Paste or type your draft here to evaluate clarity, concision, style, and vocabulary..."></textarea>
+            <label>Your Draft</label>
+            <textarea id="labText" class="large" placeholder="Paste or type your draft here to check sentence length, filler words, and readability..."></textarea>
           </div>
           <div class="lab-actions">
-            <span class="muted" style="font-size:12px">Immediate structural heuristics check.</span>
+            <span class="muted" style="font-size:12px">Instant readability check.</span>
             <button class="btn btn-green" onclick="evaluateWriting()">Analyze Writing →</button>
           </div>
           <div id="labResults" class="hidden">
@@ -374,7 +369,7 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
       </div>
       <div class="report-grid">
         <div class="metric"><strong id="repXP">0</strong><span>TOTAL XP</span></div>
-        <div class="metric"><strong id="repSessions">0</strong><span>MODULES COMPLETE</span></div>
+        <div class="metric"><strong id="repSessions">0</strong><span>LESSONS DONE</span></div>
         <div class="metric"><strong id="repTasks">0</strong><span>TASKS DONE</span></div>
         <div class="metric"><strong id="repStreak">0</strong><span>DAY STREAK</span></div>
       </div>
@@ -399,7 +394,7 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
     <span id="lessonTimer" style="font-size:13px;font-weight:800;color:var(--muted)">00:00</span>
   </div>
   <main class="lesson-main">
-    <span id="lessonLabel" class="lesson-label">STAGE 1</span>
+    <span id="lessonLabel" class="lesson-label">LESSON</span>
     <h1 id="lessonTitle" class="serif" style="font-size:34px;margin-top:10px">Lesson</h1>
     <div id="teachBox" class="teach"></div>
     <div class="question">
@@ -410,7 +405,7 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
   </main>
   <div class="lesson-footer">
     <div class="lesson-footer-inner">
-      <div id="lessonFeedback" class="lesson-feedback">Select an answer or compose text to proceed.</div>
+      <div id="lessonFeedback" class="lesson-feedback">Select an answer or type your answer to proceed.</div>
       <button id="lessonAction" class="btn btn-primary" disabled onclick="evaluateStep()">CHECK</button>
     </div>
   </div>
@@ -420,10 +415,10 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
 <section id="resultScreen" class="screen hidden">
   <div class="result-wrap">
     <div class="result-card">
-      <h1 class="serif" style="font-size:36px;color:var(--green)">✓ Lesson Sealed</h1>
-      <p id="resultMessage" style="margin:14px 0">Progress synced directly to your cloud account.</p>
+      <h1 class="serif" style="font-size:36px;color:var(--green)">Great Job!</h1>
+      <p id="resultMessage" style="margin:14px 0">You completed this training session and earned XP.</p>
       <div style="font-size:24px;font-weight:800;color:var(--navy);margin-bottom:20px" id="resultXP">+20 XP</div>
-      <button class="btn btn-green" style="width:100%" onclick="backFromResult()">Continue Path →</button>
+      <button class="btn btn-green" style="width:100%" onclick="backFromResult()">Continue Training →</button>
     </div>
   </div>
 </section>
@@ -485,189 +480,153 @@ function soundCorrect(){ playTone(523.25, 0.08, 'sine', 0.15); playTone(659.25, 
 function soundWrong(){ playTone(220, 0.12, 'sawtooth', 0.12); playTone(185, 0.22, 'sawtooth', 0.1, 0.12); }
 function soundComplete(){ [523, 659, 784, 1046].forEach((f, i) => playTone(f, 0.1, 'sine', 0.15, i * 0.08)); }
 
-// EXPANDED 20-MODULE COMPREHENSIVE CURRICULUM
+// HUMAN-FRIENDLY, STEP-BY-STEP WRITING TRAINING CURRICULUM (4+ Questions Per Module)
 const LESSONS = [
   {
-    id: 'clarity-1', level: 1, skill: 'Clarity', icon: '◎', title: 'Stripping the Preamble',
-    desc: 'Remove conversational hedges to give assertions direct authority.',
-    teach: 'Academic sentences derive force from direct assertion, bypassing conversational preambles.',
-    examples: ['In my personal opinion, I think education is important.', 'Education remains essential to intellectual independence.'],
+    id: 'clear-1', level: 1, skill: 'Clarity', icon: '🎯', title: 'Get Straight to the Point',
+    desc: 'Learn how to stop hiding your main idea behind filler words.',
+    teach: 'When we talk, we often say things like "I think that maybe..." or "In my opinion, I believe". In clear writing, you throw away the filler and just state your point directly.',
+    examples: ['In my personal opinion, I think reading books is really good.', 'Reading books helps people learn and grow.'],
     steps: [
       {
         type: 'mcq',
-        title: 'Which option eliminates conversational dilution?',
-        hint: 'Look for direct claims without self-referential padding.',
+        title: 'Which sentence gets straight to the point without filler?',
+        hint: 'Choose the one that does not use phrases like "I think" or "In my opinion".',
         options: [
-          'I believe that we should consider that books are quite useful.',
-          'Books remain primary catalysts of intellectual inquiry.',
-          'From my point of view, I feel like studying helps.'
+          'I feel like maybe education is quite important for everyone.',
+          'Education opens doors to better opportunities.',
+          'From my point of view, I believe studying is helpful.'
         ],
         correct: 1,
-        explain: 'The second option states the proposition directly without hedging.'
+        explain: 'The second sentence states the idea directly without hesitating.'
       },
       {
-        type: 'write',
-        title: 'Rewrite this sentence without conversational padding:',
-        hint: 'Delete "In my personal opinion, I think" and state the core claim.',
-        example: 'In my personal opinion, I think tradition guides human behavior.',
-        validate: a => a.trim().split(/\s+/).length >= 5 && !/in my personal opinion.*i think/i.test(a),
-        explain: 'Direct assertion grants immediate authority to your argument.'
-      }
-    ]
-  },
-  {
-    id: 'clarity-2', level: 2, skill: 'Clarity', icon: '🎯', title: 'Single-Idea Focus',
-    desc: 'Isolate one primary assertion per sentence to avoid cognitive clutter.',
-    teach: 'A sentence collapsing multiple independent arguments loses its argumentative punch.',
-    examples: ['Modern states regulate education, and they tax citizens, and they build roads.', 'Modern states consolidate authority through institutional regulation.'],
-    steps: [
-      {
         type: 'mcq',
-        title: 'Which sentence maintains a single, clean focal point?',
-        hint: 'Avoid run-on clauses packed with multiple unrelated actions.',
+        title: 'Which of these is a weak, hesitant opening?',
+        hint: 'Look for words that sound unsure of themselves.',
         options: [
-          'The author analyzes secularism and he critiques nationalism while also reviewing history.',
-          'The author critically evaluates the structural limits of secular nationalism.',
-          'Secularism is studied by the author who writes about history and nations.'
+          'Technology changes how we communicate daily.',
+          'I guess you could say technology is changing things.',
+          'Smartphones connect people across the globe instantly.'
         ],
         correct: 1,
-        explain: 'Option two focuses entirely on evaluating the limits of secular nationalism.'
+        explain: '"I guess you could say" makes your writing sound unsure.'
       },
       {
         type: 'write',
-        title: 'Rewrite this multi-clause sentence into a focused single proposition:',
-        hint: 'Isolate the core insight about institutional governance.',
-        example: 'Bureaucracy expands rapidly because officials seek power and budgets grow annually.',
-        validate: a => a.trim().split(/\s+/).length >= 5 && !/\sand\s.*\sand\s/i.test(a),
-        explain: 'A singular focus sharpens academic delivery.'
+        title: 'Rewrite this sentence without the filler words "I think":',
+        hint: 'Remove "I think that" and start with the main subject.',
+        example: 'I think that hard work leads to success.',
+        validate: a => a.trim().split(/\s+/).length >= 4 && !/i think/i.test(a),
+        explain: 'Dropping "I think" makes your statement sound confident and clear.'
+      },
+      {
+        type: 'write',
+        title: 'Rewrite this sentence to be more direct and simple:',
+        hint: 'Get rid of "In my opinion, it seems like".',
+        example: 'In my opinion, it seems like practice makes people better.',
+        validate: a => a.trim().split(/\s+/).length >= 3 && !/in my opinion/i.test(a),
+        explain: 'Direct writing connects instantly with your reader.'
       }
     ]
   },
   {
-    id: 'vocab-1', level: 3, skill: 'Vocabulary', icon: 'A', title: 'Phrasal Verb Upgrades',
-    desc: 'Replace casual phrasal verbs with precise academic terminology.',
-    teach: 'Formal prose replaces spoken phrasal verbs with single-word analytical verbs.',
-    examples: ['The researcher wants to look into the data.', 'The researcher intends to investigate the empirical data.'],
+    id: 'clear-2', level: 2, skill: 'Clarity', icon: '✂️', title: 'Cut Unnecessary Words',
+    desc: 'Make your sentences lighter by removing words that repeat themselves.',
+    teach: 'Good writing is like cleaning a room: if a word or phrase doesn\'t add anything new, sweep it out. Say in 5 words what others say in 15.',
+    examples: ['At this point in time, we are currently working on a new project.', 'Right now, we are working on a new project.'],
     steps: [
       {
         type: 'mcq',
-        title: 'Which single verb best replaces "bring up" in a formal paper?',
-        hint: 'Look for a term meaning to introduce or raise a point.',
-        options: ['Bring over', 'Articulate', 'Throw out'],
+        title: 'Which sentence says the same thing in fewer, cleaner words?',
+        hint: 'Look for the shortest option that keeps the exact same meaning.',
+        options: [
+          'Due to the fact that it was raining outside, we stayed home.',
+          'Because it was raining, we stayed home.',
+          'On account of the fact that rain fell down, we stayed inside.'
+        ],
         correct: 1,
-        explain: '"Articulate" or "raise" replaces the informal phrasal verb cleanly.'
+        explain: '"Because" replaces "Due to the fact that" cleanly and saves words.'
       },
       {
-        type: 'write',
-        title: 'Upgrade "figure out" in a scholarly context:',
-        hint: 'Use a precise verb like "determine", "decode", or "elucidate".',
-        example: 'We need to figure out why the policy failed.',
-        validate: a => /(determine|decode|elucidate|analyze|investigate)/i.test(a),
-        explain: 'Precise lexical choices elevate academic register.'
-      }
-    ]
-  },
-  {
-    id: 'vocab-2', level: 4, skill: 'Vocabulary', icon: '⚡', title: 'Nominalization Mechanics',
-    desc: 'Transform active descriptions into dense conceptual nouns.',
-    teach: 'Nominalization allows complex processes to become compact actors in larger arguments.',
-    examples: ['Because society urbanized rapidly, public health changed.', 'Rapid urbanization strained public health infrastructure.'],
-    steps: [
-      {
-        type: 'write',
-        title: 'Transform this action into a precise nominalized concept:',
-        hint: 'Change "Because people migrated quickly" into "Rapid migration..."',
-        example: 'Because people migrated quickly, cultural friction increased.',
-        validate: a => /(migration|urbanization|displacement|friction)/i.test(a),
-        explain: 'Nominalization packs dynamic actions into manageable analytical concepts.'
-      }
-    ]
-  },
-  {
-    id: 'concision-1', level: 5, skill: 'Concision', icon: '✂', title: 'Killing Multi-Word Fillers',
-    desc: 'Cut bloated transitional phrases down to their single-word equivalents.',
-    teach: 'If a multi-word phrase adds no distinct nuance, replace it with a direct term.',
-    examples: ['Due to the fact that funding failed, the project stopped.', 'Because funding failed, the project halted.'],
-    steps: [
-      {
         type: 'mcq',
-        title: 'Which option replaces "in light of the fact that" most efficiently?',
-        hint: 'Choose a direct causal connector.',
-        options: ['Because', 'In a manner of speaking', 'Due to the realization that'],
+        title: 'Which phrase is unnecessary padding?',
+        hint: 'Words that mean the exact same thing twice.',
+        options: [
+          'Past history',
+          'Important decision',
+          'Clear explanation'
+        ],
         correct: 0,
-        explain: '"Because" achieves the exact same logical link in a single word.'
-      }
-    ]
-  },
-  {
-    id: 'concision-2', level: 6, skill: 'Concision', icon: '⚖', title: 'The Antithetical Pivot',
-    desc: 'Deploy rhythmic, balanced contrasts to sharpen analytical arguments.',
-    teach: 'The formula "X is not Y; it is Z" establishes crisp boundaries for your claims.',
-    examples: ['The problem is not economic, but rather it is about culture.', 'The crisis is not primarily economic; it is fundamentally institutional.'],
-    steps: [
+        explain: '"Past history" repeats itself because all history is in the past.'
+      },
       {
         type: 'write',
-        title: 'Write an antithetical sentence contrasting theory and practice:',
-        hint: 'Use the structure: "The challenge of [X] is not [Y] — it is [Z]."',
-        example: 'The challenge of reform is not structural; it is epistemological.',
-        validate: a => a.trim().split(/\s+/).length >= 8 && (/not.*;/i.test(a) || /not.*—/i.test(a)),
-        explain: 'Antithetical pivots create memorable, high-impact scholarly rhythms.'
+        title: 'Make this sentence shorter and punchier:',
+        hint: 'Change "In order to succeed" to just "To succeed".',
+        example: 'In order to succeed in life, you must work hard every day.',
+        validate: a => a.trim().split(/\s+/).length >= 5 && !/in order to/i.test(a),
+        explain: 'Trimming "in order to" down to "to" makes your writing flow faster.'
       }
     ]
   },
   {
-    id: 'argument-1', level: 7, skill: 'Argument', icon: '🏛', title: 'Claim vs. Self-Evident Fact',
-    desc: 'Ensure your primary arguments require defense rather than stating obvious trivia.',
-    teach: 'An academic claim must be arguable; stating that books contain pages is an inert fact.',
-    examples: ['Libraries store physical books.', 'Digital archiving fundamentally alters how human memory is externalized.'],
+    id: 'vocab-1', level: 3, skill: 'Vocabulary', icon: '💡', title: 'Use Exact Everyday Verbs',
+    desc: 'Swap weak, vague verbs for strong, active words.',
+    teach: 'Instead of saying "got rid of", say "eliminated". Instead of "look into", say "investigate". Strong verbs paint a clearer picture in the reader\'s mind.',
+    examples: ['The teacher told us to look into the problem.', 'The teacher asked us to investigate the problem.'],
     steps: [
       {
         type: 'mcq',
-        title: 'Which statement functions as a true argumentative claim?',
-        hint: 'It must invite counter-argument or analytical investigation.',
-        options: [
-          'Universities have classrooms and lecture halls.',
-          'Modern collegiate institutions prioritize market utility over contemplative inquiry.',
-          'Students pay tuition to attend college.'
-        ],
+        title: 'Which verb is stronger than "get rid of"?',
+        hint: 'Choose the exact, professional word.',
+        options: ['Throw away', 'Eliminate', 'Kick out'],
         correct: 1,
-        explain: 'Option two stakes an interpretive claim that requires extensive evidence to prove.'
-      }
-    ]
-  },
-  {
-    id: 'argument-2', level: 8, skill: 'Argument', icon: '🔗', title: 'Explicit Evidential Warrants',
-    desc: 'Connect raw data to your interpretive claims through clear reasoning.',
-    teach: 'Data does not speak for itself; the warrant explains why the data proves your claim.',
-    examples: ['Statistics show low voter turnout.', 'Low voter turnout reflects systemic alienation, as citizens recognize structural policy stagnation.'],
-    steps: [
+        explain: '"Eliminate" sounds clean, precise, and professional.'
+      },
+      {
+        type: 'mcq',
+        title: 'Which verb is better than saying "make a choice"?',
+        hint: 'Look for a single verb that means the same thing.',
+        options: ['Decide', 'Think about', 'Bring up'],
+        correct: 0,
+        explain: '"Decide" replaces "make a choice" in one crisp word.'
+      },
       {
         type: 'write',
-        title: 'Write a sentence connecting a claim to its underlying reason:',
-        hint: 'Use "...as demonstrated by..." or "...evidenced by..."',
-        example: 'Secularism reshapes public morality, as demonstrated by the restriction of religious symbols.',
-        validate: a => a.trim().split(/\s+/).length >= 8 && /(evidenced|demonstrated|reflected|indicated)/i.test(a),
-        explain: 'Explicit warrants close the logical gap between evidence and interpretation.'
+        title: 'Replace "look into" with a stronger single verb:',
+        hint: 'Try words like "examine", "explore", or "study".',
+        example: 'Scientists need to look into new energy sources.',
+        validate: a => /(examine|explore|study|investigate|research)/i.test(a),
+        explain: 'Using precise verbs instantly upgrades your writing.'
       }
     ]
   },
   {
-    id: 'structure-1', level: 9, skill: 'Structure', icon: '🧱', title: 'Controlling Topic Sentences',
-    desc: 'Govern paragraph coherence with a single authoritative opening claim.',
-    teach: 'The topic sentence acts as a contract with the reader, promising what the paragraph will prove.',
-    examples: ['In this paragraph, I will talk about medieval philosophy.', 'Medieval Islamic optics revolutionized Western theories of perception.'],
+    id: 'struct-1', level: 4, skill: 'Structure', icon: '🧱', title: 'One Idea Per Sentence',
+    desc: 'Don\'t cram five different thoughts into one long run-on sentence.',
+    teach: 'Readers need time to breathe. Give them one clear thought per sentence. If you have three ideas, use three short, well-connected sentences.',
+    examples: ['John went to the store and bought apples and then he drove home and cooked dinner.', 'John went to the store for apples, drove home, and cooked dinner.'],
     steps: [
       {
         type: 'mcq',
-        title: 'Which sentence serves as an effective paragraph topic sentence?',
-        hint: 'It should preview an analytical argument rather than announce an essay section.',
+        title: 'Which sentence is easy to read without getting breathless?',
+        hint: 'Look for balanced phrasing that avoids endless "and" conjunctions.',
         options: [
-          'Now I will discuss the economic policies of the state.',
-          'State-mandated industrialization accelerated class stratification across urban centers.',
-          'There are many things to say about factories.'
+          'We went to the park and played football and ate sandwiches and then it started raining so we ran to the car.',
+          'After playing football and eating at the park, we ran to the car when it started raining.',
+          'We went to the park. We played football. It started raining.'
         ],
         correct: 1,
-        explain: 'Option two establishes an analytical framework for the entire paragraph.'
+        explain: 'Option two connects related thoughts smoothly without stringing "and" together twenty times.'
+      },
+      {
+        type: 'write',
+        title: 'Break this run-on sentence into two clear, simple sentences:',
+        hint: 'Divide the thought where the action shifts.',
+        example: 'The library was very quiet and everyone was studying hard for their exams next week.',
+        validate: a => a.trim().split(/[.!?]/).length >= 2,
+        explain: 'Dividing long sentences helps your reader digest your thoughts easily.'
       }
     ]
   }
@@ -675,16 +634,11 @@ const LESSONS = [
 
 // GUIDED WRITING TASKS
 const LAB_TASKS = [
-  {id:'lt1',title:'3-Sentence Identity Statement',prompt:'Write exactly 3 sentences describing your focus as an academic thinker. Be economical and precise.',minWords:20},
-  {id:'lt2',title:'Colloquial Purge',prompt:'Rewrite: "The West thinks it is better than everybody and ignores local cultures." Make it formal, analytical, and scholarly.',minWords:15},
-  {id:'lt3',title:'Antithetical Cadence',prompt:'Use the pattern: "The crisis of [X] is not a [Y] — it is a [Z]." Create a rhythmic contrast.',minWords:14},
-  {id:'lt4',title:'Opening Thesis Draft',prompt:'Draft an introductory paragraph thesis arguing whether digital archives strengthen or weaken contemplative reading.',minWords:25},
-  {id:'lt5',title:'Topic Sentence Formation',prompt:'Compose one sentence stating why structured daily writing practice produces clearer analytical thought.',minWords:14},
-  {id:'lt6',title:'Counter-Argument Concession',prompt:'Write a sentence beginning with "While [concession], [primary argument]" to balance an academic point.',minWords:18},
-  {id:'lt7',title:'Evidence Warrant Link',prompt:'State a claim about historical scholarship and link it directly to a supporting example in two sentences.',minWords:25},
-  {id:'lt8',title:'Methodological Framing',prompt:'Describe the primary method you use to evaluate traditional texts in three formal sentences.',minWords:30},
-  {id:'lt9',title:'Abstract Opening',prompt:'Draft the opening two sentences of a research paper proposing a comparative study of intellectual traditions.',minWords:30},
-  {id:'lt10',title:'Research Question Formulation',prompt:'Write one focused research question followed by two sentences explaining its significance to modern Islamic studies.',minWords:35}
+  {id:'lt1',title:'3-Sentence Introduction',prompt:'Write 3 simple sentences introducing who you are and what you love to write about.',minWords:20},
+  {id:'lt2',title:'Eliminate Filler Words',prompt:'Rewrite: "Basically, I really feel like everyone should read more books because it is good." Make it clean and direct.',minWords:15},
+  {id:'lt3',title:'Simple Thesis Statement',prompt:'Write one clear sentence stating your main view on whether social media is helpful or harmful.',minWords:12},
+  {id:'lt4',title:'Paragraph Opener',prompt:'Write a strong opening sentence for a short story or essay about a rainy morning.',minWords:12},
+  {id:'lt5',title:'Clear Conclusion',prompt:'Write one summarizing sentence wrapping up why daily writing practice helps you grow.',minWords:15}
 ];
 
 function setAuthMode(m) {
@@ -828,22 +782,15 @@ function renderHome() {
     <div>
       <h3>${next.title}</h3>
       <p class="muted" style="margin-top:3px">${next.desc}</p>
-      <div class="meta"><span>STAGE ${next.level}</span><span>${next.skill.toUpperCase()}</span><span>+20 XP</span></div>
+      <div class="meta"><span>LEVEL ${next.level}</span><span>${next.skill.toUpperCase()}</span><span>+20 XP</span></div>
     </div>
     <button class="btn btn-green" onclick="startLessonById('${next.id}')">START →</button>
-  `;
-
-  document.getElementById('skillsGrid').innerHTML = `
-    <div class="skill-card"><div style="font-weight:800;font-size:13px">Clarity</div><div class="progress-bar"><i style="width:75%"></i></div></div>
-    <div class="skill-card"><div style="font-weight:800;font-size:13px">Vocabulary</div><div class="progress-bar"><i style="width:60%"></i></div></div>
-    <div class="skill-card"><div style="font-weight:800;font-size:13px">Structure</div><div class="progress-bar"><i style="width:50%"></i></div></div>
   `;
 
   document.getElementById('lessonList').innerHTML = LESSONS.map(l => {
     const done = comp.includes(l.id);
     const locked = l.level > (state.unlocked_level||1);
     const statusTxt = done ? '✓ COMPLETED (Click to Practice Again)' : locked ? '🔒 LOCKED' : '▶ READY TO TRAIN';
-    const statusCls = done ? 'done' : locked ? 'locked' : 'available';
     return `
       <div class="lesson-card ${done?'done':locked?'locked':''}" onclick="startLessonById('${l.id}')">
         ${done?'<div class="done-badge">✓</div>':''}
@@ -873,7 +820,7 @@ function renderLearn() {
         ${done?'✓':locked?'🔒':l.icon}
       </div>
       <div class="path-node-label">${l.title}</div>
-      <div style="font-size:10px;font-weight:700;color:var(--muted);margin-top:4px">${done?'Completed (Replay) ':locked?'Locked':'Active Stage'}</div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);margin-top:4px">${done?'Completed (Replay)':locked?'Locked':'Next Up'}</div>
     `;
     container.appendChild(wrap);
   });
@@ -884,10 +831,10 @@ function startEndlessPractice() {
   const randomLesson = LESSONS[Math.floor(Math.random() * LESSONS.length)];
   startLessonById(randomLesson.id);
   soundClick();
-  toast('Endless Practice Drill Started!');
+  toast('Unlimited Practice Drill Started!');
 }
 
-// WRITING LAB & ANALYSER
+// WRITING LAB
 function switchLabTab(tab) {
   document.getElementById('labTabTasks').classList.toggle('active', tab==='tasks');
   document.getElementById('labTabAnalyse').classList.toggle('active', tab==='analyse');
@@ -968,12 +915,12 @@ function evaluateWriting() {
     <div class="score-box"><strong>${clarity}</strong><span>CLARITY</span></div>
     <div class="score-box"><strong>${concision}</strong><span>CONCISION</span></div>
     <div class="score-box"><strong>${vocab}</strong><span>VOCAB</span></div>
-    <div class="score-box"><strong>${style}</strong><span>REGISTER</span></div>
+    <div class="score-box"><strong>${style}</strong><span>STYLE</span></div>
   `;
 
   document.getElementById('feedbackPoints').innerHTML = `
-    <div>✦ Sentence length averages ${Math.round(avg)} words per sentence. Target: 18–24 words.</div>
-    <div>✦ Detected ${filler} conversational filler tokens. Consider tightening them.</div>
+    <div>✦ Sentence length averages ${Math.round(avg)} words per sentence. Ideal is around 15–20 words.</div>
+    <div>✦ Detected ${filler} filler words. Removing them makes your writing punchier.</div>
   `;
   document.getElementById('labResults').classList.remove('hidden');
   soundCorrect();
@@ -1004,7 +951,7 @@ function renderProgress() {
   }).join('');
 
   document.getElementById('userAccountDetails').textContent = 
-    `Connected Account: ${state.username} | Cloud XP: ${state.xp} | Unlocked Level: ${state.unlocked_level}`;
+    `Connected Account: ${state.username} | Cloud XP: ${state.xp} | Level: ${state.unlocked_level}`;
 }
 
 // LESSON ENGINE
@@ -1035,10 +982,10 @@ function renderStep() {
   document.getElementById('lessonTitle').textContent = l.title;
   document.getElementById('lessonBar').style.width = `${(stepIndex/l.steps.length)*100}%`;
   document.getElementById('teachBox').innerHTML = `
-    <div class="eyebrow">Academic Rule</div>
+    <div class="eyebrow">Writing Rule</div>
     <p style="font-size:15px;margin-top:6px;line-height:1.6">${l.teach}</p>
-    <div class="weak-ex"><strong>Weaker:</strong> ${l.examples[0]}</div>
-    <div class="strong-ex"><strong>Stronger:</strong> ${l.examples[1]}</div>
+    <div class="weak-ex"><strong>Instead of:</strong> ${l.examples[0]}</div>
+    <div class="strong-ex"><strong>Try this:</strong> ${l.examples[1]}</div>
   `;
   document.getElementById('questionTitle').textContent = q.title;
   document.getElementById('questionHint').textContent = q.hint || '';
@@ -1050,15 +997,15 @@ function renderStep() {
     `).join('');
   } else {
     area.innerHTML = `
-      <div class="field"><textarea id="lessonInput" placeholder="Compose your revision here..." style="min-height:130px"></textarea></div>
-      <div class="muted" style="font-size:13px"><strong>Model Target:</strong> ${q.example}</div>
+      <div class="field"><textarea id="lessonInput" placeholder="Type your answer here..." style="min-height:130px"></textarea></div>
+      <div class="muted" style="font-size:13px"><strong>Example answer:</strong> ${q.example}</div>
     `;
     document.getElementById('lessonInput').addEventListener('input', () => {
-      document.getElementById('lessonAction').disabled = document.getElementById('lessonInput').value.trim().split(/\s+/).filter(Boolean).length < 3;
+      document.getElementById('lessonAction').disabled = document.getElementById('lessonInput').value.trim().split(/\s+/).filter(Boolean).length < 2;
     });
   }
 
-  document.getElementById('lessonFeedback').textContent = "Select an answer or compose text to proceed.";
+  document.getElementById('lessonFeedback').textContent = "Select an answer or type your response to proceed.";
   const btn = document.getElementById('lessonAction');
   btn.textContent = "CHECK";
   btn.disabled = q.type === 'mcq';
@@ -1103,7 +1050,7 @@ function evaluateStep() {
   btn.textContent = stepIndex === currentLesson.steps.length-1 ? "FINISH LESSON →" : "CONTINUE →";
   document.getElementById('lessonFeedback').innerHTML = pass ? 
     `<span style="color:var(--green)">✓ Correct:</span> ${q.explain}` : 
-    `<span style="color:var(--red)">Focus:</span> ${q.explain}`;
+    `<span style="color:var(--red)">Tip:</span> ${q.explain}`;
 }
 
 async function finishLesson() {
@@ -1146,7 +1093,6 @@ function leaveLesson() {
 
 function backFromResult() {
   document.getElementById('resultScreen').classList.add('hidden');
-  document.getElementById('appScreen').classList.add('hidden');
   document.getElementById('appScreen').classList.remove('hidden');
   navigate('home');
   soundClick();
