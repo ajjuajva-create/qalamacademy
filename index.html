@@ -137,7 +137,6 @@ const L=[
     ["Review: Choose the correct preposition:", ["Interested in research", "Interested on research"], 0, "Use 'in' with 'interested'."]
   ], xp:30},
 
-  // UNIT 2: Word Power (Lessons 7-12)
   {id:"l7", stage:2, title:"Formal vs Informal Vocabulary", skill:"Vocabulary", icon:"◆", desc:"Replace casual conversational phrases with formal, precise vocabulary in academic writing.", weak:"The study got messed up.", strong:"The study encountered significant methodological obstacles.", steps:[
     ["Which word is more formal than 'show'?", ["Demonstrate", "Tell", "Show off"], 0, "'Demonstrate' is standard academic vocabulary."],
     ["Choose the formal alternative to 'lots of':", ["Substantial quantities of", "A bunch of", "Loads of"], 0, "'Substantial quantities of' suits formal writing."],
@@ -175,7 +174,6 @@ const L=[
     ["Review: Select the formal noun:", ["Methodology", "Way of doing stuff"], 0, "'Methodology' is formal."]
   ], xp:35},
 
-  // UNIT 3: Sentence Building (Lessons 13-18)
   {id:"l13", stage:3, title:"Simple and Compound Sentences", skill:"Structure", icon:"⌘", desc:"Compound sentences join two independent clauses using coordinating conjunctions (FANBOYS) and a comma.", weak:"The theory is complex and it requires rigorous testing.", strong:"The theory is complex, and it requires rigorous testing.", steps:[
     ["What constitutes a compound sentence?", ["Two independent clauses joined by a comma and coordinator.", "One dependent clause.", "A sentence with no verbs."], 0, "Compound sentences combine equal clauses."],
     ["Which acronym helps remember coordinating conjunctions?", ["FANBOYS (For, And, Nor, But, Or, Yet, So)", "ABCDE", "GRAMMAR"], 0, "FANBOYS covers the 7 coordinators."],
@@ -213,7 +211,6 @@ const L=[
     ["Review: Eliminate wordiness from 'at this point in time':", ["Now / Currently", "Then", "Later"], 0, "'Now' is concise."]
   ], xp:40},
 
-  // UNIT 4: Paragraph Writing (Lessons 19-24)
   {id:"l19", stage:4, title:"Topic Sentences", skill:"Clarity", icon:"¶", desc:"A topic sentence states the single controlling idea of a paragraph. Every subsequent sentence must support it.", weak:"Paragraphs are fun to write and read.", strong:"Effective paragraph structure requires a controlling topic sentence followed by supporting evidence.", steps:[
     ["What is the primary function of a topic sentence?", ["To state the controlling idea of the paragraph.", "To list random facts.", "To conclude the essay."], 0, "It governs the paragraph's scope."],
     ["Which is a strong topic sentence?", ["Education fosters economic mobility.", "I like school."], 0, "It makes a specific, developable claim."],
@@ -251,7 +248,6 @@ const L=[
     ["Unit 4 Review: What are the three core structural pillars of a paragraph?", ["Topic sentence, supporting evidence, concluding synthesis.", "Title, footnote, bibliography.", "Introduction, body, conclusion."], 0, "Core paragraph architecture."]
   ], xp:45},
 
-  // UNIT 5: Academic Voice (Lessons 25-30)
   {id:"l25", stage:5, title:"Formal Register", skill:"Style", icon:"A", desc:"Maintain formal register by avoiding slang, contractions ('don't', 'it's'), and overly casual emotional language.", weak:"You shouldn't mess around with research methods.", strong:"Researchers must adhere strictly to established methodological protocols.", steps:[
     ["Why avoid contractions in formal academic writing?", ["They introduce an informal, conversational tone.", "They are illegal.", "They contain apostrophes."], 0, "Formal prose spells out auxiliary verbs."],
     ["Identify the formal alternative to 'kids':", ["Children / Juveniles", "Tots", "Bratty youth"], 0, "'Children' maintains formal tone."],
@@ -567,7 +563,7 @@ function progress(){
   let av=Math.round(S.reduce((a,k)=>a+(state.skill[k]||0),0)/6);
   document.getElementById("ma").textContent=av+"%";
   let set=new Set(state.dates),now=new Date();
-  document.getElementById("days").innerHTML=Array.from({length:7},(_,i)=>{let d=new Date(now);d.setDate(d.getDate()-6+i);let k=d.toISOString().slice(0,10);return`<div class="day ${set.has(k)?"done":""} ${i===6?"today":''}"><span>${d.toLocaleDateString(undefined,{weekday:"short"})}</span><i></i></div>`}).join("");
+  document.getElementById("days").innerHTML=Array.from({length:7},(_,i)=>{let d=new Date(now);d.setDate(d.getDate()-6+i);let k=d.toISOString().slice(0,10);return`<div class="day ${set.has(k)?"done":""} ${i===6?"today":''}"><span>${d.toLocaleDateString(undefined,{weekday:"short"})}</span><i></i></div>`;}).join("");
   document.getElementById("skillReport").innerHTML=S.map(k=>`<div style="margin:10px 0"><div class="skilltop"><span>${k}</span><span>${Math.round(state.skill[k]||0)}%</span></div><div class="bar"><i style="width:${state.skill[k]||0}%"></i></div></div>`).join("");
   document.getElementById("history").innerHTML=state.history.length?state.history.slice(0,8).map(h=>`<div><strong>${esc(h.l)}</strong><span>${h.a}% · +${h.x}</span></div>`).join(""):"<span class='muted' style='font-size:12px'>No sessions yet.</span>";
 }
