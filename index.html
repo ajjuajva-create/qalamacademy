@@ -87,7 +87,6 @@ textarea{width:100%;border:1px solid var(--bd);border-radius:14px;padding:14px;r
 <div id="modal" class="modal hidden"><div class="modalCard" id="modalCard"></div></div><div id="toast" class="toast hidden"></div><div id="xpPop" class="xpPop"></div>
 
 <script>
-// SUPABASE REST CONFIGURATION
 const SUPA_URL = 'https://kqqhtmjidxaruunahrpq.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtxcWh0bWppZHhhcnV1bmFocnBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMzUyNzQsImV4cCI6MjEwNDcxMTI3NH0.nu1GV9pbkjYmhFPnnat_KPk5WnSTmZ_ddCA6E1p_iqg';
 const HEADERS = {'Content-Type': 'application/json', 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Prefer': 'return=representation'};
@@ -104,53 +103,54 @@ const ST=[
 ["Speech & Debate","Can I write for an audience?","Speech","◉"],
 ["Portfolio","Can I combine everything?","Portfolio","◆"]];
 
+// BULLETPROOF MULTIPLE CHOICE LESSONS (Guaranteed correct indexing and zero vague validation bugs)
 const L=[
 ["f1",1,"Complete Thoughts","Grammar","✒","A sentence gives the reader a complete thought with someone doing something. Fragments leave the reader waiting.","Because the argument was unclear.","The argument was unclear because it lacked evidence.",[
-  ["Which is a complete sentence?",["Although the evidence was weak.","The evidence was weak.","Because the evidence was weak.","When the writer changed the claim."],1,"The second option stands alone as a complete thought."],
-  ["Identify the fragment",["The researcher analyzed the data.","While reviewing the historical documents.","The committee approved the budget."],1,"'While reviewing the historical documents' is missing who did the reviewing."],
-  ["What makes a complete thought?",["A subject (who) and a verb (what they do)","Just a random noun","An exclamation mark"],0,"Every complete sentence needs a clear subject and action."],
-  ["Repair the fragment",null,"Type a complete sentence about reading a book.",a=>a.trim().split(/\s+/).length>=3&&/[.!?]$/.test(a.trim()),"A complete sentence needs at least 3 words and proper ending punctuation."],
-  ["Final check: Complete sentence",["Reading books.","Reading books expands our vocabulary and understanding of the world.","Whenever reading books."],1,"Option 2 is a fully formed thought."]
+  ["Which of these is a complete sentence?", ["Although the evidence was weak.", "The evidence was weak.", "Because the evidence was weak.", "When the writer changed the claim."], 1, "The second option stands alone as a complete thought with a clear subject and action."],
+  ["Which of these is an incomplete fragment?", ["The researcher analyzed the data.", "While reviewing the historical documents.", "The committee approved the budget."], 1, "'While reviewing the historical documents' is missing who did the reviewing."],
+  ["What makes a complete thought?", ["A subject (who) and a verb (what they do)", "Just a random noun", "An exclamation mark"], 0, "Every complete sentence needs a clear subject and action."],
+  ["Which of these has both a clear subject and action?", ["Running down the street.", "The brown horse galloped across the field.", "Underneath the warm sun."], 1, "The horse (subject) galloped (action) makes a complete sentence."],
+  ["Final check: Which is a fully formed thought?", ["Reading books.", "Reading books expands our vocabulary and understanding of the world.", "Whenever reading books."], 1, "Option 2 is a fully formed thought."]
 ],25],
 
 ["f2",1,"Subject & Verb Agreement","Grammar","S","Find the true subject before choosing the verb. If the subject is singular, the verb is singular.","The list of examples are useful.","The list of examples is useful.",[
-  ["Choose the correct sentence.",["The collection of essays are useful.","The collection of essays is useful.","The collection of essays were useful.","The collection of essays be useful."],1,"Collection is singular, so the verb is 'is'."],
-  ["Find the correct agreement",["Each of the participants was interviewed.","Each of the participants were interviewed."],0,"'Each' is singular."],
-  ["Why is 'The group of students are working' incorrect?",["Group is singular, so it takes 'is working'.","There is no verb.","It is too long."],0,"The group as a single unit takes a singular verb."],
-  ["Fix the agreement",null,"Rewrite: The box of books are heavy.",a=>/box.*is/i.test(a),"The subject is 'box' (singular), so use 'is'."],
-  ["Final check: Agreement",["Neither of the arguments makes sense.","Neither of the arguments make sense."],0,"'Neither' is singular."]
+  ["Choose the correct sentence:", ["The collection of essays are useful.", "The collection of essays is useful.", "The collection of essays were useful.", "The collection of essays be useful."], 1, "Collection is singular, so the correct verb is 'is'."],
+  ["Choose the correct sentence:", ["Each of the participants was interviewed.", "Each of the participants were interviewed."], 0, "'Each' is singular, so it takes 'was'."],
+  ["Why is 'The group of students are working' incorrect?", ["Group is singular, so it takes 'is working'.", "There is no verb.", "It is too long."], 0, "The group acts as a single collective unit, taking a singular verb."],
+  ["Choose the correct agreement:", ["Neither of the arguments makes sense.", "Neither of the arguments make sense."], 0, "'Neither' is singular, so it takes 'makes'."],
+  ["Final check: Choose the correct sentence:", ["The box of books is heavy.", "The box of books are heavy."], 0, "The subject is 'box' (singular), so use 'is'."]
 ],25],
 
 ["f3",1,"Sentence Boundaries","Grammar",".","Two independent thoughts need a full stop, semicolon, or suitable conjunction. Never glue two complete sentences with just a comma.","The claim is important, it needs evidence.","The claim is important, but it needs evidence.",[
-  ["Which is punctuated correctly?",["The claim is strong, it needs evidence.","The claim is strong it needs evidence.","The claim is strong, but it needs evidence.","The claim is strong because it needs evidence."],2,"A comma plus 'but' correctly joins two independent thoughts."],
-  ["What is a comma splice?",["Glueing two complete sentences together with only a comma.","Using a period at the end of a line.","Missing a capital letter."],0,"A comma alone cannot hold two full sentences together."],
-  ["How do you fix a run-on sentence?",["Add a period, semicolon, or conjunction.","Delete all commas.","Write longer sentences."],0,"Separating or properly connecting the thoughts fixes the run-on."],
-  ["Fix the boundary",null,"Rewrite: The data is clear, we can proceed.",a=>/clear[\.;]/.test(a),"Use a period or semicolon between the two independent thoughts."],
-  ["Final check: Punctuation",["The theory is novel; however, it lacks empirical support.","The theory is novel, however it lacks empirical support."],0,"Semicolon plus conjunctive adverb correctly joins clauses."]
+  ["Which sentence is punctuated correctly?", ["The claim is strong, it needs evidence.", "The claim is strong it needs evidence.", "The claim is strong, but it needs evidence.", "The claim is strong because it needs evidence."], 2, "A comma plus 'but' correctly joins two independent thoughts."],
+  ["What is a comma splice?", ["Glueing two complete sentences together with only a comma.", "Using a period at the end of a line.", "Missing a capital letter."], 0, "A comma alone cannot hold two full sentences together."],
+  ["How do you fix a run-on sentence?", ["Add a period, semicolon, or conjunction.", "Delete all commas.", "Write longer sentences."], 0, "Separating or properly connecting the thoughts fixes the run-on."],
+  ["Choose the correctly punctuated sentence:", ["The data is clear, we can proceed.", "The data is clear. We can proceed."], 1, "Using a period separates two complete sentences properly."],
+  ["Final check: Choose the correct sentence:", ["The theory is novel; however, it lacks empirical support.", "The theory is novel, however it lacks empirical support."], 0, "A semicolon plus a conjunctive adverb correctly joins clauses."]
 ],25],
 
 ["f4",1,"Precise Nouns","Vocabulary","◆","Precise nouns reduce the work your reader must do. Avoid vague words like 'thing' or 'matter'.","The thing affected the issue.","The policy changed access to university funding.",[
-  ["Which noun phrase is most precise?",["the thing","the matter","the policy","the aspect"],2,"'Policy' gives the reader a specific, clear referent."],
-  ["Why avoid 'stuff' in formal writing?",["It is too vague and informal.","It is too long.","It has too many syllables."],0,"Precise nouns tell the reader exactly what you mean."],
-  ["Choose the precise noun:",["The organization funded the research.","The entity did something to the project."],0,"'Organization' names the actor clearly."],
-  ["Replace the vague noun",null,"Rewrite: The thing caused problems.",a=>!/\bthing\b/i.test(a)&&a.trim().split(/\s+/).length>=3,"Use a specific noun instead of 'thing'."],
-  ["Final check: Noun precision",["Students utilized campus facilities.","People used places."],0,"'Students' and 'campus facilities' are precise."]
+  ["Which noun phrase is most precise?", ["the thing", "the matter", "the policy", "the aspect"], 2, "'Policy' gives the reader a specific, clear referent."],
+  ["Why avoid vague words like 'stuff' in formal writing?", ["It is too vague and informal.", "It is too long.", "It has too many syllables."], 0, "Precise nouns tell the reader exactly what you mean."],
+  ["Choose the more precise sentence:", ["The organization funded the research.", "The entity did something to the project."], 0, "'Organization' names the actor clearly."],
+  ["Choose the precise noun:", ["We must address this critical issue.", "We must address this thing."], 0, "'Issue' is precise and clear."],
+  ["Final check: Choose the precise option:", ["Students utilized campus facilities.", "People used places."], 0, "'Students' and 'campus facilities' are precise."]
 ],25],
 
 ["f5",1,"Strong Verbs","Style","⚡","Let verbs carry the action instead of hiding it in noun-heavy phrases.","The committee made an evaluation of the proposal.","The committee evaluated the proposal.",[
-  ["Which uses the stronger verb?",["conducted an analysis of","made an assessment of","analysed","was involved in an analysis of"],2,"'Analysed' carries the action directly without clutter."],
-  ["What is a hidden verb (nominalization)?",["Turning an action verb into a heavy noun like 'make an assumption'.","Using past tense.","Skipping verbs entirely."],0,"Hidden verbs bloat sentences unnecessarily."],
-  ["Choose the direct action:",["She gave a description of the event.","She described the event."],1,"'Described' is direct and punchy."],
-  ["Strengthen the verb",null,"Rewrite: The researcher made an examination of the data.",a=>/\bexamin(ed|es)\b/i.test(a),"Change 'made an examination of' to 'examined'."],
-  ["Final check: Direct verbs",["They reached a decision quickly.","They decided quickly."],1,"'Decided' is cleaner."]
+  ["Which uses the stronger verb?", ["conducted an analysis of", "made an assessment of", "analysed", "was involved in an analysis of"], 2, "'Analysed' carries the action directly without clutter."],
+  ["What is a hidden verb (nominalization)?", ["Turning an action verb into a heavy noun like 'make an assumption'.", "Using past tense.", "Skipping verbs entirely."], 0, "Hidden verbs bloat sentences unnecessarily."],
+  ["Choose the more direct action:", ["She gave a description of the event.", "She described the event."], 1, "'Described' is direct and punchy."],
+  ["Choose the stronger verb option:", ["The researcher examined the data.", "The researcher made an examination of the data."], 0, "'Examined' is a clean, direct verb."],
+  ["Final check: Choose the direct option:", ["They reached a decision quickly.", "They decided quickly."], 1, "'Decided' is cleaner and more direct."]
 ],25],
 
 ["f6",1,"Trim the Fat","Concision","✂","Concision removes words that add no meaning; it does not mean making every sentence short.","Due to the fact that the text is long, it is important to note that it needs revision.","Because the text is long, it needs revision.",[
-  ["Which is more concise?",["It is important to note that the result was surprising.","The result was surprising.","It is interesting to observe that the result was surprising."],1,"The sentence begins directly with the meaningful claim."],
-  ["What does concision mean?",["Saying more with fewer words.","Deleting all adjectives.","Writing less than 10 words total."],0,"Concision means eliminating waste without losing meaning."],
-  ["Choose the concise option:",["At this point in time, we must act.","Now we must act."],1,"'Now' replaces 'At this point in time'."],
-  ["Cut the filler",null,"Rewrite: Due to the fact that it rained, we stayed home.",a=>/\bbecause\b/i.test(a),"Replace 'Due to the fact that' with 'Because'."],
-  ["Final check: Concision",["The experiment was a failure.","The experiment was characterized by a lack of success."],0,"Simpler is always stronger."]
+  ["Which is more concise?", ["It is important to note that the result was surprising.", "The result was surprising.", "It is interesting to observe that the result was surprising."], 1, "The sentence begins directly with the meaningful claim."],
+  ["What does concision mean?", ["Saying more with fewer words.", "Deleting all adjectives.", "Writing less than 10 words total."], 0, "Concision means eliminating waste without losing meaning."],
+  ["Choose the concise option:", ["At this point in time, we must act.", "Now we must act."], 1, "'Now' replaces 'At this point in time' cleanly."],
+  ["Choose the concise option:", ["Because it rained, we stayed home.", "Due to the fact that it rained, we stayed home."], 0, "'Because' achieves the exact same causal link in one word."],
+  ["Final check: Choose the cleaner sentence:", ["The experiment was a failure.", "The experiment was characterized by a lack of success."], 0, "Simpler is always stronger."]
 ],25]
 ].map(x=>({id:x[0],stage:x[1],title:x[2],skill:x[3],icon:x[4],teach:x[5],weak:x[6],strong:x[7],steps:x[8],xp:x[9],desc:x[5]}));
 
@@ -351,10 +351,9 @@ function renderStep(){
   step.textContent=`Step ${si+1} of ${cur.steps.length}`;
   qt.textContent=q[0];hint.textContent=q[2];
   lp.style.width=((si+1)/cur.steps.length)*100+"%";
-  feed.textContent="Select an answer or type your response to continue.";
+  feed.textContent="Select the correct answer to continue.";
   action.disabled=true;action.textContent="CHECK";action.className="btn primary";
-  qa.innerHTML=q[1]?q[1].map((x,i)=>`<button class="option" onclick="choose(${i})">${esc(x)}</button>`).join(""):`<textarea id="lessonInput" rows="7" placeholder="Write your response here..."></textarea><div class="muted" style="font-size:12px;margin-top:6px">Write a complete sentence adhering to the lesson rule.</div>`;
-  if(!q[1])lessonInput.oninput=()=>action.disabled=!q[4](lessonInput.value);
+  qa.innerHTML=q[1].map((x,i)=>`<button class="option" onclick="choose(${i})">${esc(x)}</button>`).join("");
 }
 
 function choose(i){sel=i;document.querySelectorAll(".option").forEach((x,n)=>x.classList.toggle("sel",n===i));action.disabled=false;click()}
@@ -366,9 +365,8 @@ function check(){
     else renderStep();
     return;
   }
-  let q=cur.steps[si],ok=false;
-  if(q[1]) ok=(sel===q[3]);
-  else ok=q[4](lessonInput.value);
+  let q=cur.steps[si];
+  let ok=(sel===q[2]);
 
   answered=true;
   if(ok){
@@ -376,8 +374,8 @@ function check(){
     correctSound();
     pop("+5 XP");
     state.skill[cur.skill]=Math.min(100,(state.skill[cur.skill]||0)+12);
-    feed.innerHTML=`<span style="color:var(--g)">✓ Correct:</span> ${q[4]||"Great work!"}`;
-    if(q[1]) document.querySelectorAll(".option").forEach((x,n)=>{if(n===q[3])x.classList.add("ok")});
+    feed.innerHTML=`<span style="color:var(--g)">✓ Correct:</span> ${q[3]}`;
+    document.querySelectorAll(".option").forEach((x,n)=>{if(n===q[2])x.classList.add("ok")});
     action.textContent=si===cur.steps.length-1?"FINISH LESSON →":"CONTINUE →";
     action.className="btn green";
     action.disabled=false;
@@ -385,8 +383,8 @@ function check(){
     wrong();
     state.mist[cur.skill]++;
     state.skill[cur.skill]=Math.max(0,(state.skill[cur.skill]||0)-5);
-    feed.innerHTML=`<span style="color:#a94b4b">Not quite right:</span> ${q[5]||q[4]||"Review the rule above and try again."}`;
-    if(q[1]) document.querySelectorAll(".option").forEach((x,n)=>{if(n===sel)x.classList.add("no");if(n===q[3])x.classList.add("ok")});
+    feed.innerHTML=`<span style="color:#a94b4b">Not quite right:</span> ${q[3]}`;
+    document.querySelectorAll(".option").forEach((x,n)=>{if(n===sel)x.classList.add("no");if(n===q[2])x.classList.add("ok")});
     action.textContent="TRY AGAIN";
     action.className="btn outline";
     action.disabled=false;
@@ -456,7 +454,6 @@ function toast(t){let el=document.getElementById("toast");el.textContent=t;el.cl
 
 document.head.insertAdjacentHTML("beforeend","<style>@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}</style>");
 
-// Unlock audio on any mobile or desktop tap
 window.addEventListener('pointerdown', ()=>{ getAudioContext(); }, {once: true});
 
 window.addEventListener('DOMContentLoaded', ()=>{
