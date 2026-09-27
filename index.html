@@ -76,7 +76,7 @@ textarea{width:100%;border:1px solid var(--bd);border-radius:14px;padding:14px;r
 
 <main id="lab" class="view hidden"><div class="container"><div class="title"><div class="ey">Writing Lab</div><h1>Use the skill, not just the lesson.</h1><p>Guided tasks create transfer from simple expression to real academic and professional writing.</p></div><div class="labHero"><div class="ey" style="color:#e9c477">The learning loop</div><h2>Learn → Practise → Apply → Revisit → Master</h2><p>Completion is not mastery. Skills return in new contexts.</p></div><div class="tabs"><button id="tt" class="active" onclick="labTab('tasks')">Guided tasks</button><button id="ta" onclick="labTab('analyse')">Writing analyser</button></div><div id="tasks"></div><div id="analyse" class="hidden"><div class="card"><div class="ey">Practice feedback</div><h2 style="margin:4px 0">Analyse a paragraph</h2><p class="muted" style="font-size:13px;margin-bottom:10px">A lightweight practice analyser for clarity, development, grammar, style, concision, and argument signals.</p><textarea id="atext" rows="10" placeholder="Write or paste a paragraph..."></textarea><div class="actions" style="margin-top:10px"><button class="btn green" onclick="analyse()">Analyse →</button><button class="btn soft" onclick="atext.value='';ares.classList.add('hidden')">Clear</button></div><div id="ares" class="hidden"></div></div></div></div></main>
 
-<main id="progress" class="view hidden"><div class="container"><div class="title"><div class="ey">Progress</div><h1>Consistency becomes skill.</h1><p>Completion tells you what you finished. Mastery tells you what you can reliably use.</p></div><div class="metrics"><div class="metric"><strong id="mx">0</strong><span>XP</span></div><div class="metric"><strong id="ms">0</strong><span>SESSIONS</span></div><div class="metric"><strong id="mm">0</strong><span>MINUTES</span></div><div class="metric"><strong id="ma">0%</strong><span>AVG MASTERY</span></div></div><div class="card" style="margin-top:12px"><div class="ey">Habit rhythm</div><h3>Last seven days</h3><div class="days" id="days"></div></div><div class="twocol"><div class="card"><div class="ey">Skill mastery</div><h3>Six core skills</h3><div id="skillReport"></div></div><div class="card"><div class="ey">History</div><h3>Recent practice</h3><div class="history" id="history"></div></div></div><div class="card" style="margin-top:12px"><div class="ey">28-day pattern</div><h3>Practice calendar</h3><div id="cal" style="display:grid;grid-template-columns:repeat(14,1fr);gap:5px;margin-top:10px"></div></div><div style="margin-top:16px;text-align:right"><button class="btn outline" onclick="logout()" style="color:var(--redb);border-color:#a94b4b">Sign Out / Switch Account</button></div></div></main>
+<main id="progress" class="view hidden"><div class="container"><div class="title"><div class="ey">Progress</div><h1>Consistency becomes skill.</h1><p>Completion tells you what you finished. Mastery tells you what you can reliably use.</p></div><div class="metrics"><div class="metric"><strong id="mx">0</strong><span>XP</span></div><div class="metric"><strong id="ms">0</strong><span>SESSIONS</span></div><div class="metric"><strong id="mm">0</strong><span>MINUTES</span></div><div class="metric"><strong id="ma">0%</strong><span>AVG MASTERY</span></div></div><div class="card" style="margin-top:12px"><div class="ey">Habit rhythm</div><h3>Last seven days</h3><div class="days" id="days"></div></div><div class="twocol"><div class="card"><div class="ey">Skill mastery</div><h3>Six core skills</h3><div id="skillReport"></div></div><div class="card"><div class="ey">History</div><h3>Recent practice</h3><div class="history" id="history"></div></div></div><div class="card" style="margin-top:12px"><div class="ey">28-day pattern</div><h3>Practice calendar</h3><div id="cal" style="display:grid;grid-template-columns:repeat(14,1fr);gap:5px;margin-top:10px"></div></div><div style="margin-top:16px;text-align:right"><button class="btn outline" onclick="logout()" style="color:#a94b4b;border-color:#a94b4b">Sign Out / Switch Account</button></div></div></main>
 <div class="mobile"><button id="mh" onclick="go('home')"><b>⌂</b>Home</button><button id="ml" onclick="go('learn')"><b>☷</b>Learn</button><button id="mb" onclick="go('lab')"><b>✎</b>Lab</button><button id="mp" onclick="go('progress')"><b>◔</b>Progress</button></div>
 </div>
 
@@ -104,7 +104,6 @@ const ST=[
 ["Speech & Debate","Can I write for an audience?","Speech","◉"],
 ["Portfolio","Can I combine everything?","Portfolio","◆"]];
 
-// DEEPLY EXPANDED 5-STEP TRAINING LESSONS (No air questions, rigorous plain-English learning loops)
 const L=[
 ["f1",1,"Complete Thoughts","Grammar","✒","A sentence gives the reader a complete thought with someone doing something. Fragments leave the reader waiting.","Because the argument was unclear.","The argument was unclear because it lacked evidence.",[
   ["Which is a complete sentence?",["Although the evidence was weak.","The evidence was weak.","Because the evidence was weak.","When the writer changed the claim."],1,"The second option stands alone as a complete thought."],
@@ -158,9 +157,46 @@ const L=[
 const TASKS=["Describe a place","Observe and report","Narrate a brief event","Define a concept","Summarise an argument","Write a topic sentence + support","Explain why","Example + analysis","Meaningful comparison","Cause & effect","Claim + evidence + reasoning","Find an assumption","Counterargument + response","Evaluate evidence","Critical response","Academic introduction","Developed academic paragraph","Comparison essay","Analytical essay","Argumentative essay","Research question","Source map","Paraphrase set","Synthesis paragraph","Mini literature review","Mini research paper","Professional email","Meeting summary","Executive summary","Proposal","Personal statement","One-minute speech","Three different hooks","Rebuttal","Cross-examination questions","Three-minute speech","Revision letter","Before/after revision","Integrated essay","Portfolio reflection","Final portfolio"];
 const TASK_STAGE=[1,1,1,1,1,2,2,2,2,2,4,4,4,4,4,3,3,5,5,4,6,6,6,6,6,6,7,7,7,7,7,8,8,8,8,8,9,9,9,9,9];
 
+const KEY="qalam_revised_v1";
 let state = baseUser(), cur = null, si = 0, sel = null, answered = false, correct = 0, elapsed = 0, timer = null, sound = true, authMode = 'login';
 
 function baseUser(){ return {username: '', password: '', xp:0, streak:0, done:[], tasks:[], skill:Object.fromEntries(S.map(x=>[x,0])), mist:Object.fromEntries(S.map(x=>[x,0])), history:[], dates:[]} }
+
+// AUDIO SYNTHESIZER
+let ac = null;
+function getAudioContext(){
+  if(!ac) ac = new (window.AudioContext || window.webkitAudioContext)();
+  if(ac.state === 'suspended') ac.resume();
+  return ac;
+}
+function tone(f, d=.09){
+  if(!sound) return;
+  try{
+    let c = getAudioContext(), o = c.createOscillator(), g = c.createGain();
+    o.frequency.value = f; g.gain.value = .08;
+    g.gain.exponentialRampToValueAtTime(.001, c.currentTime + d);
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(c.currentTime + d);
+  }catch(e){}
+}
+function click(){ tone(500,.04); }
+function correctSound(){ tone(523.25,.1); setTimeout(()=>tone(659.25,.1),80); setTimeout(()=>tone(783.99,.18),160); }
+function wrong(){ tone(180,.15); setTimeout(()=>tone(140,.2),100); }
+function celebrate(){
+  correctSound();
+  for(let i=0; i<20; i++){
+    let e = document.createElement("i");
+    e.style.cssText = `position:fixed;z-index:300;top:0;left:${Math.random()*100}%;width:8px;height:8px;background:${["#172b4d","#3f6b5b","#c8903a","#a94b4b"][i%4]};animation:fall 1.4s linear`;
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(), 1500);
+  }
+}
+function toggleSound(){
+  sound = !sound;
+  let btn = document.getElementById('soundBtn');
+  if(btn) btn.textContent = sound ? "♪" : "×";
+  if(sound) click();
+}
 
 // USER AUTHENTICATION & SUPABASE CLOUD SYNC
 function switchAuthTab(mode){
@@ -351,11 +387,10 @@ function check(){
     state.skill[cur.skill]=Math.max(0,(state.skill[cur.skill]||0)-5);
     feed.innerHTML=`<span style="color:#a94b4b">Not quite right:</span> ${q[5]||q[4]||"Review the rule above and try again."}`;
     if(q[1]) document.querySelectorAll(".option").forEach((x,n)=>{if(n===sel)x.classList.add("no");if(n===q[3])x.classList.add("ok")});
-    // Force user to correct and try again
     action.textContent="TRY AGAIN";
     action.className="btn outline";
     action.disabled=false;
-    answered=false; // Allow retry
+    answered=false;
   }
 }
 
@@ -419,18 +454,9 @@ function analyse(){
 function pop(t){xpPop.textContent=t;xpPop.classList.add("show");setTimeout(()=>xpPop.classList.remove("show"),900)}
 function toast(t){let el=document.getElementById("toast");el.textContent=t;el.classList.remove("hidden");clearTimeout(window.__t);window.__t=setTimeout(()=>el.classList.add("hidden"),2200)}
 
-let ac=null;
-function getAudio(){if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();return ac}
-function tone(f,d=.09){if(!sound)return;try{let c=getAudio(),o=c.createOscillator(),g=c.createGain();o.frequency.value=f;g.gain.value=.08;g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+d)}catch(e){}}
-function click(){tone(500,.04)}
-function correctSound(){tone(523.25,.1);setTimeout(()=>tone(659.25,.1),80);setTimeout(()=>tone(783.99,.18),160)}
-function wrong(){tone(180,.15);setTimeout(()=>tone(140,.2),100)}
-function celebrate(){correctSound();for(let i=0;i<20;i++){let e=document.createElement("i");e.style.cssText=`position:fixed;z-index:300;top:0;left:${Math.random()*100}%;width:8px;height:8px;background:${["#172b4d","#3f6b5b","#c8903a","#a94b4b"][i%4]};animation:fall 1.4s linear`;document.body.appendChild(e);setTimeout(()=>e.remove(),1500)}}
-function toggleSound(){sound=!sound;soundBtn.textContent=sound?"♪":"×";if(sound)click()}
-
 document.head.insertAdjacentHTML("beforeend","<style>@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}</style>");
 
-// Mobile & browser audio unlock listener
+// Unlock audio on any mobile or desktop tap
 window.addEventListener('pointerdown', ()=>{ getAudioContext(); }, {once: true});
 
 window.addEventListener('DOMContentLoaded', ()=>{
