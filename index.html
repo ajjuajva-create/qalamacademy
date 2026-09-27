@@ -43,7 +43,6 @@ textarea{width:100%;border:1px solid var(--bd);border-radius:14px;padding:14px;r
 </head>
 <body>
 
-<!-- AUTH SCREEN -->
 <div id="authScreen" class="authScreen hidden">
   <div class="authCard">
     <div style="text-align:center;margin-bottom:20px">
@@ -64,7 +63,7 @@ textarea{width:100%;border:1px solid var(--bd);border-radius:14px;padding:14px;r
 <header class="top"><div class="brand"><div class="mark">✒</div><div>Qalam Academy<small>Write better. Think clearly.</small></div></div><nav class="nav"><button id="nh" onclick="go('home')">Home</button><button id="nl" onclick="go('learn')">Curriculum</button><button id="nb" onclick="go('lab')">Writing Lab</button><button id="np" onclick="go('progress')">Progress</button></nav><button class="icon" id="soundBtn" onclick="toggleSound()">♪</button></header>
 
 <main id="home" class="view"><div class="container">
-<section class="hero"><div><div class="ey">Daily writing academy</div><h1>Become a clearer writer, one session at a time.</h1><p>Qalam follows a planned path from sentence control to paragraphs, academic writing, argumentation, research, professional writing, speech, and a final portfolio.</p><div class="actions"><button class="btn green" onclick="today()">Start today's 5 minutes →</button><button class="btn outline" onclick="go('learn')">Explore curriculum</button></div></div><div class="heroStat"><span class="ey" style="color:#fff8">CURRENT STAGE</span><strong id="stageNo">1</strong><span id="stageName">Foundations of Writing</span></div></section>
+<section class="hero"><div><div class="ey">Daily writing academy</div><h1>Become a clearer writer, one session at a time.</h1><p>Qalam follows a planned path from sentence control to paragraphs, academic writing, argumentation, research, professional writing, speech, and a final portfolio.</p><div class="actions"><button class="btn green" onclick="today()">Start today's 5 minutes →</button><button class="btn outline" onclick="go('learn')">Explore curriculum</button></div></div><div class="heroStat"><span class="ey" style="color:#fff8">CURRENT STAGE</span><strong id="stageNo">1</strong><span id="stageName">Sentence Foundations</span></div></section>
 <section class="habit"><div class="streak"><strong id="streak">0</strong><span>DAY STREAK</span></div><div><div class="ey" style="color:#e9c477">Identity habit</div><h3 id="identity">I am becoming a writer who writes clearly.</h3><p>Five minutes is small enough to repeat and meaningful enough to compound.</p></div><div class="xp"><strong id="xp">0 XP</strong><span id="rank">Beginner Writer</span></div></section>
 <section class="section"><div class="sh"><div><div class="ey">Next incomplete lesson</div><h2 id="todayTitle">Start where you are</h2></div></div><div class="today"><div class="skillIcon" id="todayIcon">✦</div><div><h3 id="todayName"></h3><p id="todayDesc" class="muted" style="font-size:13px"></p><div class="meta" id="todayMeta"></div></div><button class="btn green" onclick="today()">START →</button></div></section>
 <section class="section"><div class="sh"><div><div class="ey">Skill dashboard</div><h2>What you're building</h2></div></div><div class="skills" id="skills"></div></section>
@@ -72,11 +71,11 @@ textarea{width:100%;border:1px solid var(--bd);border-radius:14px;padding:14px;r
 <section class="section"><div class="rec"><div><div class="ey" style="color:#8b692b">Smart review</div><h3 id="review"></h3><p id="reviewText"></p></div><button class="btn soft" onclick="recommended()">Practice →</button></div></section>
 </div></main>
 
-<main id="learn" class="view hidden"><div class="container"><div class="title"><div class="ey">Curriculum</div><h1>From sentence to portfolio.</h1><p>Ten stages. Each stage ends with a real writing outcome.</p></div><div id="curriculum"></div></div></main>
+<main id="learn" class="view hidden"><div class="container"><div class="title"><div class="ey">Curriculum</div><h1>From sentence to academic voice.</h1><p>30 structured lessons across 5 units.</p></div><div id="curriculum"></div></div></main>
 
-<main id="lab" class="view hidden"><div class="container"><div class="title"><div class="ey">Writing Lab</div><h1>Use the skill, not just the lesson.</h1><p>Guided tasks create transfer from simple expression to real academic and professional writing.</p></div><div class="labHero"><div class="ey" style="color:#e9c477">The learning loop</div><h2>Learn → Practise → Apply → Revisit → Master</h2><p>Completion is not mastery. Skills return in new contexts.</p></div><div class="tabs"><button id="tt" class="active" onclick="labTab('tasks')">Guided tasks</button><button id="ta" onclick="labTab('analyse')">Writing analyser</button></div><div id="tasks"></div><div id="analyse" class="hidden"><div class="card"><div class="ey">Practice feedback</div><h2 style="margin:4px 0">Analyse a paragraph</h2><p class="muted" style="font-size:13px;margin-bottom:10px">A lightweight practice analyser for clarity, development, grammar, style, concision, and argument signals.</p><textarea id="atext" rows="10" placeholder="Write or paste a paragraph..."></textarea><div class="actions" style="margin-top:10px"><button class="btn green" onclick="analyse()">Analyse →</button><button class="btn soft" onclick="atext.value='';ares.classList.add('hidden')">Clear</button></div><div id="ares" class="hidden"></div></div></div></div></main>
+<main id="lab" class="view hidden"><div class="container"><div class="title"><div class="ey">Writing Lab</div><h1>Use the skill, not just the lesson.</h1><p>Guided tasks create transfer from simple expression to real academic writing.</p></div><div class="labHero"><div class="ey" style="color:#e9c477">The learning loop</div><h2>Learn → Practise → Apply → Revisit → Master</h2><p>Completion is not mastery. Skills return in new contexts.</p></div><div class="tabs"><button id="tt" class="active" onclick="labTab('tasks')">Guided tasks</button><button id="ta" onclick="labTab('analyse')">Writing analyser</button></div><div id="tasks"></div><div id="analyse" class="hidden"><div class="card"><div class="ey">Practice feedback</div><h2 style="margin:4px 0">Analyse a paragraph</h2><p class="muted" style="font-size:13px;margin-bottom:10px">A lightweight practice analyser for clarity, development, grammar, style, concision, and argument signals.</p><textarea id="atext" rows="10" placeholder="Write or paste a paragraph..."></textarea><div class="actions" style="margin-top:10px"><button class="btn green" onclick="analyse()">Analyse →</button><button class="btn soft" onclick="atext.value='';ares.classList.add('hidden')">Clear</button></div><div id="ares" class="hidden"></div></div></div></div></main>
 
-<main id="progress" class="view hidden"><div class="container"><div class="title"><div class="ey">Progress</div><h1>Consistency becomes skill.</h1><p>Completion tells you what you finished. Mastery tells you what you can reliably use.</p></div><div class="metrics"><div class="metric"><strong id="mx">0</strong><span>XP</span></div><div class="metric"><strong id="ms">0</strong><span>SESSIONS</span></div><div class="metric"><strong id="mm">0</strong><span>MINUTES</span></div><div class="metric"><strong id="ma">0%</strong><span>AVG MASTERY</span></div></div><div class="card" style="margin-top:12px"><div class="ey">Habit rhythm</div><h3>Last seven days</h3><div class="days" id="days"></div></div><div class="twocol"><div class="card"><div class="ey">Skill mastery</div><h3>Six core skills</h3><div id="skillReport"></div></div><div class="card"><div class="ey">History</div><h3>Recent practice</h3><div class="history" id="history"></div></div></div><div class="card" style="margin-top:12px"><div class="ey">28-day pattern</div><h3>Practice calendar</h3><div id="cal" style="display:grid;grid-template-columns:repeat(14,1fr);gap:5px;margin-top:10px"></div></div><div style="margin-top:16px;text-align:right"><button class="btn outline" onclick="logout()" style="color:#a94b4b;border-color:#a94b4b">Sign Out / Switch Account</button></div></div></main>
+<main id="progress" class="view hidden"><div class="container"><div class="title"><div class="ey">Progress</div><h1>Consistency becomes skill.</h1><p>Completion tells you what you finished. Mastery tells you what you can reliably use.</p></div><div class="metrics"><div class="metric"><strong id="mx">0</strong><span>XP</span></div><div class="metric"><strong id="ms">0</strong><span>SESSIONS</span></div><div class="metric"><strong id="mm">0</strong><span>MINUTES</span></div><div class="metric"><strong id="ma">0%</strong><span>AVG MASTERY</span></div></div><div class="card" style="margin-top:12px"><div class="ey">Habit rhythm</div><h3>Last seven days</h3><div class="days" id="days"></div></div><div class="twocol"><div class="card"><div class="ey">Skill mastery</div><h3>Core skills</h3><div id="skillReport"></div></div><div class="card"><div class="ey">History</div><h3>Recent practice</h3><div class="history" id="history"></div></div></div><div style="margin-top:16px;text-align:right"><button class="btn outline" onclick="logout()" style="color:#a94b4b;border-color:#a94b4b">Sign Out / Switch Account</button></div></div></main>
 <div class="mobile"><button id="mh" onclick="go('home')"><b>⌂</b>Home</button><button id="ml" onclick="go('learn')"><b>☷</b>Learn</button><button id="mb" onclick="go('lab')"><b>✎</b>Lab</button><button id="mp" onclick="go('progress')"><b>◔</b>Progress</button></div>
 </div>
 
@@ -86,83 +85,30 @@ textarea{width:100%;border:1px solid var(--bd);border-radius:14px;padding:14px;r
 
 <div id="modal" class="modal hidden"><div class="modalCard" id="modalCard"></div></div><div id="toast" class="toast hidden"></div><div id="xpPop" class="xpPop"></div>
 
+<!-- LOAD CURRICULUM EXTERNALLY -->
+<script src="curriculum.js"></script>
 <script>
 const SUPA_URL = 'https://kqqhtmjidxaruunahrpq.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtxcWh0bWppZHhhcnV1bmFocnBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMzUyNzQsImV4cCI6MjEwNDcxMTI3NH0.nu1GV9pbkjYmhFPnnat_KPk5WnSTmZ_ddCA6E1p_iqg';
 const HEADERS = {'Content-Type': 'application/json', 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Prefer': 'return=representation'};
 
-const S=["Clarity","Vocabulary","Grammar","Style","Concision","Argumentation"];
+const S=["Grammar","Vocabulary","Structure","Clarity","Style"];
 const ST=[
-["Foundations of Writing","Can I write correctly?","Sentence","✒"],
-["Paragraph Mastery","Can I express one idea clearly?","Paragraph","¶"],
-["Academic Writing","Can I write academically?","Essay","A"],
-["Argumentation & Critical Thinking","Can I support an idea?","Argument","⚖"],
-["Comparison & Analysis","Can I explain significance?","Analysis","⌘"],
-["Research Writing","Can I write from sources?","Research paper","⌕"],
-["Professional Writing","Can I write for real situations?","Proposal","▣"],
-["Speech & Debate","Can I write for an audience?","Speech","◉"],
-["Portfolio","Can I combine everything?","Portfolio","◆"]];
+  ["Sentence Foundations","Mastering core grammar & parts of speech","Unit 1","✒"],
+  ["Word Power","Building precise academic vocabulary","Unit 2","◆"],
+  ["Sentence Building","Constructing clear, varied clauses","Unit 3","⌘"],
+  ["Paragraph Writing","Structuring single coherent ideas","Unit 4","¶"],
+  ["Academic Voice","Writing formally with appropriate tone","Unit 5","A"]
+];
 
-// BULLETPROOF MULTIPLE CHOICE LESSONS (Guaranteed correct indexing and zero vague validation bugs)
-const L=[
-["f1",1,"Complete Thoughts","Grammar","✒","A sentence gives the reader a complete thought with someone doing something. Fragments leave the reader waiting.","Because the argument was unclear.","The argument was unclear because it lacked evidence.",[
-  ["Which of these is a complete sentence?", ["Although the evidence was weak.", "The evidence was weak.", "Because the evidence was weak.", "When the writer changed the claim."], 1, "The second option stands alone as a complete thought with a clear subject and action."],
-  ["Which of these is an incomplete fragment?", ["The researcher analyzed the data.", "While reviewing the historical documents.", "The committee approved the budget."], 1, "'While reviewing the historical documents' is missing who did the reviewing."],
-  ["What makes a complete thought?", ["A subject (who) and a verb (what they do)", "Just a random noun", "An exclamation mark"], 0, "Every complete sentence needs a clear subject and action."],
-  ["Which of these has both a clear subject and action?", ["Running down the street.", "The brown horse galloped across the field.", "Underneath the warm sun."], 1, "The horse (subject) galloped (action) makes a complete sentence."],
-  ["Final check: Which is a fully formed thought?", ["Reading books.", "Reading books expands our vocabulary and understanding of the world.", "Whenever reading books."], 1, "Option 2 is a fully formed thought."]
-],25],
-
-["f2",1,"Subject & Verb Agreement","Grammar","S","Find the true subject before choosing the verb. If the subject is singular, the verb is singular.","The list of examples are useful.","The list of examples is useful.",[
-  ["Choose the correct sentence:", ["The collection of essays are useful.", "The collection of essays is useful.", "The collection of essays were useful.", "The collection of essays be useful."], 1, "Collection is singular, so the correct verb is 'is'."],
-  ["Choose the correct sentence:", ["Each of the participants was interviewed.", "Each of the participants were interviewed."], 0, "'Each' is singular, so it takes 'was'."],
-  ["Why is 'The group of students are working' incorrect?", ["Group is singular, so it takes 'is working'.", "There is no verb.", "It is too long."], 0, "The group acts as a single collective unit, taking a singular verb."],
-  ["Choose the correct agreement:", ["Neither of the arguments makes sense.", "Neither of the arguments make sense."], 0, "'Neither' is singular, so it takes 'makes'."],
-  ["Final check: Choose the correct sentence:", ["The box of books is heavy.", "The box of books are heavy."], 0, "The subject is 'box' (singular), so use 'is'."]
-],25],
-
-["f3",1,"Sentence Boundaries","Grammar",".","Two independent thoughts need a full stop, semicolon, or suitable conjunction. Never glue two complete sentences with just a comma.","The claim is important, it needs evidence.","The claim is important, but it needs evidence.",[
-  ["Which sentence is punctuated correctly?", ["The claim is strong, it needs evidence.", "The claim is strong it needs evidence.", "The claim is strong, but it needs evidence.", "The claim is strong because it needs evidence."], 2, "A comma plus 'but' correctly joins two independent thoughts."],
-  ["What is a comma splice?", ["Glueing two complete sentences together with only a comma.", "Using a period at the end of a line.", "Missing a capital letter."], 0, "A comma alone cannot hold two full sentences together."],
-  ["How do you fix a run-on sentence?", ["Add a period, semicolon, or conjunction.", "Delete all commas.", "Write longer sentences."], 0, "Separating or properly connecting the thoughts fixes the run-on."],
-  ["Choose the correctly punctuated sentence:", ["The data is clear, we can proceed.", "The data is clear. We can proceed."], 1, "Using a period separates two complete sentences properly."],
-  ["Final check: Choose the correct sentence:", ["The theory is novel; however, it lacks empirical support.", "The theory is novel, however it lacks empirical support."], 0, "A semicolon plus a conjunctive adverb correctly joins clauses."]
-],25],
-
-["f4",1,"Precise Nouns","Vocabulary","◆","Precise nouns reduce the work your reader must do. Avoid vague words like 'thing' or 'matter'.","The thing affected the issue.","The policy changed access to university funding.",[
-  ["Which noun phrase is most precise?", ["the thing", "the matter", "the policy", "the aspect"], 2, "'Policy' gives the reader a specific, clear referent."],
-  ["Why avoid vague words like 'stuff' in formal writing?", ["It is too vague and informal.", "It is too long.", "It has too many syllables."], 0, "Precise nouns tell the reader exactly what you mean."],
-  ["Choose the more precise sentence:", ["The organization funded the research.", "The entity did something to the project."], 0, "'Organization' names the actor clearly."],
-  ["Choose the precise noun:", ["We must address this critical issue.", "We must address this thing."], 0, "'Issue' is precise and clear."],
-  ["Final check: Choose the precise option:", ["Students utilized campus facilities.", "People used places."], 0, "'Students' and 'campus facilities' are precise."]
-],25],
-
-["f5",1,"Strong Verbs","Style","⚡","Let verbs carry the action instead of hiding it in noun-heavy phrases.","The committee made an evaluation of the proposal.","The committee evaluated the proposal.",[
-  ["Which uses the stronger verb?", ["conducted an analysis of", "made an assessment of", "analysed", "was involved in an analysis of"], 2, "'Analysed' carries the action directly without clutter."],
-  ["What is a hidden verb (nominalization)?", ["Turning an action verb into a heavy noun like 'make an assumption'.", "Using past tense.", "Skipping verbs entirely."], 0, "Hidden verbs bloat sentences unnecessarily."],
-  ["Choose the more direct action:", ["She gave a description of the event.", "She described the event."], 1, "'Described' is direct and punchy."],
-  ["Choose the stronger verb option:", ["The researcher examined the data.", "The researcher made an examination of the data."], 0, "'Examined' is a clean, direct verb."],
-  ["Final check: Choose the direct option:", ["They reached a decision quickly.", "They decided quickly."], 1, "'Decided' is cleaner and more direct."]
-],25],
-
-["f6",1,"Trim the Fat","Concision","✂","Concision removes words that add no meaning; it does not mean making every sentence short.","Due to the fact that the text is long, it is important to note that it needs revision.","Because the text is long, it needs revision.",[
-  ["Which is more concise?", ["It is important to note that the result was surprising.", "The result was surprising.", "It is interesting to observe that the result was surprising."], 1, "The sentence begins directly with the meaningful claim."],
-  ["What does concision mean?", ["Saying more with fewer words.", "Deleting all adjectives.", "Writing less than 10 words total."], 0, "Concision means eliminating waste without losing meaning."],
-  ["Choose the concise option:", ["At this point in time, we must act.", "Now we must act."], 1, "'Now' replaces 'At this point in time' cleanly."],
-  ["Choose the concise option:", ["Because it rained, we stayed home.", "Due to the fact that it rained, we stayed home."], 0, "'Because' achieves the exact same causal link in one word."],
-  ["Final check: Choose the cleaner sentence:", ["The experiment was a failure.", "The experiment was characterized by a lack of success."], 0, "Simpler is always stronger."]
-],25]
-].map(x=>({id:x[0],stage:x[1],title:x[2],skill:x[3],icon:x[4],teach:x[5],weak:x[6],strong:x[7],steps:x[8],xp:x[9],desc:x[5]}));
-
-const TASKS=["Describe a place","Observe and report","Narrate a brief event","Define a concept","Summarise an argument","Write a topic sentence + support","Explain why","Example + analysis","Meaningful comparison","Cause & effect","Claim + evidence + reasoning","Find an assumption","Counterargument + response","Evaluate evidence","Critical response","Academic introduction","Developed academic paragraph","Comparison essay","Analytical essay","Argumentative essay","Research question","Source map","Paraphrase set","Synthesis paragraph","Mini literature review","Mini research paper","Professional email","Meeting summary","Executive summary","Proposal","Personal statement","One-minute speech","Three different hooks","Rebuttal","Cross-examination questions","Three-minute speech","Revision letter","Before/after revision","Integrated essay","Portfolio reflection","Final portfolio"];
-const TASK_STAGE=[1,1,1,1,1,2,2,2,2,2,4,4,4,4,4,3,3,5,5,4,6,6,6,6,6,6,7,7,7,7,7,8,8,8,8,8,9,9,9,9,9];
+const TASKS=["Write a sentence using 'a', 'an', 'the'", "Fix subject-verb agreement", "Write past tense sentence", "Use prepositions correctly", "Fix a sentence fragment", "Unit 1 review paragraph", "Use formal vs informal words", "Use academic verbs", "Replace vague nouns", "Use academic connectors", "Avoid redundancy", "Unit 2 review paragraph", "Write a compound sentence", "Write a complex sentence", "Use a relative clause", "Write a passive sentence", "Cut unnecessary words", "Unit 3 review paragraph", "Write a topic sentence", "Write supporting sentences", "Write a concluding sentence", "Write a unified paragraph", "Write a descriptive paragraph", "Write an opinion paragraph", "Eliminate informal slang", "Use hedging language", "Integrate a citation", "Paraphrase a claim", "Use Islamic scholarly terms", "Write a complete academic paragraph"];
+const TASK_STAGE=[1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,5,5,5,5,5,5];
 
 const KEY="qalam_revised_v1";
 let state = baseUser(), cur = null, si = 0, sel = null, answered = false, correct = 0, elapsed = 0, timer = null, sound = true, authMode = 'login';
 
 function baseUser(){ return {username: '', password: '', xp:0, streak:0, done:[], tasks:[], skill:Object.fromEntries(S.map(x=>[x,0])), mist:Object.fromEntries(S.map(x=>[x,0])), history:[], dates:[]} }
 
-// AUDIO SYNTHESIZER
 let ac = null;
 function getAudioContext(){
   if(!ac) ac = new (window.AudioContext || window.webkitAudioContext)();
@@ -198,7 +144,6 @@ function toggleSound(){
   if(sound) click();
 }
 
-// USER AUTHENTICATION & SUPABASE CLOUD SYNC
 function switchAuthTab(mode){
   authMode = mode;
   document.getElementById('authTabLogin').classList.toggle('active', mode==='login');
@@ -279,7 +224,7 @@ async function syncToSupabase() {
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function words(s){return s.trim()?s.trim().split(/\s+/).length:0}
 function unlocked(n){return n===1||state.done.filter(id=>L.find(x=>x.id===id)?.stage===n-1).length>=1}
-function stage(){let n=1;while(n<9&&unlocked(n+1))n++;return n}
+function stage(){let n=1;while(n<5&&unlocked(n+1))n++;return n}
 function nextLesson(){return L.find(x=>!state.done.includes(x.id)&&unlocked(x.stage))||L.find(x=>unlocked(x.stage))||L[0]}
 function rank(){return state.xp>=1500?"Independent Writer":state.xp>=800?"Advanced Writer":state.xp>=350?"Developing Writer":"Beginner Writer"}
 
@@ -309,14 +254,14 @@ function card(l){
   return`<div class="lesson ${d?"done":!u?"lock":n?"next":""} click" onclick="start('${l.id}')"><div class="li">${d?"✓":!u?"🔒":l.icon}</div><div><h3>${l.title}</h3><p>${l.desc}</p><div class="status">${d?"✓ COMPLETED (REPLAY)":!u?"🔒 LOCKED":n?"★ UP NEXT":"AVAILABLE • "+l.skill.toUpperCase()}</div></div></div>`;
 }
 
-function curriculum(){document.getElementById("curriculum").innerHTML=ST.map((s,i)=>{let ls=L.filter(x=>x.stage===i+1),d=ls.filter(x=>state.done.includes(x.id)).length;return`<section class="stage"><div class="stageHead"><div class="stageNo">${i+1}</div><div><div class="ey">${s[1]}</div><h2>${s[0]}</h2><p>${d}/${ls.length} core lessons complete · Output: <b>${s[2]}</b></p></div></div><div class="grid">${ls.map(card).join("")}</div></section>`}).join("")}
+function curriculum(){document.getElementById("curriculum").innerHTML=ST.map((s,i)=>{let ls=L.filter(x=>x.stage===i+1),d=ls.filter(x=>state.done.includes(x.id)).length;return`<section class="stage"><div class="stageHead"><div class="stageNo">${i+1}</div><div><div class="ey">${s[2]}</div><h2>${s[0]}</h2><p>${d}/${ls.length} lessons complete · ${s[1]}</p></div></div><div class="grid">${ls.map(card).join("")}</div></section>`}).join("")}
 
-function lab(){tasks.innerHTML=TASKS.map((t,i)=>{let done=state.tasks.includes(i),u=unlocked(TASK_STAGE[i]);return`<div class="task ${done?"done":""}"><div class="tn">${done?"✓":i+1}</div><div style="flex:1"><h3>${t}</h3><p>Guided writing task · Stage ${TASK_STAGE[i]}</p><span class="tag">Words required</span></div><button class="btn ${done?"outline":"green"}" style="padding:10px 14px;font-size:11px" onclick="openTask(${i})">${done?"Redo":"Start →"}</button></div>`}).join("")}
+function lab(){tasks.innerHTML=TASKS.map((t,i)=>{let done=state.tasks.includes(i),u=unlocked(TASK_STAGE[i]);return`<div class="task ${done?"done":""}"><div class="tn">${done?"✓":i+1}</div><div style="flex:1"><h3>${t}</h3><p>Guided writing task · Unit ${TASK_STAGE[i]}</p><span class="tag">Words required</span></div><button class="btn ${done?"outline":"green"}" style="padding:10px 14px;font-size:11px" onclick="openTask(${i})">${done?"Redo":"Start →"}</button></div>`}).join("")}
 function labTab(x){document.getElementById("tasks").classList.toggle("hidden",x!=="tasks");document.getElementById("analyse").classList.toggle("hidden",x!=="analyse");tt.classList.toggle("active",x==="tasks");ta.classList.toggle("active",x==="analyse")}
 
 function openTask(i){
   let min=30+Math.min(270,Math.floor(i/5)*10);
-  modalCard.innerHTML=`<div class="mh"><div><div class="ey">Stage ${TASK_STAGE[i]}</div><h2>${TASKS[i]}</h2></div><button class="icon" onclick="closeModal()">×</button></div><div class="prompt">Complete this as real writing. Aim for clarity and simplicity.</div><textarea id="taskInput" rows="11" placeholder="Write here..."></textarea><div id="wc" class="muted" style="font-size:11px;text-align:right;margin-top:6px">0 / ${min} words</div><button class="btn green" style="width:100%;margin-top:12px" onclick="submitTask(${i},${min})">Submit task →</button>`;
+  modalCard.innerHTML=`<div class="mh"><div><div class="ey">Unit ${TASK_STAGE[i]}</div><h2>${TASKS[i]}</h2></div><button class="icon" onclick="closeModal()">×</button></div><div class="prompt">Complete this as real writing. Aim for clarity and simplicity.</div><textarea id="taskInput" rows="11" placeholder="Write here..."></textarea><div id="wc" class="muted" style="font-size:11px;text-align:right;margin-top:6px">0 / ${min} words</div><button class="btn green" style="width:100%;margin-top:12px" onclick="submitTask(${i},${min})">Submit task →</button>`;
   modal.classList.remove("hidden");
   taskInput.oninput=()=>wc.textContent=words(taskInput.value)+" / "+min+" words";
   click();
@@ -345,7 +290,7 @@ function start(id){
 
 function renderStep(){
   let q=cur.steps[si];sel=null;answered=false;
-  ll.textContent=`STAGE ${cur.stage} • ${cur.skill.toUpperCase()} • LESSON`;
+  ll.textContent=`UNIT ${cur.stage} • ${cur.skill.toUpperCase()} • LESSON`;
   lt.textContent=cur.title;ld.textContent=cur.desc;
   teach.textContent=cur.teach;weak.textContent=cur.weak;strong.textContent=cur.strong;
   step.textContent=`Step ${si+1} of ${cur.steps.length}`;
@@ -435,7 +380,6 @@ function progress(){
   document.getElementById("days").innerHTML=Array.from({length:7},(_,i)=>{let d=new Date(now);d.setDate(d.getDate()-6+i);let k=d.toISOString().slice(0,10);return`<div class="day ${set.has(k)?"done":""} ${i===6?"today":''}"><span>${d.toLocaleDateString(undefined,{weekday:"short"})}</span><i></i></div>`}).join("");
   document.getElementById("skillReport").innerHTML=S.map(k=>`<div style="margin:10px 0"><div class="skilltop"><span>${k}</span><span>${Math.round(state.skill[k]||0)}%</span></div><div class="bar"><i style="width:${state.skill[k]||0}%"></i></div></div>`).join("");
   document.getElementById("history").innerHTML=state.history.length?state.history.slice(0,8).map(h=>`<div><strong>${esc(h.l)}</strong><span>${h.a}% · +${h.x}</span></div>`).join(""):"<span class='muted' style='font-size:12px'>No sessions yet.</span>";
-  document.getElementById("cal").innerHTML=Array.from({length:28},(_,i)=>{let d=new Date();d.setDate(d.getDate()-27+i),k=d.toISOString().slice(0,10),on=set.has(k);return`<i style="height:15px;border-radius:3px;background:${on?"var(--g)":"var(--p2)"};border:1px solid ${on?"#bfd3c8":"var(--bd)"}"></i>`}).join("");
 }
 
 function analyse(){
@@ -453,7 +397,6 @@ function pop(t){xpPop.textContent=t;xpPop.classList.add("show");setTimeout(()=>x
 function toast(t){let el=document.getElementById("toast");el.textContent=t;el.classList.remove("hidden");clearTimeout(window.__t);window.__t=setTimeout(()=>el.classList.add("hidden"),2200)}
 
 document.head.insertAdjacentHTML("beforeend","<style>@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}</style>");
-
 window.addEventListener('pointerdown', ()=>{ getAudioContext(); }, {once: true});
 
 window.addEventListener('DOMContentLoaded', ()=>{
