@@ -1,6 +1,5 @@
 // curriculum.js - 30 Comprehensive Lessons Across 5 Units
 const L = [
-  // --- UNIT 1: SENTENCE FOUNDATIONS ---
   ["l1", 1, "Articles — a, an, the", "Grammar", "✒", "Use 'a' before consonant sounds, 'an' before vowel sounds, and 'the' for specific, known nouns.", "He is university student.", "He is a university student.", [
     ["Which sentence uses articles correctly?", ["She bought an apple and a banana.", "She bought a apple and an banana."], 0, "'An' precedes vowel sounds ('apple'); 'a' precedes consonant sounds."],
     ["Choose the correct option:", ["He is an honest person.", "He is a honest person."], 0, "'Honest' starts with a silent 'h', making it a vowel sound."],
@@ -10,8 +9,8 @@ const L = [
 
   ["l2", 1, "Subject-Verb Agreement", "Grammar", "S", "Singular subjects take singular verbs (with an 's'); plural subjects take plural verbs.", "The list of errors are long.", "The list of errors is long.", [
     ["Choose the correct sentence:", ["The collection of essays is fascinating.", "The collection of essays are fascinating."], 0, "'Collection' is the singular subject, so it takes 'is'."],
-    ["Identify the correct verb:", ["Each of the students __ submitted work.", "Each of the students __ submitted work."], 0, "'Each' is singular, so it takes 'has'."],
-    ["Why is 'The team of researchers are publishing' incorrect?", ["'Team' is a singular collective noun taking 'is'.", "There is no verb.", "It has too many words."], 0, "The team acts as a single unit."],
+    ["Identify the correct verb:", ["Each of the students submitted work.", "Each of the students submitted work."], 0, "'Each' is singular."],
+    ["Why is 'The group of researchers are publishing' incorrect?", ["'Team' is a singular collective noun taking 'is'.", "There is no verb.", "It has too many words."], 0, "The group acts as a single unit."],
     ["Choose the correct sentence:", ["Neither option makes sense.", "Neither option make sense."], 0, "'Neither' is singular."]
   ], 25],
 
@@ -23,10 +22,10 @@ const L = [
   ], 25],
 
   ["l4", 1, "Prepositions", "Grammar", "📍", "Use 'in' for enclosed spaces/months, 'on' for surfaces/days, and 'at' for precise locations/times.", "She arrived on Morocco.", "She arrived in Morocco.", [
-    ["Choose the correct preposition:", ["The conference is __ Monday.", "The conference is __ July."], 0, "Use 'on' for days of the week."],
-    ["Choose the correct preposition:", ["He works __ a university.", "He works __ university."], 0, "Use 'at' or 'in' with proper articles."],
+    ["Choose the correct preposition:", ["The conference is on Monday.", "The conference is in Monday."], 0, "Use 'on' for days of the week."],
+    ["Choose the correct preposition:", ["He works at a university.", "He works on a university."], 0, "Use 'at' with institutions."],
     ["Which sentence is correct?", ["Meet me at the station.", "Meet me on the station."], 0, "'At' denotes a precise location."],
-    ["Choose the correct option:", ["Born __ 1998", "Born __ 1998"], 0, "Use 'in' for years."]
+    ["Choose the correct option:", ["Born in 1998", "Born on 1998"], 0, "Use 'in' for years."]
   ], 25],
 
   ["l5", 1, "Fragments and Run-Ons", "Grammar", ".", "A sentence needs a complete thought. Never join two independent clauses with just a comma.", "The data was complex, it required careful reading.", "The data was complex; it required careful reading.", [
@@ -40,10 +39,9 @@ const L = [
     ["Review: Choose the correct sentence:", ["An university course is valuable.", "A university course is valuable."], 1, "'University' starts with a consonant sound ('y-oo'), so it takes 'a'."],
     ["Review: Choose the correct agreement:", ["The group of scholars is meeting today.", "The group of scholars are meeting today."], 0, "'Group' is singular."],
     ["Review: Spot the fragment:", ["Although the sample size was small.", "The sample size was small."], 0, "Starts with subordinating conjunction 'Although', making it a fragment."],
-    ["Review: Choose the correct preposition:", ["Interested __ research", "Interested __ research"], 0, "Use 'in' with 'interested'."]
+    ["Review: Choose the correct preposition:", ["Interested in research", "Interested on research"], 0, "Use 'in' with 'interested'."]
   ], 30],
 
-  // --- UNIT 2: WORD POWER ---
   ["l7", 2, "Formal vs Informal Vocabulary", "Vocabulary", "◆", "Replace casual conversational phrases with formal, precise vocabulary in academic writing.", "The study got messed up.", "The study encountered significant methodological obstacles.", [
     ["Which word is more formal than 'show'?", ["Demonstrate", "Tell", "Show off"], 0, "'Demonstrate' is standard academic vocabulary."],
     ["Choose the formal alternative to 'lots of':", ["Substantial quantities of", "A bunch of", "Loads of"], 0, "'Substantial quantities of' suits formal writing."],
@@ -86,7 +84,6 @@ const L = [
     ["Review: Select the formal noun:", ["Methodology", "Way of doing stuff"], 0, "'Methodology' is formal."]
   ], 35],
 
-  // --- UNIT 3: SENTENCE BUILDING ---
   ["l13", 3, "Simple and Compound Sentences", "Structure", "⌘", "Compound sentences join two independent clauses using coordinating conjunctions (FANBOYS) and a comma.", "The theory is complex and it requires rigorous testing.", "The theory is complex, and it requires rigorous testing.", [
     ["What constitutes a compound sentence?", ["Two independent clauses joined by a comma and coordinator.", "One dependent clause.", "A sentence with no verbs."], 0, "Compound sentences combine equal clauses."],
     ["Which acronym helps remember coordinating conjunctions?", ["FANBOYS (For, And, Nor, But, Or, Yet, So)", "ABCDE", "GRAMMAR"], 0, "FANBOYS covers the 7 coordinators."],
@@ -129,7 +126,6 @@ const L = [
     ["Review: Eliminate wordiness from 'at this point in time':", ["Now / Currently", "Then", "Later"], 0, "'Now' is concise."]
   ], 40],
 
-  // --- UNIT 4: PARAGRAPH WRITING ---
   ["l19", 4, "Topic Sentences", "Clarity", "¶", "A topic sentence states the single controlling idea of a paragraph. Every subsequent sentence must support it.", "Paragraphs are fun to write and read.", "Effective paragraph structure requires a controlling topic sentence followed by supporting evidence.", [
     ["What is the primary function of a topic sentence?", ["To state the controlling idea of the paragraph.", "To list random facts.", "To conclude the essay."], 0, "It governs the paragraph's scope."],
     ["Which is a strong topic sentence?", ["Education fosters economic mobility.", "I like school."], 0, "It makes a specific, developable claim."],
@@ -172,8 +168,7 @@ const L = [
     ["Unit 4 Review: What are the three core structural pillars of a paragraph?", ["Topic sentence, supporting evidence, concluding synthesis.", "Title, footnote, bibliography.", "Introduction, body, conclusion."], 0, "Core paragraph architecture."]
   ], 45],
 
-  // --- UNIT 5: ACADEMIC VOICE ---
-  ["l5", 5, "Formal Register", "Style", "A", "Maintain formal register by avoiding slang, contractions ('don't', 'it's'), and overly casual emotional language.", "You shouldn't mess around with research methods.", "Researchers must adhere strictly to established methodological protocols.", [
+  ["l25", 5, "Formal Register", "Style", "A", "Maintain formal register by avoiding slang, contractions ('don't', 'it's'), and overly casual emotional language.", "You shouldn't mess around with research methods.", "Researchers must adhere strictly to established methodological protocols.", [
     ["Why avoid contractions in formal academic writing?", ["They introduce an informal, conversational tone.", "They are illegal.", "They contain apostrophes."], 0, "Formal prose spells out auxiliary verbs."],
     ["Identify the formal alternative to 'kids':", ["Children / Juveniles", "Tots", "Bratty youth"], 0, "'Children' maintains formal tone."],
     ["Which sentence adopts a proper academic register?", ["This policy is a total disaster for everyone.", "This policy carries severe economic consequences for low-income populations."], 1, "Objective and precise."],
