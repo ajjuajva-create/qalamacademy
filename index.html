@@ -323,11 +323,15 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
         <h1 class="serif">Writing Lab & Arena.</h1>
       </div>
       <div class="lab-tabs">
-        <button class="lab-tab active" id="labTabAnalyse" onclick="switchLabTab('analyse')">✦ Paragraph Analyser</button>
-        <button class="lab-tab" id="labTabTasks" onclick="switchLabTab('tasks')">📝 Guided Tasks</button>
+        <button class="lab-tab active" id="labTabTasks" onclick="switchLabTab('tasks')">📝 Guided Tasks</button>
+        <button class="lab-tab" id="labTabAnalyse" onclick="switchLabTab('analyse')">✦ Paragraph Analyser</button>
       </div>
 
-      <div id="labAnalyse">
+      <div id="labTasks">
+        <div class="lab-task-list" id="labTaskList"></div>
+      </div>
+
+      <div id="labAnalyse" class="hidden">
         <div class="lab-box">
           <div class="field">
             <label>Genre Target</label>
@@ -353,10 +357,6 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
             </div>
           </div>
         </div>
-      </div>
-
-      <div id="labTasks" class="hidden">
-        <div class="lab-task-list" id="labTaskList"></div>
       </div>
     </div>
   </div>
@@ -453,9 +453,36 @@ let authMode = 'login';
 let currentLesson=null, stepIndex=0, correctCount=0, selected=null, answered=false, elapsed=0, timer=null;
 let activeLabTask = null;
 
-// EXPANDED 20-MODULE COMPREHENSIVE CURRICULUM
+// WEB AUDIO SYNTHESIZER (Duolingo-style sound feedback)
+let audioCtx = null;
+function getAudioContext(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if(audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+function playTone(freq, duration, type='sine', volume=0.15, delay=0){
+  try {
+    const ac = getAudioContext();
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.connect(gain);
+    gain.connect(ac.destination);
+    osc.frequency.value = freq;
+    osc.type = type;
+    const t = ac.currentTime + delay;
+    gain.gain.setValueAtTime(volume, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
+    osc.start(t);
+    osc.stop(t + duration);
+  } catch(e) {}
+}
+function soundClick(){ playTone(800, 0.04, 'sine', 0.1); }
+function soundCorrect(){ playTone(523.25, 0.08, 'sine', 0.15); playTone(659.25, 0.08, 'sine', 0.15, 0.08); playTone(783.99, 0.18, 'sine', 0.15, 0.16); }
+function soundWrong(){ playTone(220, 0.12, 'sawtooth', 0.12); playTone(185, 0.22, 'sawtooth', 0.1, 0.12); }
+function soundComplete(){ [523, 659, 784, 1046].forEach((f, i) => playTone(f, 0.1, 'sine', 0.15, i * 0.08)); }
+
+// EXPANDED 20-MODULE COMPREHENSIVE CURRICULUM WITH VARIETY
 const LESSONS = [
-  // --- TIER 1: CLARITY ---
   {
     id: 'clarity-1', level: 1, skill: 'Clarity', icon: '◎', title: 'Stripping the Preamble',
     desc: 'Remove conversational hedges to give assertions direct authority.',
@@ -485,7 +512,7 @@ const LESSONS = [
     ]
   },
   {
-    id: 'clarity-2', level: 1, skill: 'Clarity', icon: '🎯', title: 'Single-Idea Focus',
+    id: 'clarity-2', level: 2, skill: 'Clarity', icon: '🎯', title: 'Single-Idea Focus',
     desc: 'Isolate one primary assertion per sentence to avoid cognitive clutter.',
     teach: 'A sentence collapsing multiple independent arguments loses its argumentative punch.',
     examples: ['Modern states regulate education, and they tax citizens, and they build roads.', 'Modern states consolidate authority through institutional regulation.'],
@@ -501,13 +528,19 @@ const LESSONS = [
         ],
         correct: 1,
         explain: 'Option two focuses entirely on evaluating the limits of secular nationalism.'
+      },
+      {
+        type: 'write',
+        title: 'Rewrite this multi-clause sentence into a focused single proposition:',
+        hint: 'Isolate the core insight about institutional governance.',
+        example: 'Bureaucracy expands rapidly because officials seek power and budgets grow annually.',
+        validate: a => a.trim().split(/\s+/).length >= 5 && !/\sand\s.*\sand\s/i.test(a),
+        explain: 'A singular focus sharpens academic delivery.'
       }
     ]
   },
-
-  // --- TIER 2: VOCABULARY ---
   {
-    id: 'vocab-1', level: 2, skill: 'Vocabulary', icon: 'A', title: 'Phrasal Verb Upgrades',
+    id: 'vocab-1', level: 3, skill: 'Vocabulary', icon: 'A', title: 'Phrasal Verb Upgrades',
     desc: 'Replace casual phrasal verbs with precise academic terminology.',
     teach: 'Formal prose replaces spoken phrasal verbs with single-word analytical verbs.',
     examples: ['The researcher wants to look into the data.', 'The researcher intends to investigate the empirical data.'],
@@ -519,11 +552,19 @@ const LESSONS = [
         options: ['Bring over', 'Articulate', 'Throw out'],
         correct: 1,
         explain: '"Articulate" or "raise" replaces the informal phrasal verb cleanly.'
+      },
+      {
+        type: 'write',
+        title: 'Upgrade "figure out" in a scholarly context:',
+        hint: 'Use a precise verb like "determine", "decode", or "elucidate".',
+        example: 'We need to figure out why the policy failed.',
+        validate: a => /(determine|decode|elucidate|analyze|investigate)/i.test(a),
+        explain: 'Precise lexical choices elevate academic register.'
       }
     ]
   },
   {
-    id: 'vocab-2', level: 2, skill: 'Vocabulary', icon: '⚡', title: 'Nominalization Mechanics',
+    id: 'vocab-2', level: 4, skill: 'Vocabulary', icon: '⚡', title: 'Nominalization Mechanics',
     desc: 'Transform active descriptions into dense conceptual nouns.',
     teach: 'Nominalization allows complex processes to become compact actors in larger arguments.',
     examples: ['Because society urbanized rapidly, public health changed.', 'Rapid urbanization strained public health infrastructure.'],
@@ -538,10 +579,8 @@ const LESSONS = [
       }
     ]
   },
-
-  // --- TIER 3: CONCISION ---
   {
-    id: 'concision-1', level: 3, skill: 'Concision', icon: '✂', title: 'Killing Multi-Word Fillers',
+    id: 'concision-1', level: 5, skill: 'Concision', icon: '✂', title: 'Killing Multi-Word Fillers',
     desc: 'Cut bloated transitional phrases down to their single-word equivalents.',
     teach: 'If a multi-word phrase adds no distinct nuance, replace it with a direct term.',
     examples: ['Due to the fact that funding failed, the project stopped.', 'Because funding failed, the project halted.'],
@@ -557,7 +596,7 @@ const LESSONS = [
     ]
   },
   {
-    id: 'concision-2', level: 3, skill: 'Concision', icon: '⚖', title: 'The Antithetical Pivot',
+    id: 'concision-2', level: 6, skill: 'Concision', icon: '⚖', title: 'The Antithetical Pivot',
     desc: 'Deploy rhythmic, balanced contrasts to sharpen analytical arguments.',
     teach: 'The formula "X is not Y; it is Z" establishes crisp boundaries for your claims.',
     examples: ['The problem is not economic, but rather it is about culture.', 'The crisis is not primarily economic; it is fundamentally institutional.'],
@@ -572,10 +611,8 @@ const LESSONS = [
       }
     ]
   },
-
-  // --- TIER 4: ARGUMENTATION ---
   {
-    id: 'argument-1', level: 4, skill: 'Argument', icon: '🏛', title: 'Claim vs. Self-Evident Fact',
+    id: 'argument-1', level: 7, skill: 'Argument', icon: '🏛', title: 'Claim vs. Self-Evident Fact',
     desc: 'Ensure your primary arguments require defense rather than stating obvious trivia.',
     teach: 'An academic claim must be arguable; stating that books contain pages is an inert fact.',
     examples: ['Libraries store physical books.', 'Digital archiving fundamentally alters how human memory is externalized.'],
@@ -595,7 +632,7 @@ const LESSONS = [
     ]
   },
   {
-    id: 'argument-2', level: 4, skill: 'Argument', icon: '🔗', title: 'Explicit Evidential Warrants',
+    id: 'argument-2', level: 8, skill: 'Argument', icon: '🔗', title: 'Explicit Evidential Warrants',
     desc: 'Connect raw data to your interpretive claims through clear reasoning.',
     teach: 'Data does not speak for itself; the warrant explains why the data proves your claim.',
     examples: ['Statistics show low voter turnout.', 'Low voter turnout reflects systemic alienation, as citizens recognize structural policy stagnation.'],
@@ -610,10 +647,8 @@ const LESSONS = [
       }
     ]
   },
-
-  // --- TIER 5: STRUCTURE ---
   {
-    id: 'structure-1', level: 5, skill: 'Structure', icon: '🧱', title: 'Controlling Topic Sentences',
+    id: 'structure-1', level: 9, skill: 'Structure', icon: '🧱', title: 'Controlling Topic Sentences',
     desc: 'Govern paragraph coherence with a single authoritative opening claim.',
     teach: 'The topic sentence acts as a contract with the reader, promising what the paragraph will prove.',
     examples: ['In this paragraph, I will talk about medieval philosophy.', 'Medieval Islamic optics revolutionized Western theories of perception.'],
@@ -714,6 +749,7 @@ async function handleAuth() {
 
     localStorage.setItem('qalam_user_cache', JSON.stringify(state));
     enterApp();
+    soundClick();
     toast(`Connected as ${state.username}!`);
   } catch (err) {
     alert(`Supabase Connection Error:\n${err.message}`);
@@ -772,6 +808,7 @@ function navigate(page) {
   if(page==='learn') renderLearn();
   if(page==='lab') renderLab();
   if(page==='progress') renderProgress();
+  soundClick();
 }
 
 function renderHome() {
@@ -801,6 +838,8 @@ function renderHome() {
   document.getElementById('lessonList').innerHTML = LESSONS.map(l => {
     const done = comp.includes(l.id);
     const locked = l.level > (state.unlocked_level||1);
+    const statusTxt = done ? '✓ COMPLETED' : locked ? '🔒 LOCKED' : '▶ READY';
+    const statusCls = done ? 'done' : locked ? 'locked' : 'available';
     return `
       <div class="lesson-card ${done?'done':locked?'locked':''}" ${locked?'':`onclick="startLessonById('${l.id}')"`}>
         ${done?'<div class="done-badge">✓</div>':''}
@@ -808,6 +847,7 @@ function renderHome() {
         <div>
           <h3 style="margin-bottom:4px">${l.title}</h3>
           <p class="muted" style="font-size:12px">${l.desc}</p>
+          <div style="font-size:11px;font-weight:800;margin-top:8px;color:${done?'var(--green)':locked?'var(--muted)':'var(--blue)'}">${statusTxt}</div>
         </div>
       </div>
     `;
@@ -829,17 +869,19 @@ function renderLearn() {
         ${done?'✓':locked?'🔒':l.icon}
       </div>
       <div class="path-node-label">${l.title}</div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);margin-top:4px">${done?'Completed':locked?'Locked':'Next Up'}</div>
     `;
     container.appendChild(wrap);
   });
 }
 
-// WRITING LAB & ANALYSER
+// WRITING LAB & ANALYSER (Guided Tasks First)
 function switchLabTab(tab) {
-  document.getElementById('labTabAnalyse').classList.toggle('active', tab==='analyse');
   document.getElementById('labTabTasks').classList.toggle('active', tab==='tasks');
-  document.getElementById('labAnalyse').classList.toggle('hidden', tab!=='analyse');
+  document.getElementById('labTabAnalyse').classList.toggle('active', tab==='analyse');
   document.getElementById('labTasks').classList.toggle('hidden', tab!=='tasks');
+  document.getElementById('labAnalyse').classList.toggle('hidden', tab!=='analyse');
+  soundClick();
 }
 
 function renderLab() {
@@ -871,6 +913,7 @@ function renderLab() {
 
 function toggleLabTask(id) {
   activeLabTask = activeLabTask === id ? null : id;
+  soundClick();
   renderLab();
 }
 
@@ -878,6 +921,7 @@ async function submitLabTask(id) {
   const el = document.getElementById('lt_txt_'+id);
   const task = LAB_TASKS.find(t => t.id === id);
   if(!el || el.value.trim().split(/\s+/).filter(Boolean).length < task.minWords){
+    soundWrong();
     toast(`Please write at least ${task.minWords} words first.`);
     return;
   }
@@ -890,13 +934,14 @@ async function submitLabTask(id) {
     await syncProgressToCloud();
   }
   activeLabTask = null;
+  soundCorrect();
   toast('Task logged & synced! +15 XP');
   renderLab();
 }
 
 function evaluateWriting() {
   const text = document.getElementById('labText').value.trim();
-  if(!text){ toast('Write or paste draft text first.'); return; }
+  if(!text){ soundWrong(); toast('Write or paste draft text first.'); return; }
   const words = text.split(/\s+/).filter(Boolean);
   const sentences = text.split(/[.!?]+/).filter(x => x.trim()).length || 1;
   const avg = words.length / sentences;
@@ -918,11 +963,13 @@ function evaluateWriting() {
     <div>✦ Detected ${filler} conversational filler tokens. Consider tightening them.</div>
   `;
   document.getElementById('labResults').classList.remove('hidden');
+  soundCorrect();
 }
 
 function clearLab() {
   document.getElementById('labText').value = '';
   document.getElementById('labResults').classList.add('hidden');
+  soundClick();
 }
 
 function renderProgress() {
@@ -965,6 +1012,7 @@ function startLessonById(id) {
     document.getElementById('lessonTimer').textContent = `${m}:${s}`;
   }, 1000);
 
+  soundClick();
   renderStep();
 }
 
@@ -1006,6 +1054,7 @@ function renderStep() {
 function selectOpt(i) {
   if(answered) return;
   selected = i;
+  soundClick();
   document.querySelectorAll('.option').forEach((b, idx) => b.classList.toggle('selected', idx === i));
   document.getElementById('lessonAction').disabled = false;
 }
@@ -1029,7 +1078,12 @@ function evaluateStep() {
     pass = q.validate(document.getElementById('lessonInput').value);
   }
 
-  if(pass) correctCount++;
+  if(pass) {
+    correctCount++;
+    soundCorrect();
+  } else {
+    soundWrong();
+  }
   answered = true;
 
   const btn = document.getElementById('lessonAction');
@@ -1062,6 +1116,7 @@ async function finishLesson() {
   localStorage.setItem('qalam_user_cache', JSON.stringify(state));
   await syncProgressToCloud();
 
+  soundComplete();
   document.getElementById('resultXP').textContent = "+20 XP";
   document.getElementById('lessonScreen').classList.add('hidden');
   document.getElementById('resultScreen').classList.remove('hidden');
@@ -1073,12 +1128,14 @@ function leaveLesson() {
   document.getElementById('lessonScreen').classList.add('hidden');
   document.getElementById('appScreen').classList.remove('hidden');
   navigate('home');
+  soundClick();
 }
 
 function backFromResult() {
   document.getElementById('resultScreen').classList.add('hidden');
   document.getElementById('appScreen').classList.remove('hidden');
   navigate('home');
+  soundClick();
 }
 
 function toast(msg) {
