@@ -239,7 +239,7 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
           </svg>
         </div>
         <h1 class="serif">Qalam Academy</h1>
-        <p>Simple, clean writing training for everyday writers.</p>
+        <p>Simple, human-friendly writing training.</p>
       </div>
       <div class="tabs">
         <button class="tab active" id="tabLogin" onclick="setAuthMode('login')">Sign in</button>
@@ -280,9 +280,9 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
       <div class="habit">
         <div class="streak"><strong id="streakNum">1</strong><span>STREAK</span></div>
         <div>
-          <div class="tier" id="tierPill">Writer</div>
+          <div class="tier" id="tierPill">Beginner</div>
           <div class="habit-title" id="greeting">Welcome back.</div>
-          <div class="habit-text">Pick up a lesson or jump into unlimited practice below.</div>
+          <div class="habit-text">Pick up your next lesson below.</div>
         </div>
         <div class="xp"><strong id="xpNum">0 XP</strong><span>TOTAL</span></div>
       </div>
@@ -480,153 +480,169 @@ function soundCorrect(){ playTone(523.25, 0.08, 'sine', 0.15); playTone(659.25, 
 function soundWrong(){ playTone(220, 0.12, 'sawtooth', 0.12); playTone(185, 0.22, 'sawtooth', 0.1, 0.12); }
 function soundComplete(){ [523, 659, 784, 1046].forEach((f, i) => playTone(f, 0.1, 'sine', 0.15, i * 0.08)); }
 
-// HUMAN-FRIENDLY, STEP-BY-STEP WRITING TRAINING CURRICULUM (4+ Questions Per Module)
+// HUMAN-FRIENDLY CURRICULUM: TRUE BEGINNER TO ADVANCED STEP-BY-STEP TRAINING
 const LESSONS = [
   {
-    id: 'clear-1', level: 1, skill: 'Clarity', icon: '🎯', title: 'Get Straight to the Point',
-    desc: 'Learn how to stop hiding your main idea behind filler words.',
-    teach: 'When we talk, we often say things like "I think that maybe..." or "In my opinion, I believe". In clear writing, you throw away the filler and just state your point directly.',
-    examples: ['In my personal opinion, I think reading books is really good.', 'Reading books helps people learn and grow.'],
+    id: 'step-1', level: 1, skill: 'Basics', icon: '🌱', title: '1. What Makes a Clear Sentence?',
+    desc: 'Learn the basic building blocks of a sentence that makes instant sense.',
+    teach: 'Every clear sentence has two simple parts: WHO is doing something, and WHAT they are doing. When you add too many extra thoughts into the middle, the reader gets lost.',
+    examples: ['And then John went outside and he saw a dog and it was barking.', 'John went outside and saw a barking dog.'],
     steps: [
       {
         type: 'mcq',
-        title: 'Which sentence gets straight to the point without filler?',
-        hint: 'Choose the one that does not use phrases like "I think" or "In my opinion".',
+        title: 'Which sentence tells you clearly who is doing what without extra clutter?',
+        hint: 'Look for the sentence that gets straight to the action.',
         options: [
-          'I feel like maybe education is quite important for everyone.',
-          'Education opens doors to better opportunities.',
-          'From my point of view, I believe studying is helpful.'
-        ],
-        correct: 1,
-        explain: 'The second sentence states the idea directly without hesitating.'
-      },
-      {
-        type: 'mcq',
-        title: 'Which of these is a weak, hesitant opening?',
-        hint: 'Look for words that sound unsure of themselves.',
-        options: [
-          'Technology changes how we communicate daily.',
-          'I guess you could say technology is changing things.',
-          'Smartphones connect people across the globe instantly.'
-        ],
-        correct: 1,
-        explain: '"I guess you could say" makes your writing sound unsure.'
-      },
-      {
-        type: 'write',
-        title: 'Rewrite this sentence without the filler words "I think":',
-        hint: 'Remove "I think that" and start with the main subject.',
-        example: 'I think that hard work leads to success.',
-        validate: a => a.trim().split(/\s+/).length >= 4 && !/i think/i.test(a),
-        explain: 'Dropping "I think" makes your statement sound confident and clear.'
-      },
-      {
-        type: 'write',
-        title: 'Rewrite this sentence to be more direct and simple:',
-        hint: 'Get rid of "In my opinion, it seems like".',
-        example: 'In my opinion, it seems like practice makes people better.',
-        validate: a => a.trim().split(/\s+/).length >= 3 && !/in my opinion/i.test(a),
-        explain: 'Direct writing connects instantly with your reader.'
-      }
-    ]
-  },
-  {
-    id: 'clear-2', level: 2, skill: 'Clarity', icon: '✂️', title: 'Cut Unnecessary Words',
-    desc: 'Make your sentences lighter by removing words that repeat themselves.',
-    teach: 'Good writing is like cleaning a room: if a word or phrase doesn\'t add anything new, sweep it out. Say in 5 words what others say in 15.',
-    examples: ['At this point in time, we are currently working on a new project.', 'Right now, we are working on a new project.'],
-    steps: [
-      {
-        type: 'mcq',
-        title: 'Which sentence says the same thing in fewer, cleaner words?',
-        hint: 'Look for the shortest option that keeps the exact same meaning.',
-        options: [
-          'Due to the fact that it was raining outside, we stayed home.',
-          'Because it was raining, we stayed home.',
-          'On account of the fact that rain fell down, we stayed inside.'
-        ],
-        correct: 1,
-        explain: '"Because" replaces "Due to the fact that" cleanly and saves words.'
-      },
-      {
-        type: 'mcq',
-        title: 'Which phrase is unnecessary padding?',
-        hint: 'Words that mean the exact same thing twice.',
-        options: [
-          'Past history',
-          'Important decision',
-          'Clear explanation'
+          'Mary walked to the store to buy milk.',
+          'Mary, who was very tired yesterday evening, decided she would walk to the store to buy some milk.',
+          'Walking to the store was Mary because she needed milk.'
         ],
         correct: 0,
-        explain: '"Past history" repeats itself because all history is in the past.'
-      },
-      {
-        type: 'write',
-        title: 'Make this sentence shorter and punchier:',
-        hint: 'Change "In order to succeed" to just "To succeed".',
-        example: 'In order to succeed in life, you must work hard every day.',
-        validate: a => a.trim().split(/\s+/).length >= 5 && !/in order to/i.test(a),
-        explain: 'Trimming "in order to" down to "to" makes your writing flow faster.'
-      }
-    ]
-  },
-  {
-    id: 'vocab-1', level: 3, skill: 'Vocabulary', icon: '💡', title: 'Use Exact Everyday Verbs',
-    desc: 'Swap weak, vague verbs for strong, active words.',
-    teach: 'Instead of saying "got rid of", say "eliminated". Instead of "look into", say "investigate". Strong verbs paint a clearer picture in the reader\'s mind.',
-    examples: ['The teacher told us to look into the problem.', 'The teacher asked us to investigate the problem.'],
-    steps: [
-      {
-        type: 'mcq',
-        title: 'Which verb is stronger than "get rid of"?',
-        hint: 'Choose the exact, professional word.',
-        options: ['Throw away', 'Eliminate', 'Kick out'],
-        correct: 1,
-        explain: '"Eliminate" sounds clean, precise, and professional.'
+        explain: 'Option 1 tells you who (Mary) and what (walked to the store) immediately.'
       },
       {
         type: 'mcq',
-        title: 'Which verb is better than saying "make a choice"?',
-        hint: 'Look for a single verb that means the same thing.',
-        options: ['Decide', 'Think about', 'Bring up'],
-        correct: 0,
-        explain: '"Decide" replaces "make a choice" in one crisp word.'
-      },
-      {
-        type: 'write',
-        title: 'Replace "look into" with a stronger single verb:',
-        hint: 'Try words like "examine", "explore", or "study".',
-        example: 'Scientists need to look into new energy sources.',
-        validate: a => /(examine|explore|study|investigate|research)/i.test(a),
-        explain: 'Using precise verbs instantly upgrades your writing.'
-      }
-    ]
-  },
-  {
-    id: 'struct-1', level: 4, skill: 'Structure', icon: '🧱', title: 'One Idea Per Sentence',
-    desc: 'Don\'t cram five different thoughts into one long run-on sentence.',
-    teach: 'Readers need time to breathe. Give them one clear thought per sentence. If you have three ideas, use three short, well-connected sentences.',
-    examples: ['John went to the store and bought apples and then he drove home and cooked dinner.', 'John went to the store for apples, drove home, and cooked dinner.'],
-    steps: [
-      {
-        type: 'mcq',
-        title: 'Which sentence is easy to read without getting breathless?',
-        hint: 'Look for balanced phrasing that avoids endless "and" conjunctions.',
+        title: 'Why do long, cluttered sentences confuse readers?',
+        hint: 'Think about holding too many things in your hands at once.',
         options: [
-          'We went to the park and played football and ate sandwiches and then it started raining so we ran to the car.',
-          'After playing football and eating at the park, we ran to the car when it started raining.',
-          'We went to the park. We played football. It started raining.'
+          'They contain too many unrelated ideas bundled together.',
+          'They use too many periods.',
+          'They are always too short.'
+        ],
+        correct: 0,
+        explain: 'Bundling too many thoughts into one sentence overwhelms the reader.'
+      },
+      {
+        type: 'write',
+        title: 'Make this sentence simpler and clearer:',
+        hint: 'Remove the clutter and focus on the main action.',
+        example: 'The big brown dog that lived next door barked loudly.',
+        validate: a => a.trim().split(/\s+/).length >= 3,
+        explain: 'Great job! Simple sentences are the easiest for anyone to read.'
+      }
+    ]
+  },
+  {
+    id: 'step-2', level: 2, skill: 'Clarity', icon: '✂️', title: '2. Removing Filler Words',
+    desc: 'Stop hiding your ideas behind weak opening phrases.',
+    teach: 'In everyday conversation, we say things like "I think that maybe..." or "In my opinion, I believe". In writing, these are called filler words. They make you sound unsure of yourself. Just state your point!',
+    examples: ['I think that maybe reading books is good.', 'Reading books helps you learn faster.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'Which sentence sounds confident and direct?',
+        hint: 'Choose the one without "I think" or "In my opinion".',
+        options: [
+          'I feel like maybe exercise is healthy.',
+          'Exercise keeps your body strong and healthy.',
+          'From my point of view, I believe exercise helps.'
         ],
         correct: 1,
-        explain: 'Option two connects related thoughts smoothly without stringing "and" together twenty times.'
+        explain: 'Option 2 states the fact directly without hiding behind "I feel like".'
+      },
+      {
+        type: 'mcq',
+        title: 'Which of these is a filler phrase you should delete?',
+        hint: 'Look for words that add zero meaning.',
+        options: [
+          'As a matter of fact,',
+          'Quickly',
+          'Carefully'
+        ],
+        correct: 0,
+        explain: '"As a matter of fact" is padding. You can delete it and lose nothing.'
       },
       {
         type: 'write',
-        title: 'Break this run-on sentence into two clear, simple sentences:',
-        hint: 'Divide the thought where the action shifts.',
-        example: 'The library was very quiet and everyone was studying hard for their exams next week.',
+        title: 'Rewrite this sentence without "I think that":',
+        hint: 'Start directly with the main idea.',
+        example: 'I think that practice makes you better.',
+        validate: a => a.trim().split(/\s+/).length >= 3 && !/i think/i.test(a),
+        explain: 'Removing "I think" gives your writing instant confidence.'
+      }
+    ]
+  },
+  {
+    id: 'step-3', level: 3, skill: 'Flow', icon: '🌊', title: '3. Fixing Run-On Sentences',
+    desc: 'Learn what a clause is and how to break long sentences apart.',
+    teach: 'A **clause** is simply a mini-sentence containing a subject (who) and a verb (what they do). A **run-on sentence** happens when you glue two complete mini-sentences together with just the word "and" over and over. Fix this by using a period (.) or a comma.',
+    examples: ['It started to rain and we forgot our umbrellas and we got soaked.', 'It started to rain. Because we forgot our umbrellas, we got soaked.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'What is a clause in simple terms?',
+        hint: 'Think of the basic ingredients of a thought.',
+        options: [
+          'A mini-sentence that has a subject and an action.',
+          'A difficult vocabulary word.',
+          'A punctuation mark like a comma.'
+        ],
+        correct: 0,
+        explain: 'A clause is a distinct thought block containing someone doing something.'
+      },
+      {
+        type: 'mcq',
+        title: 'Which sentence fixes the run-on problem correctly?',
+        hint: 'Look for proper pausing or splitting.',
+        options: [
+          'I went to the store and I bought fruit and then I walked home.',
+          'I went to the store, bought some fruit, and walked home.',
+          'And I went to the store and bought fruit.'
+        ],
+        correct: 1,
+        explain: 'Option 2 groups the actions cleanly without repeating "and" endlessly.'
+      },
+      {
+        type: 'write',
+        title: 'Break this run-on sentence into two separate sentences:',
+        hint: 'Put a period where the first thought ends.',
+        example: 'The sun was shining brightly and the birds were singing in the trees.',
         validate: a => a.trim().split(/[.!?]/).length >= 2,
-        explain: 'Dividing long sentences helps your reader digest your thoughts easily.'
+        explain: 'Splitting long thoughts gives your reader room to breathe.'
+      }
+    ]
+  },
+  {
+    id: 'step-4', level: 4, skill: 'Vocabulary', icon: '💡', title: '4. Using Strong Verbs',
+    desc: 'Replace weak, lazy words with exact, powerful verbs.',
+    teach: 'A verb is an action word. Instead of saying "got rid of", use "eliminate". Instead of "look into", use "investigate". Strong verbs make your writing come alive.',
+    examples: ['We need to look into this problem.', 'We need to investigate this problem.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'Which verb is stronger and more precise than "make better"?',
+        hint: 'Choose the single professional word.',
+        options: ['Improve', 'Fix up', 'Make good'],
+        correct: 0,
+        explain: '"Improve" is a sharp, exact verb.'
+      },
+      {
+        type: 'write',
+        title: 'Replace "figure out" with a stronger single word:',
+        hint: 'Try "solve", "discover", or "figure".',
+        example: 'We must figure out the answer.',
+        validate: a => /(solve|discover|determine|find|calculate)/i.test(a),
+        explain: 'Strong verbs remove clutter and make sentences punchy.'
+      }
+    ]
+  },
+  {
+    id: 'step-5', level: 5, skill: 'Structure', icon: '🧱', title: '5. Building Paragraphs',
+    desc: 'Connect sentences smoothly into a well-organized paragraph.',
+    teach: 'A great paragraph works like a staircase: sentence 1 introduces the main point, sentences 2 and 3 give examples or details, and the final sentence wraps it up nicely.',
+    examples: ['Random facts thrown together.', 'Topic sentence + supporting detail + clear conclusion.'],
+    steps: [
+      {
+        type: 'mcq',
+        title: 'What should the very first sentence of a paragraph do?',
+        hint: 'Think about introducing the main topic.',
+        options: [
+          'State the main idea or point of the paragraph.',
+          'List random unrelated details.',
+          'End the story.'
+        ],
+        correct: 0,
+        explain: 'The first sentence sets the roadmap for everything that follows.'
       }
     ]
   }
