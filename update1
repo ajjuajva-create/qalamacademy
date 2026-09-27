@@ -282,9 +282,13 @@ textarea.large{min-height:220px;resize:vertical;line-height:1.7;font-size:15px}
         <div>
           <div class="tier" id="tierPill">Scholar</div>
           <div class="habit-title" id="greeting">Welcome back.</div>
-          <div class="habit-text">Start today's lesson below.</div>
+          <div class="habit-text">Start today's lesson or enter endless practice below.</div>
         </div>
         <div class="xp"><strong id="xpNum">0 XP</strong><span>TOTAL</span></div>
+      </div>
+
+      <div style="margin-bottom:20px">
+        <button class="btn btn-green" style="width:100%;padding:16px;font-size:16px" onclick="startEndlessPractice()">⚡ Start Endless Practice Drill (+15 XP)</button>
       </div>
 
       <div class="section">
@@ -453,7 +457,7 @@ let authMode = 'login';
 let currentLesson=null, stepIndex=0, correctCount=0, selected=null, answered=false, elapsed=0, timer=null;
 let activeLabTask = null;
 
-// WEB AUDIO SYNTHESIZER (Duolingo-style sound feedback)
+// WEB AUDIO SYNTHESIZER
 let audioCtx = null;
 function getAudioContext(){
   if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -481,7 +485,7 @@ function soundCorrect(){ playTone(523.25, 0.08, 'sine', 0.15); playTone(659.25, 
 function soundWrong(){ playTone(220, 0.12, 'sawtooth', 0.12); playTone(185, 0.22, 'sawtooth', 0.1, 0.12); }
 function soundComplete(){ [523, 659, 784, 1046].forEach((f, i) => playTone(f, 0.1, 'sine', 0.15, i * 0.08)); }
 
-// EXPANDED 20-MODULE COMPREHENSIVE CURRICULUM WITH VARIETY
+// EXPANDED 20-MODULE COMPREHENSIVE CURRICULUM
 const LESSONS = [
   {
     id: 'clarity-1', level: 1, skill: 'Clarity', icon: '◎', title: 'Stripping the Preamble',
@@ -838,10 +842,10 @@ function renderHome() {
   document.getElementById('lessonList').innerHTML = LESSONS.map(l => {
     const done = comp.includes(l.id);
     const locked = l.level > (state.unlocked_level||1);
-    const statusTxt = done ? '✓ COMPLETED' : locked ? '🔒 LOCKED' : '▶ READY';
+    const statusTxt = done ? '✓ COMPLETED (Click to Practice Again)' : locked ? '🔒 LOCKED' : '▶ READY TO TRAIN';
     const statusCls = done ? 'done' : locked ? 'locked' : 'available';
     return `
-      <div class="lesson-card ${done?'done':locked?'locked':''}" ${locked?'':`onclick="startLessonById('${l.id}')"`}>
+      <div class="lesson-card ${done?'done':locked?'locked':''}" onclick="startLessonById('${l.id}')">
         ${done?'<div class="done-badge">✓</div>':''}
         <div class="lesson-icon">${locked?'🔒':l.icon}</div>
         <div>
@@ -865,17 +869,25 @@ function renderLearn() {
     const wrap = document.createElement('div');
     wrap.className = 'path-node-wrap';
     wrap.innerHTML = `
-      <div class="path-node ${done?'node-done':!locked?'node-active':'node-locked'}" ${locked?'':`onclick="startLessonById('${l.id}')"`}>
+      <div class="path-node ${done?'node-done':!locked?'node-active':'node-locked'}" onclick="startLessonById('${l.id}')">
         ${done?'✓':locked?'🔒':l.icon}
       </div>
       <div class="path-node-label">${l.title}</div>
-      <div style="font-size:10px;font-weight:700;color:var(--muted);margin-top:4px">${done?'Completed':locked?'Locked':'Next Up'}</div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);margin-top:4px">${done?'Completed (Replay) ':locked?'Locked':'Active Stage'}</div>
     `;
     container.appendChild(wrap);
   });
 }
 
-// WRITING LAB & ANALYSER (Guided Tasks First)
+// ENDLESS PRACTICE MODE
+function startEndlessPractice() {
+  const randomLesson = LESSONS[Math.floor(Math.random() * LESSONS.length)];
+  startLessonById(randomLesson.id);
+  soundClick();
+  toast('Endless Practice Drill Started!');
+}
+
+// WRITING LAB & ANALYSER
 function switchLabTab(tab) {
   document.getElementById('labTabTasks').classList.toggle('active', tab==='tasks');
   document.getElementById('labTabAnalyse').classList.toggle('active', tab==='analyse');
@@ -898,12 +910,12 @@ function renderLab() {
             <div class="lab-task-meta">Task ${i+1} · Target: ${t.minWords}+ words</div>
           </div>
         </div>
-        ${isActive&&!isDone?`
+        ${isActive?`
         <div class="lab-task-body" onclick="event.stopPropagation()">
           <div class="lab-task-prompt">${t.prompt}</div>
           <textarea id="lt_txt_${t.id}" placeholder="Compose your response here..."></textarea>
           <div style="margin-top:10px;text-align:right">
-            <button class="btn btn-green" onclick="submitLabTask('${t.id}')">Submit Task →</button>
+            <button class="btn btn-green" onclick="submitLabTask('${t.id}')">Submit & Re-train →</button>
           </div>
         </div>`:''}
       </div>
@@ -929,10 +941,11 @@ async function submitLabTask(id) {
   if(!state.lab_tasks_done) state.lab_tasks_done = [];
   if(!state.lab_tasks_done.includes(id)){
     state.lab_tasks_done.push(id);
-    state.xp += 15;
-    localStorage.setItem('qalam_user_cache', JSON.stringify(state));
-    await syncProgressToCloud();
   }
+  state.xp += 15;
+  localStorage.setItem('qalam_user_cache', JSON.stringify(state));
+  await syncProgressToCloud();
+
   activeLabTask = null;
   soundCorrect();
   toast('Task logged & synced! +15 XP');
@@ -1133,6 +1146,7 @@ function leaveLesson() {
 
 function backFromResult() {
   document.getElementById('resultScreen').classList.add('hidden');
+  document.getElementById('appScreen').classList.add('hidden');
   document.getElementById('appScreen').classList.remove('hidden');
   navigate('home');
   soundClick();
